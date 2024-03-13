@@ -10,7 +10,7 @@
     <br>
     <h4 align="center">Environment</h3>
     <p align="center">
-        <imgalt="Static Badge" src="https://img.shields.io/badge/-Ubuntu_64--bit-blue?style=flat&logo=ubuntu&logoColor=white&labelColor=black">
+        <img alt="Static Badge" src="https://img.shields.io/badge/-Ubuntu_64--bit-blue?style=flat&logo=ubuntu&logoColor=white&labelColor=black">
     </p>
     <br>
 </p>
