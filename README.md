@@ -6,11 +6,10 @@
     <img alt="Static Badge" src="https://img.shields.io/badge/-HTML5-blue?style=flat&logo=html5&logoColor=white&labelColor=black">
     <img alt="Static Badge" src="https://img.shields.io/badge/-CSS-blue?style=flat&logo=css3&logoColor=white&labelColor=black">
     <img alt="Static Badge" src="https://img.shields.io/badge/-JavaScript-blue?style=flat&logo=javascript&logoColor=white&labelColor=black">
-    <br>
     <img alt="Static Badge" src="https://img.shields.io/badge/license-GNU--GPL_v3-blue?style=flat&logo=gpl3&logoColor=white&labelColor=black">
     <br>
-    <h3>Environment</h3>
-    <img alt="Static Badge" src="https://img.shields.io/badge/-Ubuntu_64--bit-blue?style=flat&logo=ubuntu&logoColor=white&labelColor=black">
+    <h3 align="center">Environment</h3>
+    <img align="center" alt="Static Badge" src="https://img.shields.io/badge/-Ubuntu_64--bit-blue?style=flat&logo=ubuntu&logoColor=white&labelColor=black">
     <br>
 </p>
 
