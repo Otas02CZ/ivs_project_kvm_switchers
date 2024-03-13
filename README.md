@@ -8,8 +8,10 @@
     <img alt="Static Badge" src="https://img.shields.io/badge/-JavaScript-blue?style=flat&logo=javascript&logoColor=white&labelColor=black">
     <img alt="Static Badge" src="https://img.shields.io/badge/license-GNU--GPL_v3-blue?style=flat&logo=gpl3&logoColor=white&labelColor=black">
     <br>
-    <h3 align="center">Environment</h3>
-    <img align="center" alt="Static Badge" src="https://img.shields.io/badge/-Ubuntu_64--bit-blue?style=flat&logo=ubuntu&logoColor=white&labelColor=black">
+    <h4 align="center">Environment</h3>
+    <p align="center">
+        <imgalt="Static Badge" src="https://img.shields.io/badge/-Ubuntu_64--bit-blue?style=flat&logo=ubuntu&logoColor=white&labelColor=black">
+    </p>
     <br>
 </p>
 
