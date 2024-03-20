@@ -19,7 +19,7 @@
 <br>
 
 ## Authors
-KVM Switchers
+Team KVM Switchers
 - [xvalenk00 | @chadmee](https://www.github.com/chadmee)
 - [xkocio00 | @Otas02CZ](https://www.github.com/Otas02CZ)
 - [xmendlm00 | @Mr-Annonym](https://www.github.com/Mr-Annonym)
@@ -30,7 +30,63 @@ This section provides a concise overview of the project's functionality and feat
 
 Find the documentation [here.](https://www.google.com/)
 
-## Math engine (etc..) usage
+## Math engine library
+
+Math engine library evaluates string based equations with support for these operations:
+
+Operation           |   Format      
+--------------      |-------------------
+addition            | 6 + 1
+subtraction         | 5 - 4
+multiplication      | 12 * 2
+division            | 6 / 2
+power               | pow(base, exponent)
+natural root        | root(base, exponent)
+factorial           | 6!
+natural logarithm   | log(base, value)
+
+### Math engine library interface
+
+To be implemented in file ```/src/math_engine.js```
+```javascript
+class MathObject {
+
+  ...
+  // inner implementation
+  ...
+
+  //takes equation defined in string and returns string with result or throws an error
+  solveEquation(equation) {
+    return string_with_result;
+  }
+
+  ...
+  // inner implementation
+  ...
+
+}
+
+...
+
+modules.exports = MathObject;
+```
+Concrete list of exceptions is to be defined soon.
+
+### Testing the library
+
+Unit tests for the specified library interface are written using Jest framework in file ```/src/math_engine.test.js```. 
+
+The tests can be run using ```npx jest``` when in the ```src``` directory. Dependencies defined in ```package.json``` must be installed using ```npm install``` in order to run these tests.
+
+
+Currently only tests for basic and complex features are written. Testing for edge cases and exceptions will come in the future.
+
+
+## Environment
+
+Using CommonJS module format.
+
+<!---
 
 To integrate the math engine, follow the example usage below:
 
