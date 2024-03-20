@@ -1,0 +1,15 @@
+{
+    "name": "calculator-by-kvm-switchers",
+    "version": "0.0.1",
+    "description": "Electron based calculator created by team KVM Switchers",
+    "main": "",
+    "scripts": {
+        "test": "jest"
+    },
+    "license": "GPL-3.0",
+    "type": "commonjs",
+    "devDependencies": {
+        "electron": "^29.1.4",
+        "jest": "^29.7.0"
+    }
+}
