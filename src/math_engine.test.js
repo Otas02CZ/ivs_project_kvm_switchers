@@ -1,5 +1,6 @@
 //FILE:           math_engine.test.js
 //AUTHORS:        Otakar Kočí <xkocio00@stud.fit.vutbr.cz>
+//                Martin Mendl <x247581@stud.fit.vutbr.cz>
 //                <>
 //TEAM            KVM Switchers FIT BUT
 //CREATED:        20/03/2024
@@ -28,10 +29,26 @@ describe('MathObject', () => {
     mathObject = new MathObject();
   });
 
+  test("Invalid input test           ''         = error", () => {
+    expect(() => mathObject.solveEquation("")).toThrow("eqv must be a valid equation");
+  });
+
+  test("Invalid input test         'asdf'       = error", () => {
+    expect(() => mathObject.solveEquation("asdf")).toThrow("eqv must be a valid equation");
+  });
+
+  test("Invalid input test    '2 +a 3 + 4 + 5'  = error", () => {
+    expect(() => mathObject.solveEquation("2 +a 3 + 4 + 5")).toThrow("eqv must be a valid equation");
+  });
+
   test("Addition test         '2 + 10'          = 12", () => {
     const result = mathObject.solveEquation("2 + 10");
     expect(result).toBe(12);
   });
+
+  test("Addition test extreme '1+1+1+1+...+1+1' = 200", () => {
+    const result = mathObject.solveEquation("1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1")
+  })
 
   test("Subtraction test      '5 - 3'           = 2", () => {
     const result = mathObject.solveEquation("5 - 3");
@@ -43,9 +60,14 @@ describe('MathObject', () => {
     expect(result).toBe(12);
   });
 
+
   test("Division test         '10 / 2'          = 5", () => {
     const result = mathObject.solveEquation("10 / 2");
     expect(result).toBe(5);
+  });
+
+  test("Division by zero test '10 / 0'          = error", () => {
+    expect(() => mathObject.solveEquation("10 / 0")).toThrow("b must not be 0");
   });
 
   test("Factorial test        '5!'              = 120", () => {
@@ -53,9 +75,23 @@ describe('MathObject', () => {
     expect(result).toBe(120);
   });
 
+  test("Factorial test        '0!'              = 1", () => {
+    const result = mathObject.solveEquation("0!");
+    expect(result).toBe(1);
+  });
+
+  test("Factorial wrong input '1.5!'            = error", () => {
+    expect(() => mathObject.solveEquation("1.5!")).toThrow("eqv must be a valid equation");
+  });
+
   test("Power test            'pow(4, 2)'       = 16", () => {
     const result = mathObject.solveEquation("pow(4, 2)");
     expect(result).toBe(16);
+  });
+
+  test("Power test            'pow(4, 0)'       = 1", () => {
+    const result = mathObject.solveEquation("pow(4, 0)");
+    expect(result).toBe(1);
   });
 
   test("Natural root test     'root(4, 2)'      = 2", () => {
@@ -63,14 +99,36 @@ describe('MathObject', () => {
     expect(result).toBe(2);
   });
 
+  test("Natural root test     'root(4, 0)'      = error", () => {
+    expect(() => mathObject.solveEquation("root(4, 0)")).toThrow("eqv must be a valid equation");
+  });
+
   test("Log test              'log(10, 100)'    = 2", () => {
     const result = mathObject.solveEquation("log(10, 100)");
     expect(result).toBe(2);
   });
 
+  test("Log test              'log(10, 1)'      = 0", () => {
+    const result = mathObject.solveEquation("log(10, 1)");
+    expect(result).toBe(0);
+  });
+
+  test("Log test              'log(10, 0)'      = error", () => {
+    expect(() => mathObject.solveEquation("log(10, 0)")).toThrow("eqv must be a valid equation");
+  });
+
+  test("Log test              'log(0, 100)'     = error", () => {
+    expect(() => mathObject.solveEquation("log(0, 100)")).toThrow("base must be greater than or equal to 0");
+  });
+
   test("Complex equation 1:   '2 + 3 * 4'           = 14", () => {
     const result = mathObject.solveEquation("2 + 3 * 4");
     expect(result).toBe(14);
+  });
+
+  test("Comple equation 2:    '2*2*2*2*2*2*2*2'     = 256", () => {
+    const result = mathObject.solveEquation("2*2*2*2*2*2*2*2");
+    expect(result).toBe(256);
   });
 
   test("Complex equation 2:   '5 - 2 / 2'           = 4", () => {
@@ -81,6 +139,27 @@ describe('MathObject', () => {
   test("Complex equation 3:   '4 * (7 - 3)'         = 16", () => {
     const result = mathObject.solveEquation("4 * (7 - 3)");
     expect(result).toBe(16);
+  });
+
+  test("Complex equation 4:   '10 / ((((3 + 1))))'        = 2.5", () => { 
+    const result = mathObject.solveEquation("10 / (3 + 1)");
+    expect(result).toBe(2.5);
+  });
+
+  test("Invalid brackets:     '10 / ((((3 + 1))'         = error", () => {
+    expect(() => mathObject.solveEquation("10 / ((((3 + 1))")).toThrow("eqv must be a valid equation");
+  });
+
+  test("Invalid brackets:     '10 / ((((3 + 1'         = error", () => {
+    expect(() => mathObject.solveEquation("10 / ((((3 + 1))")).toThrow("eqv must be a valid equation");
+  });
+
+  test("Invalid brackets:     '10 / ((((3 + 1]}))'         = error", () => {
+    expect(() => mathObject.solveEquation("10 / ((((3 + 1))")).toThrow("eqv must be a valid equation");
+  });
+
+  test("Invalid brackets:     '10 / [(((3 + 1))))'         = error", () => {
+    expect(() => mathObject.solveEquation("10 / ((((3 + 1))")).toThrow("eqv must be a valid equation");
   });
 
   test("Complex equation 4:   '10 / (3 + 1)'        = 2.5", () => {
@@ -162,5 +241,7 @@ describe('MathObject', () => {
     const result = mathObject.solveEquation("((6 + 8) - log(100, (10 * (5 - 2)))) * pow(2, 3) / (3 - 1)");
     expect(+result.toFixed(6)).toBe(53.045757);
   });
+
+
 
 });
