@@ -78,7 +78,6 @@ Exceptions in the Math Engine Library:
 | RangeError | value must be within a range |
 | DivisionByZeroError | divisor value must not be 0 |
 | TypeError | values must be numbers |
-| ExponentTypeError | exponent value must be a number |
 
 ### Testing the library
 
