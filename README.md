@@ -49,7 +49,7 @@ natural logarithm   | log(base, value)
 
 To be implemented in file ```/src/math_engine.js```
 ```javascript
-class MathObject {
+class MathEngine {
 
   ...
   // inner implementation
@@ -68,9 +68,17 @@ class MathObject {
 
 ...
 
-modules.exports = MathObject;
+modules.exports = MathEngine;
 ```
-Concrete list of exceptions is to be defined soon.
+Exceptions in the Math Engine Library:
+
+| Exception | Error Message |
+|-----------|---------------|
+| EqvFormatError | equation format must be valid |
+| RangeError | value must be within a range |
+| DivisionByZeroError | divisor value must not be 0 |
+| TypeError | values must be numbers |
+| ExponentTypeError | exponent value must be a number |
 
 ### Testing the library
 
