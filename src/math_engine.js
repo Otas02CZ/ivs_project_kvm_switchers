@@ -481,8 +481,6 @@ class MathEngine {
             counter++;
         }
 
-        console.log(eqv);
-        
         let openingBracketIdx = 0;
         let closingBracketIdx = eqv.length - 1;
 
