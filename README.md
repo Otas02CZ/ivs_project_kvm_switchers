@@ -47,7 +47,7 @@ natural logarithm   | log(base, value)
 
 ### Math engine library interface
 
-To be implemented in file ```/src/math_engine.js```
+Is implemented in file ```/src/js/math_engine.js```
 ```javascript
 class MathEngine {
 
@@ -81,9 +81,9 @@ Exceptions in the Math Engine Library:
 
 ### Testing the library
 
-Unit tests for the specified library interface are written using Jest framework in file ```/src/math_engine.test.js```. 
+Unit tests for the specified library interface are written using Jest framework in file ```/src/js/math_engine.test.js```. 
 
-The tests can be run using ```npx jest``` when in the ```src``` directory. Dependencies defined in ```package.json``` must be installed using ```npm install``` in order to run these tests.
+The tests can be run using ```npx jest``` or `npm test` when in the ```src``` directory. Dependencies defined in ```package.json``` must be installed using ```npm install``` in order to run these tests.
 
 
 Currently only tests for basic and complex features are written. Testing for edge cases and exceptions will come in the future.
