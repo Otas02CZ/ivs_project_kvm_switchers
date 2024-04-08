@@ -112,3 +112,10 @@ To successfully deploy the project from the source-code, run:
 ## Demo
 
 Add demo gifs/pictures here.
+-->
+
+## Miscellaneous
+
+[Project motivation](https://youtu.be/UR7tujNjfo4)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UR7tujNjfo4?si=VYwEp-ytMsbVFIvd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
