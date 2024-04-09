@@ -112,3 +112,8 @@ To successfully deploy the project from the source-code, run:
 ## Demo
 
 Add demo gifs/pictures here.
+-->
+
+## Miscellaneous
+
+[Project motivation](https://youtu.be/UR7tujNjfo4)
