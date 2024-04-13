@@ -3,3 +3,4 @@
 .DS_Store
 _MACOSX
 gui/src/index backup.html
+dist

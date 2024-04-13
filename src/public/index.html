@@ -1,23 +1,134 @@
 <!--
 FILE:           index.html
 AUTHORS:        Otakar Kočí <xkocio00@stud.fit.vutbr.cz>
+                Kryštof Valenta <xvalenk00@stud.fit.vutbr.cz>
                 <>
 TEAM            KVM Switchers FIT BUT
 CREATED:        31/03/2024
-LAST MODIFIED:  31/03/2024
+LAST MODIFIED:  13/04/2024
 DESCRIPTION:    Electron application entry point (HTML)
 -->
 
-
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>Calculator</title>
-  </head>
-  <body>
-    <h1>Welcome to Calculator app made by KVM Switchers</h1>
-    <span id="welcome"></span>
-  </body>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' ">
+        <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
+        <link rel="stylesheet" href="styles_font.css">
+        <link rel="stylesheet" href="styles_base.css">
+        <link rel="stylesheet" href="styles_font_awesome.css">
+        <script type="text/javascript" src="../js/jquery-3.7.1.min.js"></script>
+        <script type="text/javascript" src="../js/math_engine.js"></script>
+        <script src="../js/renderer.js"></script>
+        <title>Calculator</title>
+    </head>
+    <body>
+        <div class="calculator">
+            <div id="navOverlay" class="overlay">
+    
+                <!-- Overlay content -->
+                <div class="overlay-content">
+                    <a href="#">About</a>
+                    <a href="#">Help</a>
+                    <a href="#">Manual</a>
+                    <a href="#" onclick="clearHistory()">Clear History</a>
+                </div>
+    
+            </div>
+            <div class="topBar">
+                <div class="menuButtonWrapper">
+                    <label for="navControlCheck">
+                        <input type="checkbox" id="navControlCheck" onchange="navControl()" />
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </label>
+                </div>
+                <p>Calculator</p>
+            </div>
+            <div class="displayWrapper">
+                <!-- <div class="resultBoxWrapper" id="results">
+                    
+                </div> -->
+                <div class="resultBoxWrapper" id="results">
+                   
+                </div>
+                <div class="displayBoxWrapper">
+                    <input type="text" id="display" placeholder="0">
+                </div>
+                <!-- <div class="resultBoxWrapper">
+                    <input type="text" id="result" readonly>
+                </div> -->
+            </div>
+            <div class="page1">
+                <div class="row">
+                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('7')">7</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('8')">8</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('9')">9</button>
+                    <button class="button" onclick="insertToDisplayAtCaret('^')">^</button>
+                    <button class="button main-button" onclick="clearDisplay()">C</button>
+                </div>
+                <div class="row">
+                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('4')">4</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('5')">5</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('6')">6</button>
+                    <button class="button" onclick="insertToDisplayAtCaret('*')">*</button>
+                    <button class="button" onclick="insertToDisplayAtCaret('/')">/</button>
+                </div>
+                <div class="row">
+                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('1')">1</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('2')">2</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('3')">3</button>
+                    <button class="button" onclick="insertToDisplayAtCaret('-')">-</button>
+                    <button class="button" onclick="insertToDisplayAtCaret('+')">+</button>
+                </div>
+                <div class="row">
+                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('(')">(</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCaret(')')">)</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('0')">0</button>
+                    <button class="button" onclick="insertToDisplayAtCaret('.')">.</button>
+                    <button class="button main-button" onclick="calculate()">=</button>
+                </div>
+            </div>
+    
+            <!-- Secondary page enable button -->
+            <div class="switchRow">
+                <button class="secondary-button" onclick="toggleSecondaryPage()">
+                    <i class="fa fa-chevron-up secondary-toggle" aria-hidden="true"></i>
+                </button>
+                <div class="page2">
+                    <div class="row">
+                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('root(x, 2)')">√</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('root(x, 3)')"><sup>3</sup>√</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('^2')">x<sup>2</sup></button>
+                        <button class="button" onclick="insertToDisplayAtCaret('^')">^</button>
+                        <button class="button" onclick="clearDisplay()">C</button>
+                    </div>
+                    <div class="row">
+                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('log(10, x)')">log</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('log(e, x)')">ln</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('!')">x<sup>3</sup></button>
+                        <button class="button" onclick="insertToDisplayAtCaret('*')">*</button>
+                        <button class="button" onclick="insertToDisplayAtCaret('/')">/</button>
+                    </div>
+                    <div class="row">
+                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('π')">π</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('e')">e</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('!')">!</button>
+                        <button class="button" onclick="insertToDisplayAtCaret('-')">-</button>
+                        <button class="button" onclick="insertToDisplayAtCaret('+')">+</button>
+                    </div>
+                    <div class="row">
+                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('(')">(</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCaret(')')">)</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('0')">0</button>
+                        <button class="button" onclick="insertToDisplayAtCaret('.')">.</button>
+                        <button class="button main-button" onclick="calculate()">=</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

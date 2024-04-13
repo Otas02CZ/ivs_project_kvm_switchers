@@ -1,0 +1,411 @@
+/*
+FILE:           styles_base.css
+AUTHORS:        Kryštof Valenta <xvalenk00@stud.fit.vutbr.cz>
+                Otakar Kočí <xkocio00@stud.fit.vutbr.cz>
+                <>
+TEAM            KVM Switchers FIT BUT
+CREATED:        31/03/2024
+LAST MODIFIED:  13/04/2024
+DESCRIPTION:    File containing basic styles for the calculator
+*/
+
+/* Display wrapper field */
+.displayWrapper {
+    transition: all .4s ease-in-out;
+    background-color: #1C1C1C;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.displayWrapper * {
+    background-color: transparent;
+    box-sizing: border-box;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-align: right;
+}
+
+.displayWrapper input[type="text"] {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.displayWrapper input[type="text"]:focus {
+    outline: none;
+}
+
+input#result {
+    /* visibility: hidden; */
+    font-weight: bold;
+    font-size: 36px;
+    vertical-align: top;
+}
+
+input#display {
+    font-size: 36px;
+    font-weight: bold;
+    vertical-align: bottom;
+}
+
+.displayResultDis {
+    color: #ccc;
+    font-size: 24px !important;
+    font-weight: normal !important;
+    /* Add !important to override other font-size declarations */
+}
+
+.displayResultOrder {
+    display: flex;
+    flex-direction: column;
+}
+
+.displayBoxWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.resultBoxWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Display clear classes */
+
+.displayWrapper.clear {
+    flex-direction: column;
+}
+
+.displayWrapper.clear * {
+    font-size: 36px;
+    font-weight: bold;
+    color: #fff;
+    background-color: transparent;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 5px;
+    text-align: right;
+}
+
+.displayWrapper.clear input[type="text"] {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.displayWrapper.clear input[type="text"]:focus {
+    outline: none;
+}
+
+.displayResultDis.clear {
+    color: #ccc;
+    font-size: 24px !important;
+    font-weight: normal !important;
+}
+
+.displayResultOrder.clear {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Display clear classes end */
+
+body {
+    width: 500px;
+    max-width: 500px;
+    height: 650px;
+    max-height: 650px;
+    margin: 0 auto;
+    background-color: #f2f2f2;
+    font-family: "Nunito Sans", sans-serif;
+    overflow: hidden;
+    overflow-y: hidden;
+}
+
+/* Calculator styles */
+
+.calculator {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #ededed;
+}
+
+.calculator input[type="text"] {
+    font-size: 24px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.calculator .displayWrapper div {
+    width: 100%;
+    height: 50%;
+    box-sizing: border-box;
+}
+
+.calculator .page1 {
+    padding: 12px 0;
+}
+
+
+.calculator .row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.calculator .row .button {
+    width: 72px;
+    height: 72px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 5px 12px;
+    color: #5B5F97;
+    font-size: 30px;
+    font-weight: 800;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.switchable-button {
+    background-color: #6a63984a;
+    /* color: #e6e6e6 !important; */
+}
+
+.switchable-button:hover {
+    background-color: #484b7949 !important;
+}
+
+.main-button {
+    background-color: #f2f2f2;
+    color: #6649aa !important;
+    text-shadow: 0px 0px 3px #2a2a2a48;
+}
+
+.calculator .row .button:hover {
+    background-color: #d9d9d9;
+}
+
+/* Second page */
+.calculator .page2 {
+    padding: 12px 0;
+    flex-wrap: wrap;
+    background-color: #ededed;
+}
+
+.calculator .page2 .button:hover {
+    background-color: #d9d9d9;
+}
+
+/* Secondary page enable button */
+.calculator .secondary-button {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    background-color: #5B5F97;
+    color: #888bb3;
+    border-radius: 10px 10px 0 0;
+    font-size: 30px;
+    font-weight: 100;
+    border: none;
+    cursor: pointer;
+}
+
+.calculator .secondary-button:hover {
+    background-color: #4a4f8d;
+    color: #5B5F97;
+}
+
+/* Top bar */
+
+.topBar {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    background-color: #1C1C1C;
+    color: #ffffffb0;
+    height: 50px;
+    z-index: 400;
+    position: relative;
+}
+
+.topBar p {
+    margin: 0;
+    font-size: 20px;
+}
+
+.topBar i {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* Menu button */
+
+label {
+    display: flex;
+    flex-direction: column;
+    width: 70px;
+    cursor: pointer;
+    scale: .4;
+}
+
+label span {
+    background: #ffffffb0;
+    ;
+    border-radius: 10px;
+    height: 7px;
+    margin: 7px 0;
+    transition: .4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+
+span:nth-of-type(1) {
+    width: 50%;
+
+}
+
+span:nth-of-type(2) {
+    width: 100%;
+}
+
+
+span:nth-of-type(3) {
+    width: 75%;
+
+}
+
+
+input[type="checkbox"] {
+    display: none;
+}
+
+
+input[type="checkbox"]:checked~span:nth-of-type(1) {
+    transform-origin: bottom;
+    transform: rotatez(45deg) translate(8px, 0px)
+}
+
+
+input[type="checkbox"]:checked~span:nth-of-type(2) {
+
+    transform-origin: top;
+    transform: rotatez(-45deg)
+}
+
+
+input[type="checkbox"]:checked~span:nth-of-type(3) {
+
+    transform-origin: bottom;
+    width: 50%;
+    transform: translate(30px, -11px) rotatez(45deg);
+
+}
+
+
+/* switch wrapper fly up */
+.switchRow {
+    position: relative;
+    width: 100%;
+    z-index: 30;
+    height: 400px;
+    bottom: 0%;
+    transition: all .35s cubic-bezier(.39, 0, .64, 1);
+}
+
+.switchRow-up {
+    animation-name: flyUp;
+    animation-duration: .35s;
+    animation-fill-mode: forwards;
+}
+
+.switchRow-down {
+    animation-name: flyDown;
+    animation-duration: .35s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes flyUp {
+    from {
+        bottom: 0%;
+    }
+
+    to {
+        bottom: 62%;
+    }
+}
+
+@keyframes flyDown {
+    from {
+        bottom: 62%;
+    }
+
+    to {
+        bottom: 0%;
+    }
+}
+
+.secondary-toggle {
+    transition: all .4s ease-in-out;
+}
+
+/* The overlay effect - full height */
+.overlay {
+    display: none;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 35;
+    left: 0;
+    top: 0;
+    background-color: #171717;
+    overflow-x: hidden;
+    transition: all .4s ease-in-out;
+}
+
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay a:hover,
+.overlay a:focus {
+    color: #f1f1f1;
+}
+
+/* Position the close button (top right corner) */
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    left: 45px;
+    font-size: 60px;
+}
+
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+    .overlay a {
+        font-size: 20px
+    }
+
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}

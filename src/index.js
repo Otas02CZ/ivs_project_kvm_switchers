@@ -6,17 +6,15 @@
 //LAST MODIFIED:  31/03/2024
 //DESCRIPTION:    Electron application entry point
 
-/*
-
-*/
-
 const { app, BrowserWindow } = require('electron')
 const path = require('node:path')
 
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 500,
+        height: 650,
+        resizable: false,
+        autoHideMenuBar: true,
         webPreferences: {
             preload: path.join(__dirname, 'js/preload.js')
         }
