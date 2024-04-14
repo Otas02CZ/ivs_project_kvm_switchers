@@ -67,6 +67,18 @@ document.addEventListener("keypress", function onEvent(event) {
 });
 
 /**
+ * @description Array of objects of class HistoryItem.
+ * @name historyItems
+ * @type {HistoryItem[]}
+ * @default []
+ * @see HistoryItem
+ * @see calculate
+ * @see copyHistoryItem
+ * @see clearHistory 
+ */
+let historyItems = [];
+
+/**
  * Toggles between the main and secondary page of buttons of the calculator.
  * Takes care of animations during the transition.
  * @summary Handles transition animation between pages of buttons.
@@ -297,38 +309,55 @@ function parseInput() {
     return input;
 }
 
+
+
 function calculate() {
     var displayBoxWrapper = document.getElementsByClassName('displayBoxWrapper');
     var display = document.getElementById('display');
     let input = display.value;
+    let historyItem = null;
     let result = "";
     try {
         input = parseInput();
         result = mathEngine.solveEquation(input);
+        historyItem = new HistoryItem(HISTORY_ITEM_CALCULATION, input, result, "");
     } catch (error) {
+        let errorMsg = "";
         switch (error.name) {
             case "RangeError":
-                alert("Invalid range detected in one of the operands or functions.");
+                errorMsg = "INVALID RANGE";
+                break;
             case "EqvFormatError":
-                alert("Invalid equation format.");
+                errorMsg = "WRONG FORMAT";
+                break;
             case "DivideByZeroError":
-                alert("Division by zero.");
+                errorMsg = "ZERO DIVISION";
+                break;
             case "ExponentTypeError":
-                alert("Wrong exponent used.");
+                errorMsg = "WRONG EXPONENT";
+                break;
             case "FactorialValueError":
-                alert("Inccorect number for the factorial function.");
+                errorMsg = "WRONG FAC VALUE";
+                break;
             default:
-                alert("Unknown error occured.");
+                errorMsg = "UNKNOWN ERROR";
+                break;
         }
-        return;
+        historyItem = new HistoryItem(HISTORY_ITEM_MESSAGE, "", "", errorMsg);
     }
     const resultsField = document.getElementById('results');
-
-    resultsField.innerHTML += `<input type="text" value="${display.value} = ${result}" readonly>`;
+    if (historyItems.length > 0  && (historyItems[historyItems.length - 1].type === HISTORY_ITEM_MESSAGE)) {
+        resultsField.removeChild(resultsField.lastChild);
+        historyItems.pop();
+    }
+    historyItems.push(historyItem);
+    resultsField.innerHTML += historyItem.getHistoryItemHTML(historyItems.length - 1);
     resultsField.scrollTop = resultsField.scrollHeight;
     resultsField.lastChild.scrollLeft = resultsField.lastChild.scrollWidth;
-    display.value = result;
-    setCaretPosition(result.toString().length);
+    if (historyItem.type === HISTORY_ITEM_CALCULATION) {
+        display.value = result;
+        setCaretPosition(result.toString().length);
+    }
 
     // var resultField = document.getElementById('result');
     // resultField.value = result;
@@ -341,6 +370,16 @@ function calculate() {
     // display.classList.add('displayResultDis');
 }
 
+function copyHistoryItem(id) {
+    const display = document.getElementById('display');
+    insertToDisplayAtCaret(historyItems[id].result.toString());
+}
+
+function hideMenu() {
+    document.getElementById('navControlCheck').checked = false;
+    navControl();
+}
+
 function clearDisplay() {
     const display = document.getElementById('display');
     display.value = '';
@@ -348,5 +387,7 @@ function clearDisplay() {
 
 function clearHistory() {
     const resultsField = document.getElementById('results');
+    historyItems = [];
     resultsField.innerHTML = '';
+    hideMenu();
 }
