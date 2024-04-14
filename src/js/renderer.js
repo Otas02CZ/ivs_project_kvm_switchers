@@ -307,22 +307,20 @@ function calculate() {
         result = mathEngine.solveEquation(input);
     } catch (error) {
         switch (error.name) {
+            case "RangeError":
+                alert("Invalid range detected in one of the operands or functions.");
             case "EqvFormatError":
                 alert("Invalid equation format.");
-                return;
             case "DivideByZeroError":
                 alert("Division by zero.");
-                return;
             case "ExponentTypeError":
                 alert("Wrong exponent used.");
-                return;
             case "FactorialValueError":
                 alert("Inccorect number for the factorial function.");
-                return;
             default:
                 alert("Unknown error occured.");
-                return;
         }
+        return;
     }
     const resultsField = document.getElementById('results');
 
