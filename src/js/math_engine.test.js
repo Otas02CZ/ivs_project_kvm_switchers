@@ -64,7 +64,6 @@ describe('MathObject', () => {
     expect(result).toBe(12);
   });
 
-
   test("Division test         '10 / 2'          = 5", () => {
     const result = mathEngine.solveEquation("10 / 2");
     expect(result).toBe(5);
@@ -98,6 +97,9 @@ describe('MathObject', () => {
     expect(result).toBe(1);
   });
 
+  // here pow test
+  
+
   test("Natural root test     'root(4, 2)'      = 2", () => {
     const result = mathEngine.solveEquation("root(4, 2)");
     expect(result).toBe(2);
@@ -107,6 +109,8 @@ describe('MathObject', () => {
     expect(() => mathEngine.solveEquation("root(4, -2.5)")).toThrow(EqvFormatError)
   })
 
+  // valid root test was here
+  
   test("Natural root test     'root(4, 0)'      = error", () => {
     expect(() => mathEngine.solveEquation("root(4, 0)")).toThrow(EqvFormatError);
   });
@@ -250,6 +254,21 @@ describe('MathObject', () => {
     expect(+result.toFixed(6)).toBe(53.045757);
   });
 
+  // test
+  test("Power test            'pow((-2+3), 2)'      = 4", () => {
+    const result = mathEngine.solveEquation("pow((-2+3), -2)");
+    expect(result).toBe(1);
+  });
 
+  // test
+  test("Power test            'pow((-2), 2)'      = 4", () => {
+    const result = mathEngine.solveEquation("pow((-2), 2)");
+    expect(result).toBe(4);
+  });
+
+  test("Valid root    'root(-8, 3)'   = error" , () => {
+    const result = mathEngine.solveEquation("root(-8, 3)");
+    expect(result).toBe(-2);
+  })
 
 });

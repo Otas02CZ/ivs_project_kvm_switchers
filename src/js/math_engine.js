@@ -57,7 +57,7 @@ class MathEngine {
         };
 
         // Matches equations in the form of (digits operator digits operator ...)
-        this.eqvPattern = /[\(\{\[]\d+(?:\.\d+)?(?:e[+-]\d+)?([-+*/]\d+(?:\.\d+)?(?:e[+-]\d+)?)*[\)\}\]]/;
+        this.eqvPattern = /[\(\{\[][-+*/]?\d+(?:\.\d+)?(?:e[+-]\d+)?([-+*/]\d+(?:\.\d+)?(?:e[+-]\d+)?)*[\)\}\]]/;
         
         // Matches only int numbers
         this.intPattern = /\d+(?!\.\d+)/;
@@ -170,7 +170,7 @@ class MathEngine {
             throw new ExponentTypeError('base and exponent must be numbers');
         }
 
-        return base ** exponent;
+        return Math.pow(base, exponent);
     }
 
 
@@ -196,7 +196,13 @@ class MathEngine {
             throw new RangeError('base must be greater than or equal to 0 if exponent is even');
         }
 
-        return base ** (1 / exponent);
+        if (base < 0) {
+            base *= -1;
+            let result = Math.pow(base, 1/exponent);
+            return result* -1;
+        } 
+
+        return Math.pow(base, 1/exponent);
     }
 
     /*
@@ -361,7 +367,7 @@ class MathEngine {
                 }
             }
         }
-    
+        
         return [eqv, didSomething];
     }
     
@@ -413,6 +419,18 @@ class MathEngine {
 
         let idx = 0;
         let amountOfSteps = allOperators.length;
+
+        // we need to check, if the user has added the sing inform of the first number
+
+        if (allOperators.length == allNumbers.length) {
+
+            if (allOperators[0] == '*' || allOperators[0] == '/') // check if the first operator is * or /
+                throw new EqvFormatError('eqv must be a valid equation');
+
+            allNumbers[0] = allNumbers[0] * (allOperators[0] == '-' ? -1 : 1);
+            allOperators.splice(0, 1);
+        }
+
         for (let i = 0; i < amountOfSteps; i++) {
             let operator = allOperators[idx];
             let result;
@@ -458,7 +476,7 @@ class MathEngine {
         }
 
         let counter = 0;
-    
+
         while (true) {
             let bracketEqv = this._findLowestBracket(eqv);
             if (bracketEqv) {
@@ -524,13 +542,11 @@ class MathEngine {
         
         // need to test, if the equations has the same amount of opening and closing brackets ?
 
-        if (this.debug) {
+        if (this.debug) 
             console.log('\n\nfinal equation -> ', eqv);
-        }
     
         return this._solveOneEquationBasicMath(`(${eqv})`);
     }
-
 }
 
 module.exports = {MathEngine, EqvFormatError, DivisionByZeroError};
