@@ -24,13 +24,14 @@ const {
   MathEngine,
   EqvFormatError,
   DivisionByZeroError,
+  ExponentTypeError
 } = require('./math_engine.js');
 
 describe('MathObject', () => {
   let mathEngine;
 
   beforeEach(() => {
-    mathEngine = new MathEngine();
+    mathEngine = new MathEngine(debug=true);
   });
 
   test("Invalid input test           ''         = error", () => {
@@ -112,7 +113,7 @@ describe('MathObject', () => {
   // valid root test was here
   
   test("Natural root test     'root(4, 0)'      = error", () => {
-    expect(() => mathEngine.solveEquation("root(4, 0)")).toThrow(EqvFormatError);
+    expect(() => mathEngine.solveEquation("root(4, 0)")).toThrow(ExponentTypeError);
   });
 
   test("Log test              'log(10, 100)'    = 2", () => {
@@ -125,9 +126,7 @@ describe('MathObject', () => {
     expect(result).toBe(0);
   });
 
-  test("Log test              'log(10, 0)'      = error", () => {
-    expect(() => mathEngine.solveEquation("log(10, 0)")).toThrow(EqvFormatError);
-  });
+
 
   test("Log test              'log(0, 100)'     = error", () => {
     expect(() => mathEngine.solveEquation("log(0, 100)")).toThrow(RangeError);
@@ -270,5 +269,15 @@ describe('MathObject', () => {
     const result = mathEngine.solveEquation("root(-8, 3)");
     expect(result).toBe(-2);
   })
+
+  test("Log test              'log(10, 0)'      = error", () => {
+    expect(() => mathEngine.solveEquation("log(10, 0)")).toThrow(RangeError);
+  });
+
+  test("Power test           'pow(2, -2)'      = 0.25", () => {
+    const result = mathEngine.solveEquation("pow(2, -2)");
+    expect(result).toBe(0.25);
+  });
+
 
 });

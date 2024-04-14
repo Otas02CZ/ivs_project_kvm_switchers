@@ -194,7 +194,7 @@ class MathEngine {
             throw new ExponentTypeError('exponent must be an integer');
         }
 
-        if (exponent < 0) {
+        if (exponent <= 0) {
             throw new ExponentTypeError('exponent must be greater than or equal to 0');
         }
 
@@ -244,11 +244,15 @@ class MathEngine {
     @return The logarithm of x with base
     */
     _log(base, x) {
+
+        console.log('base -> ', base);
+        console.log('x -> ', x);
+
         if (typeof base !== 'number' || typeof x !== 'number') {
             throw new TypeError('base and x must be numbers');
         }
 
-        if (x < 0) {
+        if (x <= 0) {
             throw new RangeError('x must be greater than or equal to 0');
         }
 
@@ -410,6 +414,11 @@ class MathEngine {
         if (typeof eqv !== 'string') {
             throw new EqvFormatError('eqv must be a string');
         }
+
+        console.log('eqv -> ', eqv);
+        if (eqv === "(NaN)" || eqv === "(Infinity)" || eqv === "(-Infinity)") {
+            return eqv;
+        }
     
         if (!this.eqvPattern.test(eqv)) {
             throw new EqvFormatError('eqv must be a valid equation');
@@ -505,6 +514,8 @@ class MathEngine {
             counter++;
         }
 
+        // Nan
+
         let openingBracketIdx = 0;
         let closingBracketIdx = eqv.length - 1;
 
@@ -531,12 +542,11 @@ class MathEngine {
                 }
             }
 
-            if (!con1 && !con2) { // no more brackets found, defound exit
+            if (!con1 && !con2)  // no more brackets found, defound exit
                 break;
-            }
-
+            
             if (con1 && con2) // in this case, the eqv might have the right brackets, but it may not be formated correctally
-                break ;
+                break;
 
             if (openingBracketIdx > closingBracketIdx) // fist ) found before (
                 throw new EqvFormatError('eqv must be a valid equation');
@@ -555,5 +565,6 @@ class MathEngine {
     }
 }
 
-module.exports = {MathEngine, EqvFormatError, DivisionByZeroError};
+
+module.exports = {MathEngine, EqvFormatError, DivisionByZeroError, ExponentTypeError};
 
