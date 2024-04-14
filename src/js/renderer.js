@@ -67,6 +67,22 @@ document.addEventListener("keypress", function onEvent(event) {
 });
 
 /**
+ * @description Array of objects of class HistoryItem.
+ * @name historyItems
+ * @type {HistoryItem[]}
+ * @default []
+ * @see HistoryItem
+ * @see calculate
+ * @see copyHistoryItem
+ * @see clearHistory 
+ */
+let historyItems = [];
+
+const leftBrackets = ["(", "{", "["];
+const rightBrackets = [")", "}", "]"];
+const numbers = "0123456789.";
+
+/**
  * Toggles between the main and secondary page of buttons of the calculator.
  * Takes care of animations during the transition.
  * @summary Handles transition animation between pages of buttons.
@@ -159,8 +175,22 @@ function insertToDisplayAtCaret(contentToInsert) {
     const displayValue = display.value;
     const displayValueBeforeCaret = displayValue.substring(0, caretPosition);
     const displayValueAfterCaret = displayValue.substring(caretPosition);
+    const xPositionInContent = contentToInsert.indexOf('x');
+    contentToInsert = contentToInsert.replace('x', '');
     display.value = displayValueBeforeCaret + contentToInsert + displayValueAfterCaret;
-    setCaretPosition(caretPosition + contentToInsert.length);
+    //if there is a caret in the content
+    if (contentToInsert.includes('^')) {
+        const symbolBeforeCaret = displayValueBeforeCaret[caretPosition - 1];
+        if (numbers.includes(symbolBeforeCaret) || rightBrackets.includes(symbolBeforeCaret) || leftBrackets.includes(symbolBeforeCaret)) {
+            setCaretPosition(caretPosition + contentToInsert.length);
+            return;
+        }
+    }
+    if (xPositionInContent !== -1) {
+        setCaretPosition(caretPosition + xPositionInContent);
+    } else {
+        setCaretPosition(caretPosition + contentToInsert.length);
+    }
 }
 
 function replaceAll(string, searchedStr, replaceStr) {
@@ -182,9 +212,7 @@ function parseInput() {
     input = replaceAll(input, "EU", Math.E);
     console.log(input);
 
-    const leftBrackets = ["(", "{", "["];
-    const rightBrackets = [")", "}", "]"];
-    const numbers = "0123456789.";
+    
 
     let roofIndex;
     
@@ -297,40 +325,55 @@ function parseInput() {
     return input;
 }
 
+
+
 function calculate() {
     var displayBoxWrapper = document.getElementsByClassName('displayBoxWrapper');
     var display = document.getElementById('display');
     let input = display.value;
+    let historyItem = null;
     let result = "";
     try {
         input = parseInput();
         result = mathEngine.solveEquation(input);
+        historyItem = new HistoryItem(HISTORY_ITEM_CALCULATION, display.value, result, "");
     } catch (error) {
+        let errorMsg = "";
         switch (error.name) {
+            case "RangeError":
+                errorMsg = "INVALID RANGE";
+                break;
             case "EqvFormatError":
-                alert("Invalid equation format.");
-                return;
+                errorMsg = "WRONG FORMAT";
+                break;
             case "DivideByZeroError":
-                alert("Division by zero.");
-                return;
+                errorMsg = "ZERO DIVISION";
+                break;
             case "ExponentTypeError":
-                alert("Wrong exponent used.");
-                return;
+                errorMsg = "WRONG EXPONENT";
+                break;
             case "FactorialValueError":
-                alert("Inccorect number for the factorial function.");
-                return;
+                errorMsg = "WRONG FAC VALUE";
+                break;
             default:
-                alert("Unknown error occured.");
-                return;
+                errorMsg = "UNKNOWN ERROR";
+                break;
         }
+        historyItem = new HistoryItem(HISTORY_ITEM_MESSAGE, "", "", errorMsg);
     }
     const resultsField = document.getElementById('results');
-
-    resultsField.innerHTML += `<input type="text" value="${display.value} = ${result}" readonly>`;
+    if (historyItems.length > 0  && (historyItems[historyItems.length - 1].type === HISTORY_ITEM_MESSAGE)) {
+        resultsField.removeChild(resultsField.lastChild);
+        historyItems.pop();
+    }
+    historyItems.push(historyItem);
+    resultsField.innerHTML += historyItem.getHistoryItemHTML(historyItems.length - 1);
     resultsField.scrollTop = resultsField.scrollHeight;
     resultsField.lastChild.scrollLeft = resultsField.lastChild.scrollWidth;
-    display.value = result;
-    setCaretPosition(result.toString().length);
+    if (historyItem.type === HISTORY_ITEM_CALCULATION) {
+        display.value = result;
+        setCaretPosition(result.toString().length);
+    }
 
     // var resultField = document.getElementById('result');
     // resultField.value = result;
@@ -343,6 +386,27 @@ function calculate() {
     // display.classList.add('displayResultDis');
 }
 
+function removeLastAfterCaret() {
+    const display = document.getElementById('display');
+    const caretPosition = getCaretPosition();
+    const displayValue = display.value;
+    const displayValueBeforeCaret = displayValue.substring(0, caretPosition - 1);
+    const displayValueAfterCaret = displayValue.substring(caretPosition);
+    display.value = displayValueBeforeCaret + displayValueAfterCaret;
+    setCaretPosition(caretPosition - 1);
+
+}
+
+function copyHistoryItem(id) {
+    const display = document.getElementById('display');
+    insertToDisplayAtCaret(historyItems[id].result.toString()); 
+}
+
+function hideMenu() {
+    document.getElementById('navControlCheck').checked = false;
+    navControl();
+}
+
 function clearDisplay() {
     const display = document.getElementById('display');
     display.value = '';
@@ -350,5 +414,7 @@ function clearDisplay() {
 
 function clearHistory() {
     const resultsField = document.getElementById('results');
+    historyItems = [];
     resultsField.innerHTML = '';
+    hideMenu();
 }
