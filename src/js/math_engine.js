@@ -63,7 +63,7 @@ class MathEngine {
         };
 
         // Matches equations in the form of (digits operator digits operator ...)
-        this.eqvPattern = /[\(\{\[][-+*/]?\d+(?:\.\d+)?(?:e[+-]\d+)?([-+*/]\d+(?:\.\d+)?(?:e[+-]\d+)?)*[\)\}\]]/;
+        this.eqvPattern = /[\(\{\[][-+]?\d+(?:\.\d+)?(?:e[+-]\d+)?((([/*][+-])|[-+*/])\d+(?:\.\d+)?(?:e[+-]\d+)?)*[\)\}\]]/;
         
         // Matches only int numbers
         this.intPattern = /\d+(?!\.\d+)/;
@@ -77,8 +77,8 @@ class MathEngine {
         // similar to ablove, but no including negative numbers
         this.floatParamPattern = /-?\d+(?:\.\d+)?(?:e[+-]\d+)?/;
 
-        // Matches basic arithmetic operators: +, -, *, /
-        this.basicOperatorPattern = /[-+*/]/;
+        // Matches basic arithmetic operators: +, -, *, /, *+, +*, -*, *-, -/
+        this.basicOperatorPattern = /([/*][+-])|[-+*/]/;
 
         // Matches power function expressions in the form of pow(x, y)
         this.powerPattern = /pow\(-?\d+(?:\.\d+)?(?:e[+-]\d+)?,-?\d+(?:\.\d+)?(?:e[+-]\d+)?\)/;
@@ -244,9 +244,6 @@ class MathEngine {
     @return The logarithm of x with base
     */
     _log(base, x) {
-
-        console.log('base -> ', base);
-        console.log('x -> ', x);
 
         if (typeof base !== 'number' || typeof x !== 'number') {
             throw new TypeError('base and x must be numbers');
@@ -415,7 +412,6 @@ class MathEngine {
             throw new EqvFormatError('eqv must be a string');
         }
 
-        console.log('eqv -> ', eqv);
         if (eqv === "(NaN)" || eqv === "(Infinity)" || eqv === "(-Infinity)") {
             return eqv;
         }
@@ -439,9 +435,10 @@ class MathEngine {
 
         if (allOperators.length == allNumbers.length) {
 
-            if (allOperators[0] == '*' || allOperators[0] == '/') // check if the first operator is * or /
+            if (allOperators[0] == '*' || allOperators[0] == '/') {
                 throw new EqvFormatError('eqv must be a valid equation');
-
+            } // check if the first operator is * or /
+            
             allNumbers[0] = allNumbers[0] * (allOperators[0] == '-' ? -1 : 1);
             allOperators.splice(0, 1);
         }
@@ -449,14 +446,18 @@ class MathEngine {
         for (let i = 0; i < amountOfSteps; i++) {
             let operator = allOperators[idx];
             let result;
-            if (operator == '*') {
+            if (operator == '*' || operator == '*+') {
                 result = this._multiply(allNumbers[idx], allNumbers[idx + 1]);
-            } else if (operator == '/') {
+            } else if (operator == '/' || operator == '/+') {
                 result = this._divide(allNumbers[idx], allNumbers[idx + 1]);
+            } else if (operator == '*-') {
+                result = this._multiply(allNumbers[idx], -allNumbers[idx + 1]);
+            } else if (operator == '/-') {
+                result = this._divide(allNumbers[idx], -allNumbers[idx + 1]);
             } else {
                 idx++;
             }
-
+            
             if (operator == '*' || operator == '/') {
                 allNumbers[idx] = result;
                 allNumbers.splice(idx + 1, 1);
@@ -499,7 +500,7 @@ class MathEngine {
                 eqv = eqv.replace(bracketEqv, String(result));
             }
             let [newEqv, status] = this._solveComplexEquations(eqv);
-    
+
             if (this.debug) {
                 console.log(` - equation after round of processing -> ${newEqv}\n`);
             }
