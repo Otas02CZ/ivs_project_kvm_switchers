@@ -5,6 +5,12 @@
 //LAST MODIFIED:  21/03/2024
 //DESCRIPTION:    Math engine for solving equations and basic math operations, including complex math operations like power, root, factorial and logarithm
 
+/**
+ * This module contains the MathEngine class, which is used for solving equations and basic math operations.
+ * 
+ * @file MathEngine.js
+ * @module MathEngine
+ */
 /*
 The MathObject class is a class that contains methods for solving equations and basic math operations, including complex math operations like power, root, factorial and logarithm.
 The main method of this class is solveEquation, which takes an equation as a string and returns the result of the equation as a number. or throws an error if the equation is invalid.

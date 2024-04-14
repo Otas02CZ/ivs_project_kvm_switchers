@@ -7,7 +7,8 @@
     "test": "jest js/",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "make-docs": "jsdoc --readme README_DOCS.md -c JSDoc.json -d ../docs"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,8 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.3.1",
     "@electron-forge/plugin-fuses": "^7.3.1",
     "electron": "^29.1.6",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "jsdoc": "^4.0.2"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0"

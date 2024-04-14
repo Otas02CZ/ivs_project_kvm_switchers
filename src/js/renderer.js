@@ -1,20 +1,62 @@
+/**
+ * @file renderer.js
+ * @description This file contains the main logic of the calculator such as parsing
+ * the inputed equation and using object of the MathEngine class to calculate the
+ * result, keyboard bindings, toggles between menus, repositioning the caret in the
+ * input field, inserting results to the history and clearing the history and input fields.
+ * @summary Main logic of the calculator. Uses MathEngine and is binded to index.html.
+ * @module renderer
+ * @requires MathEngine
+ * @author Otakar Kočí
+ * @author Kryštof Valenta
+ * @author Team KVM Switchers FIT BUT
+ * @license GNU GPL v3
+ * @todo Remove debug console.log() calls
+ * @todo Fix behavior of the history panel
+ */
 //FILE:             renderer.js
 //AUTHORS:          Otakar Kočí <xkocio00@stud.fit.vutbr.cz>
 //                  Kryštof Valenta <xvalenk00@stud.fit.vutbr.cz>
 //                  <>
 //TEAM              KVM Switchers FIT BUT
 //CREATED:          31/03/2024
-//LAST MODIFIED:    13/04/2024
+//LAST MODIFIED:    14/04/2024
 //DESCRIPTION:      Renderer JS script for index.html
 
-var i = 0;
+/**
+ * @description Object of the MathEngine class used to calculate the result of the equation
+ * @name mathEngine
+ * @type {MathEngine}
+ * @see MathEngine
+ * @see calculate
+ */
 const mathEngine = new MathEngine();
+
+/**
+ * @description Saves state of the button pages, so that correct animation can be applied.
+ * @name buttonPageAnimToggle
+ * @type {boolean}
+ * @default false
+ * @see toggleSecondaryPage
+ */
+let buttonPageAnimToggle = false;
+
+/**
+ * @description When true, enter key will trigger the calculate function
+ * this is used to prevent unwanted behavior when user is in the menu.
+ * @name canCalculate
+ * @type {boolean}
+ * @default true
+ * @see calculate
+ * @see navControl
+ */
 let canCalculate = true;
 
+/** Binds eventListener to keypresses such as Enter */
 document.addEventListener("keypress", function onEvent(event) {
     switch (event.key) {
         case "Enter":
-
+            /** Do not calculate if user is in menu */
             if (canCalculate) {
                 calculate();
             }
@@ -24,6 +66,14 @@ document.addEventListener("keypress", function onEvent(event) {
     }
 });
 
+
+/**
+ * Toggles between the main and secondary page of buttons of the calculator.
+ * Takes care of animations during the transition.
+ * @summary Handles transition animation between pages of buttons.
+ * @function toggleSecondaryPage
+ * @see buttonPageAnimToggle
+ */
 function toggleSecondaryPage() {
     var page1 = document.querySelector('.page1');
     var page2 = document.querySelector('.page2');
@@ -31,8 +81,8 @@ function toggleSecondaryPage() {
     var button = document.querySelector('.secondary-button');
     var animWrapper = document.querySelector('.switchRow');
 
-    if (i == 0) {
-        i = 1;
+    if (!buttonPageAnimToggle) {
+        buttonPageAnimToggle = true;
         // page2.style.display = 'block';
         animWrapper.classList.add('switchRow-up');
         animWrapper.classList.remove('switchRow-down');
@@ -41,7 +91,7 @@ function toggleSecondaryPage() {
         button.style.borderRadius = '0 0 10px 10px';
 
     } else {
-        i = 0;
+        buttonPageAnimToggle = false;
         // page2.style.display = 'none';
         animWrapper.classList.add('switchRow-down');
         animWrapper.classList.remove('switchRow-up');
@@ -51,6 +101,13 @@ function toggleSecondaryPage() {
     }
 }
 
+/**
+ * Toggles the navigation menu and handles animations. Disables calculation on Enter key press
+ * for the duration of the menu being open.
+ * @summary Toggles the nav menu, handles animations.
+ * @function navControl
+ * @see canCalculate
+ */
 function navControl() {
     canCalculate = canCalculate ? false : true;
     console.log(canCalculate);
@@ -69,7 +126,16 @@ function navControl() {
         // }, 500);
     }
 }
-
+/**
+ * Returns caret position in the input field (as a number). Uses the selectionStart
+ * property, so it always returns the leftmost position of a selection in the input field or the
+ * position of the caret itself.
+ * @summary Gets the caret position in the input field.
+ * @function getCaretPosition
+ * @see {@link setCaretPosition} [setCaretPosition]{@link setCaretPosition}
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/selectionStart|MDN Web Docs}
+ * @returns {number}
+ */
 function getCaretPosition() {
     const display = document.getElementById('display');
     const caretPosition = display.selectionStart;
