@@ -66,7 +66,6 @@ document.addEventListener("keypress", function onEvent(event) {
     }
 });
 
-
 /**
  * Toggles between the main and secondary page of buttons of the calculator.
  * Takes care of animations during the transition.
@@ -174,7 +173,13 @@ function parseInput() {
     let input = display.value;
 
     input = replaceAll(input, "π", Math.PI);
-    input = replaceAll(input, "e", Math.E);
+    input = replaceAll(input, "pi", Math.PI);
+    input = replaceAll(input, "Pi", Math.PI);
+    input = replaceAll(input, "PI", Math.PI);
+
+    input = replaceAll(input, "eu", Math.E);
+    input = replaceAll(input, "Eu", Math.E);
+    input = replaceAll(input, "EU", Math.E);
     console.log(input);
 
     const leftBrackets = ["(", "{", "["];
@@ -320,7 +325,10 @@ function calculate() {
         }
     }
     const resultsField = document.getElementById('results');
+
     resultsField.innerHTML += `<input type="text" value="${display.value} = ${result}" readonly>`;
+    resultsField.scrollTop = resultsField.scrollHeight;
+    resultsField.lastChild.scrollLeft = resultsField.lastChild.scrollWidth;
     display.value = result;
     setCaretPosition(result.toString().length);
 
