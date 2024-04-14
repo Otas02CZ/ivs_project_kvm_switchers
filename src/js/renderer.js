@@ -336,7 +336,7 @@ function calculate() {
     try {
         input = parseInput();
         result = mathEngine.solveEquation(input);
-        historyItem = new HistoryItem(HISTORY_ITEM_CALCULATION, input, result, "");
+        historyItem = new HistoryItem(HISTORY_ITEM_CALCULATION, display.value, result, "");
     } catch (error) {
         let errorMsg = "";
         switch (error.name) {
