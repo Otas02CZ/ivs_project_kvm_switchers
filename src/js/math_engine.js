@@ -10,13 +10,14 @@
  * @author Team KVM Switchers FIT BUT
  * @license GNU GPL v3
  */
-//FILE:           math_engine.js
-//AUTHOR          Martin Mendl <x247581@stud.fit.vutbr.cz>
-//AUTHOR          Otakar Kočí <xkocio00@stud.fit.vutbr.cz> JSDoc changes only
-//TEAM            KVM Switchers FIT BUT
-//CREATED:        21/03/2024
-//LAST MODIFIED:  15/04/2024
-//DESCRIPTION:    Math engine for solving equations and basic math operations, including complex math operations like power, root, factorial and logarithm
+//FILE:             math_engine.js
+//AUTHORS:          Martin Mendl <x247581@stud.fit.vutbr.cz>
+//                  Otakar Kočí <xkocio00@stud.fit.vutbr.cz> JSDoc changes only
+//TEAM:             KVM Switchers FIT BUT
+//LICENSE:          GNU GPL v3
+//CREATED:          21/03/2024
+//LAST MODIFIED:    15/04/2024
+//DESCRIPTION:      Math engine for solving equations and basic math operations, including complex math operations like power, root, factorial and logarithm
 
 
 /**
@@ -331,12 +332,15 @@ class MathEngine {
         return result;
     }
 
-    /*
-    @brief Calculates the logarithm of a number
-    @param base The base of the logarithm (base > 0, base != 1)
-    @param x The number (x >= 0)
-    @return The logarithm of x with base
-    */
+    /**
+     * Calculates the logarithm of a number
+     * @description Calculates the logarithm of a number, checks correct types of parameters.
+     * @param {number} base - The base of the logarithm (base > 0, base != 1)
+     * @param {number} x - The number (x >= 0)
+     * @returns {number} The logarithm of x with base
+     * @throws {TypeError} base and x must be numbers
+     * @throws {RangeError} x must be greater than or equal to 0, base must be greater than 0
+     */
     _log(base, x) {
 
         if (typeof base !== 'number' || typeof x !== 'number') {

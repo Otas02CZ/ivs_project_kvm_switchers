@@ -16,7 +16,8 @@
 //FILE:           index.js
 //AUTHORS:        Otakar Kočí <xkocio00@stud.fit.vutbr.cz>
 //                <>
-//TEAM            KVM Switchers FIT BUT
+//TEAM:           KVM Switchers FIT BUT
+//LICENSE:        GNU GPL v3
 //CREATED:        31/03/2024
 //LAST MODIFIED:  15/04/2024
 //DESCRIPTION:    Electron application entry point

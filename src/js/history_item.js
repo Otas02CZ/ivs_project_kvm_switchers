@@ -12,7 +12,8 @@
 //FILE:             history_item.js
 //AUTHORS:          Otakar Kočí <xkocio00@stud.fit.vutbr.cz>
 //                  <>
-//TEAM              KVM Switchers FIT BUT
+//TEAM:             KVM Switchers FIT BUT
+//LICENSE:          GNU GPL v3
 //CREATED:          14/04/2024
 //LAST MODIFIED:    14/04/2024
 //DESCRIPTION:      contains HistoryItem class and constants for history items

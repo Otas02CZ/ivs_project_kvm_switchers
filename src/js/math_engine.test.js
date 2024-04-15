@@ -2,23 +2,21 @@
 //AUTHORS:        Otakar Kočí <xkocio00@stud.fit.vutbr.cz>
 //                Martin Mendl <x247581@stud.fit.vutbr.cz>
 //                <>
-//TEAM            KVM Switchers FIT BUT
+//TEAM:           KVM Switchers FIT BUT
+//LICENSE:        GNU GPL v3
 //CREATED:        20/03/2024
-//LAST MODIFIED:  26/03/2024
+//LAST MODIFIED:  16/04/2024
 //DESCRIPTION:    Tests for calculator math library using the Jest testing framework
 
-
 /*
-Expects math_engine.js file with class MathObject that has public method solveEquation
+Expects math_engine module with class MathEngine that has public method solveEquation
 which takes a string representation of an equation and returns numeric result or throws Errors
 It expects support of addition, subtraction, multiplication, division, factorial,
 power [pow(base, exp)], natural root [root(base, exp)], natural logarithm [log(base, value)]
 and can work with brackets
 */
 
-// this test can be run via npx jest command when jest is installed and cwd is /src
-
-// TODO add more tests especially for edge cases and situations that should throw Errors
+// can be run with npm test in src directory
 
 const {
   MathEngine,
