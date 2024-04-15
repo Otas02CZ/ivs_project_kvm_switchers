@@ -1,26 +1,28 @@
+/**
+ * @file math_engine.js
+ * @description This module contains the MathEngine class, which is used for solving
+ * equations and basic math operations. There are also these custom exceptions:
+ * ExponentTypeError, EqvFormatError, DivisionByZeroError and FactorialValueError.
+ * @summary This module contains the MathEngine class, which is used for solving equations and basic math operations.
+ * @module math_engine
+ * @author Martin Mendl
+ * @author Otakar Kočí - JSdoc changes only
+ * @author Team KVM Switchers FIT BUT
+ * @license GNU GPL v3
+ */
 //FILE:           math_engine.js
 //AUTHOR          Martin Mendl <x247581@stud.fit.vutbr.cz>
+//AUTHOR          Otakar Kočí <xkocio00@stud.fit.vutbr.cz> JSDoc changes only
 //TEAM            KVM Switchers FIT BUT
 //CREATED:        21/03/2024
-//LAST MODIFIED:  21/03/2024
+//LAST MODIFIED:  15/04/2024
 //DESCRIPTION:    Math engine for solving equations and basic math operations, including complex math operations like power, root, factorial and logarithm
 
-/**
- * This module contains the MathEngine class, which is used for solving equations and basic math operations.
- * 
- * @file MathEngine.js
- * @module MathEngine
- */
-/*
-The MathObject class is a class that contains methods for solving equations and basic math operations, including complex math operations like power, root, factorial and logarithm.
-The main method of this class is solveEquation, which takes an equation as a string and returns the result of the equation as a number. or throws an error if the equation is invalid.
-Usage:
-    let mathEng = new MathEngine();
-    mathEng.solveEquation('2 + 3 * 4'); // 14
-    mathEng.solveEquation('2 + 3 / 4'); // 2.75
-    ...
-*/
 
+/**
+ * ExponentTypeError
+ * @classdesc Exception ExponentTypeError, that is thrown when the base or exponent of a power operation is not a number.
+ */
 class ExponentTypeError extends Error {
     constructor(message) {
         super(message);
@@ -28,6 +30,10 @@ class ExponentTypeError extends Error {
     }
 }
 
+/**
+ * EqvFormatError
+ * @classdesc Exception EqvFormatError, that is thrown when the equation is not in the correct format.
+ */
 class EqvFormatError extends Error {
     constructor(message) {
         super(message);
@@ -35,6 +41,10 @@ class EqvFormatError extends Error {
     }
 }
 
+/**
+ * DivisionByZeroError
+ * @classdesc Exception DivisionByZeroError, that is thrown when the divisor is zero.
+ */
 class DivisionByZeroError extends Error {
     constructor(message) {
         super(message);
@@ -42,6 +52,10 @@ class DivisionByZeroError extends Error {
     }
 }
 
+/**
+ * FactorialValueError
+ * @classdesc Exception FactorialValueError, that is thrown when the value of the factorial is not a number or is negative.
+ */
 class FactorialValueError extends Error {
     constructor(message) {
         super(message);
@@ -49,50 +63,109 @@ class FactorialValueError extends Error {
     }
 }
 
+/**
+ * MathEngine class
+ * @classdesc The MathEngine class contains methods for solving equations and basic math operations,
+ * including complex math operations like power, root, factorial and logarithm. The main method
+ * of this class is solveEquation, which takes an equation as a string and returns the result of
+ * the equation as a number, or throws an error if the equation is invalid.
+ */
 class MathEngine {
-    /*
-    @brief Constructor for the MathObject class
-    @param debug A boolean value to enable or disable debug mode
-    @return None
+    /**
+    * Creates an instance of MathEngine.
+    * @param {boolean} debug - disable or enable debug mode (default is false)
+    * @example
+    * let mathEngine = new MathEngine();
+    * @example
+    * let mathEngine = new MathEngine(true); -> debug mode enabled
+    * @example
+    * let mathEngine = new MathEngine();
+    * mathEngine.solveEquation('2 + 3 * 4'); // -> 14
+    * mathEngine.solveEquation('2 + 3 / 4'); // -> 2.75 
+    * @see ExponentTypeError
+    * @see EqvFormatError
+    * @see DivisionByZeroError
+    * @see FactorialValueError
+    * @see RangeError
+    * @see MathEngine#solveEquation
     */
     constructor(debug = false) {
+        /**
+         * Matching brackets for inner implementation
+         * @type {Object<string, string>}
+         * @default { '(': ')', '[': ']', '{': '}' }
+         */
         this.matchingBrackets = {
             '(': ')',
             '[': ']',
             '{': '}'
         };
 
-        // Matches equations in the form of (digits operator digits operator ...)
+        /**
+         * Equation pattern, matches equations in the form of (digits operator digits operator ...)
+         * @type {RegExp}
+         */
         this.eqvPattern = /[\(\{\[][-+]?\d+(?:\.\d+)?(?:e[+-]\d+)?((([/*][+-])|[-+*/])\d+(?:\.\d+)?(?:e[+-]\d+)?)*[\)\}\]]/;
         
-        // Matches only int numbers
+        /**
+         * Integer pattern, matches only integer numbers
+         * @type {RegExp}
+         */
         this.intPattern = /\d+(?!\.\d+)/;
 
-        // Matches positive floating point numbers
+        /**
+         * Positive floating point pattern, matches only positive floating point numbers
+         * @type {RegExp}
+         */
         this.positiveFloatPattern = /\d+(?:\.\d+)?/;
 
-        // Matches floating point numbers including negative numbers and exponential notation
+        /**
+         * Floating point pattern, matches floating point numbers including negative numbers and exponential notation
+         * @type {RegExp}
+         */
         this.floatPattern = /\d+(?:\.\d+)?(?:e[+-]\d+)?/;
 
-        // similar to ablove, but no including negative numbers
+        /**
+         * Floating point parameter pattern, matches floating point numbers including exponential notation.
+         * Without negative numbers.
+         * @type {RegExp}
+         */
         this.floatParamPattern = /-?\d+(?:\.\d+)?(?:e[+-]\d+)?/;
 
-        // Matches basic arithmetic operators: +, -, *, /, *+, +*, -*, *-, -/
+        /**
+         * Basic operator pattern, matches basic arithmetic operators: +, -, *, /, *+, +*, -*, *-
+         * @type {RegExp}
+         */
         this.basicOperatorPattern = /([/*][+-])|[-+*/]/;
 
-        // Matches power function expressions in the form of pow(x, y)
+        /**
+         * Power pattern, matches power function expressions in the form of pow(x, y)
+         * @type {RegExp}
+         */
         this.powerPattern = /pow\(-?\d+(?:\.\d+)?(?:e[+-]\d+)?,-?\d+(?:\.\d+)?(?:e[+-]\d+)?\)/;
 
-        // Matches natural root function expressions in the form of root(x, n)
+        /**
+         * Natural root pattern, matches natural root function expressions in the form of root(x, n)
+         * @type {RegExp}
+         */
         this.naturalRootPattern = /root\(-?\d+(?:\.\d+)?(?:e[+-]\d+)?,\d+(?:.0)?\)/;
 
-        // Matches factorial expressions like 5!
+        /**
+         * Factorial pattern, matches factorial function expressions in the form of x!
+         * @type {RegExp}
+         */
         this.factorialPattern = /(?<!\d+\.)\d+!/;
 
-        // Matches logarithm function expressions in the form of log(base, x)
+        /**
+         * Logarithm pattern, matches logarithm function expressions in the form of log(base, x)
+         * @type {RegExp}
+         */
         this.logPattern = /log\(\d+(?:\.\d+)?(?:e\+\d+)?,\d+(?:\.\d+)?(?:e[+-]\d+)?\)/;
 
-
+        /**
+         * Complex math patterns, array of patterns for complex math operations
+         * @type {Array<RegExp>}
+         */
         this.complexMathPatterns = [
             this.powerPattern,
             this.naturalRootPattern,
@@ -100,16 +173,22 @@ class MathEngine {
             this.logPattern
         ];
 
+        /**
+         * Debug mode, if true, debug messages are printed
+         * @type {boolean}
+         */
         this.debug = debug;
     }
 
 
-    /*
-    @brief Adds two numbers
-    @param a The first number
-    @param b The second number
-    @return The sum of a and b
-    */
+    /**
+     * Sum of two numbers
+     * @description Adds two numbers, checks correct types of parameters.
+     * @param {number} a - The first number
+     * @param {number} b - The second number
+     * @returns {number} The sum of a and b
+     * @throws {TypeError} a and b must be numbers
+     */
     _add(a, b) {
         if (typeof a !== 'number' || typeof b !== 'number') {
             throw new TypeError('a and b must be numbers');
@@ -118,12 +197,14 @@ class MathEngine {
         return a + b;
     }
 
-    /*
-    @brief Subtracts two numbers
-    @param a The first number
-    @param b The second number
-    @return The difference of a and b
-    */
+    /**
+     * Subtracts two numbers
+     * @description Subtracts two numbers, checks correct types of parameters.
+     * @param {number} a - The first number
+     * @param {number} b - The second number
+     * @returns {number} The difference of a and b
+     * @throws {TypeError} a and b must be numbers
+     */
     _subtract(a, b) {
         if (typeof a !== 'number' || typeof b !== 'number') {
             throw new TypeError('a and b must be numbers');
@@ -132,12 +213,14 @@ class MathEngine {
         return a - b;
     }
 
-    /*
-    @brief Multiplies two numbers
-    @param a The first number
-    @param b The second number
-    @return The product of a and b
-    */
+    /**
+     * Multiplies two numbers
+     * @description Multiplies two numbers, checks correct types of parameters.
+     * @param {number} a - The first number
+     * @param {number} b - The second number
+     * @returns {number} The product of a and b
+     * @throws {TypeError} a and b must be numbers
+     */
     _multiply(a, b) {
         if (typeof a !== 'number' || typeof b !== 'number') {
             throw new TypeError('a and b must be numbers');
@@ -146,12 +229,15 @@ class MathEngine {
         return a * b;
     }
 
-
-    /*
-    @brief Divides two numbers
-    @param a The first number
-    @param b The second number (not 0)
-    @return The quotient of a and b
+   /**
+    * Divides two numbers
+    * @description Divides two numbers, checks correct types of parameters and if the divisor is not zero.
+    * @param {number} a - The first number
+    * @param {number} b - The second number (not 0)
+    * @returns {number} The quotient of a and b
+    * @throws {TypeError} a and b must be numbers
+    * @throws {DivisionByZeroError} b must not be 0
+    * @see DivisionByZeroError
     */
     _divide(a, b) {
         if (typeof a !== 'number' || typeof b !== 'number') {
@@ -165,12 +251,15 @@ class MathEngine {
         return a / b;
     }
 
-    /*
-    @brief Raises a number to the power of another number
-    @param base The base number
-    @param exponent The exponent
-    @return The result of base raised to the power of exponent
-    */
+    /**
+     * Raises a number to the power of another number
+     * @description Raises a number to the power of another number, checks correct types of parameters.
+     * @param {number} base - The base to be raised to the power
+     * @param {number} exponent - The exponent to raise the base to
+     * @returns {number} The result of the base raised to the power of the exponent
+     * @throws {ExponentTypeError} base and exponent must be numbers
+     * @see ExponentTypeError
+     */
     _power(base, exponent) {
         if (typeof base !== 'number' || typeof exponent !== 'number') {
             throw new ExponentTypeError('base and exponent must be numbers');
@@ -179,13 +268,16 @@ class MathEngine {
         return Math.pow(base, exponent);
     }
 
-
-    /*
-    @brief Calculates the natural root of a number
-    @param base The base number (not negative if exponent is even)
-    @param exponent The exponent (exponent >= 0)
-    @return The result of the natural root of base with exponent
-    */
+    /**
+     * Calculates the natural root of a number
+     * @description Calculates the natural root of a number, checks correct types of parameters.
+     * @param {number} base - The base number (not negative if exponent is even) 
+     * @param {number} exponent - The exponent (exponent >= 0)
+     * @returns {number} The result of the natural root of base with exponent
+     * @throws {ExponentTypeError} base and exponent must be numbers, exponent is integer >= 0
+     * @throws {RangeError} base must be >= 0 if exponent is even
+     * @see ExponentTypeError
+     */
     natural_root(base, exponent) {
         if (typeof base !== 'number' || typeof exponent !== 'number') {
             throw new ExponentTypeError('base and exponent must be numbers');
@@ -211,11 +303,13 @@ class MathEngine {
         return Math.pow(base, 1/exponent);
     }
 
-    /*
-    @brief Calculates the factorial of a number
-    @param x The number (x >= 0, x is an integer)
-    @return The factorial of x
-    */
+    /**
+     * Calculates the factorial of a number
+     * @description Calculates the factorial of a number, checks correct types of parameters.
+     * @param {number} x - The number (x >= 0, x is an integer)
+     * @returns {number} The factorial of x
+     * @throws {FactorialValueError} x must be a number, x must be an integer, x must be >= 0
+     */
     _factorial(x) {
         if (typeof x !== 'number') {
             throw new FactorialValueError('x must be a number');
@@ -260,12 +354,13 @@ class MathEngine {
         return Math.log(x) / Math.log(base);
     }
 
-
-    /*
-    @brief Solves complex math operations in an equation
-    @param eqv The equation
-    @return The equation after solving the complex math operations and a boolean value indicating if any operation was performed
-    */
+    /**
+     * Solves power operation
+     * @description Solves power operation given as string
+     * @param {string} eqv - Equation with power operation, represented as a string
+     * @returns {number} The result of the power operation
+     * @throws {EqvFormatError} eqv must be a string with valid power operation format
+     */
     _solvePow(eqv) {
         if (typeof eqv !== 'string') {
             throw new EqvFormatError('eqv must be a string');
@@ -282,11 +377,15 @@ class MathEngine {
         return this._power(base, exponent);
     }
     
-    /*
-    @brief Solves natural root operations in an equation
-    @param eqv The equation
-    @return The equation after solving the natural root operations and a boolean value indicating if any operation was performed
-    */
+    /**
+     * Solves natural root operation
+     * @description Solves natural root operation given as string
+     * @param {string} eqv - Equation with natural root operation, represented as a string
+     * @returns {number} The result of the natural root operation
+     * @throws {EqvFormatError} eqv must be a string with valid natural root operation format
+     * @throws {Error} Invalid number of matches for natural root operation
+     * @see ExponentTypeError
+     */
     _solveNaturalRoot(eqv) {
         if (typeof eqv !== 'string') {
             throw new EqvFormatError('eqv must be a string');
@@ -304,11 +403,16 @@ class MathEngine {
         return this.natural_root(number, parseInt(exponent));
     }
     
-    /*
-    @brief Solves factorial operations in an equation
-    @param eqv The equation
-    @return The equation after solving the factorial operations and a boolean value indicating if any operation was performed
-    */
+    /**
+     * Solves factorial operation
+     * @description Solves factorial operation given as string
+     * @param {string} eqv - Equation with factorial operation, represented as a string
+     * @returns {number} The result of the factorial operation
+     * @throws {EqvFormatError} eqv must be a string with valid factorial operation format
+     * @throws {FactorialValueError} Invalid number of matches for factorial operation
+     * @see FactorialValueError
+     * @see EqvFormatError
+     */
     _solveFactorial(eqv) {
         if (typeof eqv !== 'string') {
             throw new EqvFormatError('eqv must be a string');
@@ -325,9 +429,15 @@ class MathEngine {
         return this._factorial(number);
     }
     
-    /*
-    @brief Solves logarithm operations in an equation
-    */
+    /**
+     * Solves logarithm operation
+     * @description Solves logarithm operation given as string
+     * @param {string} eqv - Equation with logarithm operation, represented as a string
+     * @returns {number} The result of the logarithm operation
+     * @throws {EqvFormatError} eqv must be a string with valid logarithm operation format
+     * @throws {Error} Invalid number of matches for log operation
+     * @see ExponentTypeError
+     */
     _solveLog(eqv) {
         if (typeof eqv !== 'string') {
             throw new EqvFormatError('eqv must be a string');
@@ -344,7 +454,18 @@ class MathEngine {
         return this._log(base, number);
     }
     
-
+    /**
+     * Solves complex equations
+     * @description Solves complex equations with power, root, factorial and logarithm operations
+     * @param {string} eqv - Equation with complex math operations, represented as a string
+     * @returns {Array} Array with the result of the equation and a boolean value indicating if the equation was solved
+     * @throws {EqvFormatError} eqv must be a string
+     * @see _solvePow
+     * @see _solveNaturalRoot
+     * @see _solveFactorial
+     * @see _solveLog
+     * @see EqvFormatError
+     */
     _solveComplexEquations(eqv) {
         if (typeof eqv !== 'string') {
             throw new EqvFormatError('eqv must be a string');
@@ -378,7 +499,14 @@ class MathEngine {
         return [eqv, didSomething];
     }
     
-
+    /**
+     * Finds the lowest bracket in the equation
+     * @description Finds the lowest bracket in the equation and returns it
+     * @param {string} eqv - Equation with brackets, represented as a string
+     * @returns {string} The lowest bracket in the equation
+     * @throws {EqvFormatError} eqv must be a string
+     * @see EqvFormatError
+     */
     _findLowestBracket(eqv) {
         if (typeof eqv !== 'string') {
             throw new EqvFormatError('eqv must be a string');
@@ -407,6 +535,14 @@ class MathEngine {
         return null;
     }
 
+    /**
+     * Solves one equation with basic math operations
+     * @description Solves one equation with basic math operations given as string
+     * @param {string} eqv - Equation with basic math operations, represented as a string
+     * @returns {number} The result of the equation
+     * @throws {EqvFormatError} eqv must be a string with valid equation format
+     * @see EqvFormatError
+     */
     _solveOneEquationBasicMath(eqv) {
         if (typeof eqv !== 'string') {
             throw new EqvFormatError('eqv must be a string');
@@ -480,6 +616,27 @@ class MathEngine {
         return sum;
     }
 
+    /**
+     * Solves an equation
+     * @description Solves an equation given as string, uses built-in methods to solve complex math operations
+     * @param {string} eqv - Equation to be solved, represented as a string
+     * @returns {number} The result of the equation
+     * @throws {EqvFormatError} eqv must be a string
+     * @see _findLowestBracket
+     * @see _solveOneEquationBasicMath
+     * @see _solveComplexEquations
+     * @see EqvFormatError
+     * @see DivisionByZeroError
+     * @see ExponentTypeError
+     * @see FactorialValueError
+     * @see RangeError
+     * @example
+     * let mathEngine = new MathEngine();
+     * mathEngine.solveEquation('2 + 3 * 4'); // -> 14
+     * mathEngine.solveEquation('2 + 3 / 4'); // -> 2.75
+     * mathEngine.solveEquation('pow(2, 3)'); // -> 8
+     * ...
+     */
     solveEquation(eqv) {
         if (typeof eqv !== 'string') {
             throw new EqvFormatError('eqv must be a string');
@@ -566,6 +723,6 @@ class MathEngine {
     }
 }
 
-
+// Export the MathEngine class and custom exceptions as a CommonJS modules
 module.exports = {MathEngine, EqvFormatError, DivisionByZeroError, ExponentTypeError};
 

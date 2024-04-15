@@ -7,12 +7,12 @@
  * @summary Main logic of the calculator. Uses MathEngine and is binded to index.html.
  * @module renderer
  * @requires MathEngine
+ * @requires HistoryItem
  * @author Otakar Kočí
  * @author Kryštof Valenta
  * @author Team KVM Switchers FIT BUT
  * @license GNU GPL v3
  * @todo Remove debug console.log() calls
- * @todo Fix behavior of the history panel
  */
 //FILE:             renderer.js
 //AUTHORS:          Otakar Kočí <xkocio00@stud.fit.vutbr.cz>
@@ -20,7 +20,7 @@
 //                  <>
 //TEAM              KVM Switchers FIT BUT
 //CREATED:          31/03/2024
-//LAST MODIFIED:    14/04/2024
+//LAST MODIFIED:    15/04/2024
 //DESCRIPTION:      Renderer JS script for index.html
 
 /**
@@ -80,34 +80,34 @@ let historyItems = [];
 
 /**
  * @description Array of strings (symbols) representing left brackets.
- * @name leftBrackets
+ * @name LEFT_BRACKETS
  * @type {string[]}
  * @default ["(", "{", "["]
  * @see parseInput
- * @see insertToDisplayAtCaret
+ * @see insertToDisplayAtCursor
  * @constant
  */
-const leftBrackets = ["(", "{", "["];
+const LEFT_BRACKETS = ["(", "{", "["];
 /**
  * @description Array of strings (symbols) representing right brackets.
- * @name rightBrackets
+ * @name RIGHT_BRACKETS
  * @type {string[]}
  * @default [")", "}", "]"]
  * @see parseInput
- * @see insertToDisplayAtCaret
+ * @see insertToDisplayAtCursor
  * @constant
  */
-const rightBrackets = [")", "}", "]"];
+const RIGHT_BRACKETS = [")", "}", "]"];
 /**
  * @description String representing numbers and the decimal point.
- * @name numbers
+ * @name NUMBERS
  * @type {string}
  * @default "0123456789."
  * @see parseInput
- * @see insertToDisplayAtCaret
+ * @see insertToDisplayAtCursor
  * @constant
  */
-const numbers = "0123456789.";
+const NUMBERS = "0123456789.";
 
 /**
  * Toggles between the main and secondary page of buttons of the calculator.
@@ -179,16 +179,16 @@ function navControl() {
  * @summary Gets the caret position in the input field.
  * @function getCaretPosition
  * @see setCaretPosition
- * @see insertToDisplayAtCaret
+ * @see insertToDisplayAtCursor
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/selectionStart|MDN Web Docs}
  * @returns {number}
  */
 function getCaretPosition() {
     const display = document.getElementById('display');
-    const caretPosition = display.selectionStart;
-    console.log("Current value: " + caretPosition);
+    const caretIndex = display.selectionStart;
+    console.log("Current value: " + caretIndex);
 
-    return caretPosition;
+    return caretIndex;
 }
 
 /**
@@ -200,7 +200,7 @@ function getCaretPosition() {
  * @param {number} position - position to set the caret to
  * @returns {void}
  * @see getCaretPosition
- * @see insertToDisplayAtCaret
+ * @see insertToDisplayAtCursor
  * @see removeLastAfterCaret
  * @see calculate
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange|MDN Web Docs}
@@ -216,168 +216,216 @@ function setCaretPosition(position) {
 }
 
 /**
- * Inserts the specified content to the input field at the caret position. The caret position is then
- * @param {*} contentToInsert 
- * @returns 
+ * Inserts the specified content to the input field at the caret position. The caret position is then updated to
+ * reflect the length and content of the inserted string. If the inserted content contains the character 'x', the caret
+ * is positioned at the first occurence of 'x' in the inserted content (and 'x' is removed). In case of '^' character, the caret
+ * is positioned depending on the character before the caret in the input field. If the character is a number, right bracket or
+ * left bracket, the caret is positioned at the end of the inserted content. Otherwise, the caret is positioned in the place of
+ * x in the string
+ * @summary Inserts content to the input field at the caret position. Also updates the caret position.
+ * @param {string} contentToInsert - content to insert at the caret position
+ * @function insertToDisplayAtCursor
+ * @returns {void}
+ * @see getCaretPosition
+ * @see setCaretPosition
  */
-function insertToDisplayAtCaret(contentToInsert) {
-    const caretPosition = getCaretPosition();
+function insertToDisplayAtCursor(contentToInsert) {
+    const caretIndex = getCaretPosition();
     const display = document.getElementById('display');
     const displayValue = display.value;
-    const displayValueBeforeCaret = displayValue.substring(0, caretPosition);
-    const displayValueAfterCaret = displayValue.substring(caretPosition);
+    const displayValueBeforeCaret = displayValue.substring(0, caretIndex);
+    const displayValueAfterCaret = displayValue.substring(caretIndex);
     const xPositionInContent = contentToInsert.indexOf('x');
     contentToInsert = contentToInsert.replace('x', '');
     display.value = displayValueBeforeCaret + contentToInsert + displayValueAfterCaret;
     //if there is a caret in the content
     if (contentToInsert.includes('^')) {
-        const symbolBeforeCaret = displayValueBeforeCaret[caretPosition - 1];
-        if (numbers.includes(symbolBeforeCaret) || rightBrackets.includes(symbolBeforeCaret) || leftBrackets.includes(symbolBeforeCaret)) {
-            setCaretPosition(caretPosition + contentToInsert.length);
+        const symbolBeforeCaret = displayValueBeforeCaret[caretIndex - 1];
+        if (NUMBERS.includes(symbolBeforeCaret) || RIGHT_BRACKETS.includes(symbolBeforeCaret) || LEFT_BRACKETS.includes(symbolBeforeCaret)) {
+            setCaretPosition(caretIndex + contentToInsert.length);
             return;
         }
     }
     if (xPositionInContent !== -1) {
-        setCaretPosition(caretPosition + xPositionInContent);
+        setCaretPosition(caretIndex + xPositionInContent);
     } else {
-        setCaretPosition(caretPosition + contentToInsert.length);
+        setCaretPosition(caretIndex + contentToInsert.length);
     }
 }
 
+/**
+ * Replaces all occurences of a searched string in given string with a specified replace string.
+ * Uses the replace method with a global regular expression.
+ * @summary Replaces all occurences of a string in a string with another string.
+ * @param {string} string - string to replace in
+ * @param {string} searchedStr - string to search for
+ * @param {string} replaceStr - string to replace searched string with
+ * @function replaceAll
+ * @returns {string} - new string with all occurences of searched string replaced with replace string
+ * @see parseInput
+ */
 function replaceAll(string, searchedStr, replaceStr) {
     let regex = new RegExp(searchedStr, 'g');
     return string.replace(regex, replaceStr);
 }
 
+/**
+ * Parses the contents of the input field to a format supported by the MathEngine class. Symbols like
+ * π and e (and their derivatives) are replaced with their respective values. The caret operator '^'
+ * is replaced with the function pow().
+ * @summary Parses the input from the input field to a format supported by the MathEngine class.
+ * @function parseInput
+ * @returns {string} parsed string in format supported by the MathEngine class
+ * @see calculate
+ * @see MathEngine
+ * @see replaceAll
+ * @see NUMBERS
+ * @see LEFT_BRACKETS
+ * @see RIGHT_BRACKETS
+ * @throws {EqvFormatError} if the format of the equation is wrong
+ */
 function parseInput() {
     const display = document.getElementById('display');
     let input = display.value;
 
+    // replace all occurences of π and e (and variations) with their values
     input = replaceAll(input, "π", Math.PI);
     input = replaceAll(input, "pi", Math.PI);
     input = replaceAll(input, "Pi", Math.PI);
     input = replaceAll(input, "PI", Math.PI);
-
     input = replaceAll(input, "eu", Math.E);
     input = replaceAll(input, "Eu", Math.E);
     input = replaceAll(input, "EU", Math.E);
     console.log(input);
 
-    
 
-    let roofIndex;
+    let caretIndex; // Index of caret in input
     
-    while ((roofIndex = input.indexOf("^")) !== -1) {
-        if (roofIndex == 0 || roofIndex == input.length-1) {
+    while ((caretIndex = input.indexOf("^")) !== -1) { // for all carets in the input
+        if (caretIndex == 0 || caretIndex == input.length-1)
             throw new EqvFormatError("Caret without a number before or after it.");
-        }
-        console.log(`Roof index: ${roofIndex}`);
-        let caretPosition = roofIndex;
-        let valueBefore = ""; // Value before the roof
-        let valueAfter = "";  // Value after the roof
-        let startOfRange = caretPosition-1; // Start of the range to replace
-        let endOfRange = caretPosition+1;  // End of the range to replace
+        console.log(`Roof index: ${caretIndex}`);
+        let valueBefore = ""; // Value before the caret
+        let valueAfter = "";  // Value after the caret
+        let startOfRange = caretIndex-1; // Start of the range to replace
+        let endOfRange = caretIndex+1;  // End of the range to replace
+        const symBeforeCaret = input[caretIndex - 1];
+        const symAfterCaret = input[caretIndex + 1];
 
-        if (!(rightBrackets.includes(input[caretPosition - 1]) || numbers.includes(input[caretPosition - 1]))) {
+        if (!(RIGHT_BRACKETS.includes(symBeforeCaret) || NUMBERS.includes(symBeforeCaret)))
             throw new EqvFormatError("Wrong character before the caret.");
-        }
-        if (!(leftBrackets.includes(input[caretPosition + 1]) || numbers.includes(input[caretPosition + 1]))) {
+        if (!(LEFT_BRACKETS.includes(symAfterCaret) || NUMBERS.includes(symAfterCaret)))
             throw new EqvFormatError("Wrong character after the caret.");
-        }
 
-        // get value before the roof
+        // get value before the caret
 
         // are there brackets before the caret?
-        if (rightBrackets.includes(input[caretPosition - 1])) {
+        if (RIGHT_BRACKETS.includes(symBeforeCaret)) {
+            // if there are brackets, find the corresponding leftmost bracket
             let bracketCounter = 0;
-            let bracketType = input[caretPosition - 1];
-            let closingBracketType = leftBrackets[rightBrackets.indexOf(bracketType)];
-            // find the corresponding bracket
+            let bracketType = symBeforeCaret;
+            let closingBracketType = LEFT_BRACKETS[RIGHT_BRACKETS.indexOf(bracketType)];
             while(true) {
-                if (startOfRange<0) {
+                if (startOfRange<0)
                     throw new EqvFormatError("Bracket not closed.");
-                }
-                if (input[startOfRange] === closingBracketType) {
+
+                if (input[startOfRange] === closingBracketType)
                     bracketCounter--;
-                } else if (input[startOfRange] === bracketType) {
+                else if (input[startOfRange] === bracketType)
                     bracketCounter++;
-                }
-                if (bracketCounter === 0) {
+                
+                if (bracketCounter === 0)
                     break;
-                }
                 startOfRange--;
             }
         }
         // are there numbers before the caret?
         else {
+            // if there are numbers, find the leftmost digit of the number
             while (true) {
-                if (startOfRange < 0) {
+                if (startOfRange < 0)
                     break;
-                }
-                if (numbers.includes(input[startOfRange])) {
+
+                if (NUMBERS.includes(input[startOfRange]))
                     startOfRange--;
-                } else {
+                else
                     break;
-                }
             }
             startOfRange++;
         }
-        valueBefore = input.substring(startOfRange, caretPosition);
+        // get value before the caret that is to be placed into pow()
+        valueBefore = input.substring(startOfRange, caretIndex);
 
-        // get value after the roof
+        // get value after the caret
 
-        // are there brackets before the caret?
-        if (leftBrackets.includes(input[caretPosition + 1])) {
+        // are there brackets after the caret?
+        if (LEFT_BRACKETS.includes(symAfterCaret)) {
+            // if there are brackets, find the corresponding rightmost bracket
             let bracketCounter = 0;
-            let bracketType = input[caretPosition + 1];
-            let closingBracketType = rightBrackets[leftBrackets.indexOf(bracketType)];
-            // find the corresponding bracket
+            let bracketType = symAfterCaret;
+            let closingBracketType = RIGHT_BRACKETS[LEFT_BRACKETS.indexOf(bracketType)];
             while(true) {
-                if (endOfRange>=input.length) {
+                if (endOfRange>=input.length)
                     throw new EqvFormatError("Bracket not closed.");
-                }
-                if (input[endOfRange] === closingBracketType) {
+
+                if (input[endOfRange] === closingBracketType)
                     bracketCounter++;
-                } else if (input[endOfRange] === bracketType) {
+                else if (input[endOfRange] === bracketType) 
                     bracketCounter--;
-                }
-                if (bracketCounter === 0) {
+
+                if (bracketCounter === 0)
                     break;
-                }
                 endOfRange++;
             }
             endOfRange++;
         }
         // are there numbers before the caret?
         else {
+            // if there are numbers, find the rightmost digit of the number
             while (true) {
-                if (endOfRange >= input.length) {
+                if (endOfRange >= input.length)
                     break;
-                }
-                if (numbers.includes(input[endOfRange])) {
+
+                if (NUMBERS.includes(input[endOfRange]))
                     endOfRange++;
-                } else {
+                else
                     break;
-                }
             }
         }
-        valueAfter = input.substring(caretPosition+1, endOfRange);
+        // get value after the caret that is to be placed into pow()
+        valueAfter = input.substring(caretIndex+1, endOfRange);
 
         console.log(`Value before: ${valueBefore}`);
         console.log(`Value after: ${valueAfter}`);
+        // get substrings before and after the range to replace (ommiting the previous x^n part)
         const substringBefore = input.substring(0, startOfRange);
         const substringAfter = input.substring(endOfRange);
         console.log(`Substring before: ${substringBefore}`);
         console.log(`Substring after: ${substringAfter}`);
+        // replace the range with the pow() function
         input = `${substringBefore} pow(${valueBefore}, ${valueAfter}) ${substringAfter}`;
         console.log(`Input after parsing: ${input}`);
     }
-    
     return input;
 }
 
-
-
+/**
+ * Attempts to calculate the result of the equation in the input field. If the calculation is successful,
+ * the result is displayed in the input field and the equation (and result) are added to the history.
+ * If the calculation fails, an error message is displayed in the history. History is scrolled to the right-bottom.
+ * All previous error messages are removed from the history.
+ * @summary Attempts to calculate the result of the equation in the input field and show the outcome.
+ * @function calculate
+ * @returns {void}
+ * @see MathEngine
+ * @see mathEngine
+ * @see parseInput
+ * @see HistoryItem
+ * @see HISTORY_ITEM_CALCULATION
+ * @see HISTORY_ITEM_MESSAGE
+ * @see historyItems
+ * @see setCaretPosition
+ */
 function calculate() {
     var displayBoxWrapper = document.getElementsByClassName('displayBoxWrapper');
     var display = document.getElementById('display');
@@ -437,32 +485,75 @@ function calculate() {
     // display.classList.add('displayResultDis');
 }
 
+/**
+ * Removes the character before the caret in the input field.
+ * The caret position is then updated to reflect the changes.
+ * @summary Removes the character before the caret in the input field.
+ * @function removeLastAfterCaret
+ * @returns {void}
+ * @see getCaretPosition
+ * @see setCaretPosition
+ */
 function removeLastAfterCaret() {
     const display = document.getElementById('display');
-    const caretPosition = getCaretPosition();
+    const caretIndex = getCaretPosition();
     const displayValue = display.value;
-    const displayValueBeforeCaret = displayValue.substring(0, caretPosition - 1);
-    const displayValueAfterCaret = displayValue.substring(caretPosition);
+    const displayValueBeforeCaret = displayValue.substring(0, caretIndex - 1);
+    const displayValueAfterCaret = displayValue.substring(caretIndex);
     display.value = displayValueBeforeCaret + displayValueAfterCaret;
-    setCaretPosition(caretPosition - 1);
+    setCaretPosition(caretIndex - 1);
 
 }
 
-function copyHistoryItem(id) {
+/**
+ * Copies the result of the history item with the specified index to the input field.
+ * The caret position is then updated to reflect the changes.
+ * @summary Copies the result of the history item with the specified index to the input field.
+ * @function copyHistoryItem
+ * @param {number} index - index of the history item in historyItems array
+ * @returns {void}
+ * @see insertToDisplayAtCursor
+ * @see historyItems
+ * @see HistoryItem
+ */
+function copyHistoryItem(index) {
     const display = document.getElementById('display');
-    insertToDisplayAtCaret(historyItems[id].result.toString()); 
+    insertToDisplayAtCursor(historyItems[index].result.toString()); 
 }
 
+/**
+ * Hides the navigation menu. Sets the checked property of the checkbox to false.
+ * And calls the navControl function to handle the animation.
+ * @summary Hides the navigation menu.
+ * @function hideMenu
+ * @returns {void}
+ * @see navControl
+ */
 function hideMenu() {
     document.getElementById('navControlCheck').checked = false;
     navControl();
 }
 
+/**
+ * @summary Clears the input field.
+ * @function clearDisplay
+ * @returns {void}
+ */
 function clearDisplay() {
     const display = document.getElementById('display');
     display.value = '';
 }
 
+/**
+ * Clears the history of calculations and messages. Removes all displayed history items.
+ * And all internally stored history items.
+ * @summary Clears the history of calculations.
+ * @function clearHistory
+ * @returns {void}
+ * @see historyItems
+ * @see HistoryItem
+ * @see hideMenu
+ */
 function clearHistory() {
     const resultsField = document.getElementById('results');
     historyItems = [];

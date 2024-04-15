@@ -65,31 +65,31 @@ DESCRIPTION:    Electron application entry point (HTML)
             </div>
             <div class="page1">
                 <div class="row">
-                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('7')">7</button>
-                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('8')">8</button>
-                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('9')">9</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCursor('7')">7</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCursor('8')">8</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCursor('9')">9</button>
                     <button class="button" onclick="removeLastAfterCaret()">CE</button>
                     <button class="button main-button" onclick="clearDisplay()">C</button>
                 </div>
                 <div class="row">
-                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('4')">4</button>
-                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('5')">5</button>
-                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('6')">6</button>
-                    <button class="button" onclick="insertToDisplayAtCaret('*')">*</button>
-                    <button class="button" onclick="insertToDisplayAtCaret('/')">/</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCursor('4')">4</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCursor('5')">5</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCursor('6')">6</button>
+                    <button class="button" onclick="insertToDisplayAtCursor('*')">*</button>
+                    <button class="button" onclick="insertToDisplayAtCursor('/')">/</button>
                 </div>
                 <div class="row">
-                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('1')">1</button>
-                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('2')">2</button>
-                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('3')">3</button>
-                    <button class="button" onclick="insertToDisplayAtCaret('-')">-</button>
-                    <button class="button" onclick="insertToDisplayAtCaret('+')">+</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCursor('1')">1</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCursor('2')">2</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCursor('3')">3</button>
+                    <button class="button" onclick="insertToDisplayAtCursor('-')">-</button>
+                    <button class="button" onclick="insertToDisplayAtCursor('+')">+</button>
                 </div>
                 <div class="row">
-                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('(')">(</button>
-                    <button class="button switchable-button" onclick="insertToDisplayAtCaret(')')">)</button>
-                    <button class="button switchable-button" onclick="insertToDisplayAtCaret('0')">0</button>
-                    <button class="button" onclick="insertToDisplayAtCaret('.')">.</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCursor('(')">(</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCursor(')')">)</button>
+                    <button class="button switchable-button" onclick="insertToDisplayAtCursor('0')">0</button>
+                    <button class="button" onclick="insertToDisplayAtCursor('.')">.</button>
                     <button class="button main-button" onclick="calculate()">=</button>
                 </div>
             </div>
@@ -101,31 +101,31 @@ DESCRIPTION:    Electron application entry point (HTML)
                 </button>
                 <div class="page2">
                     <div class="row">
-                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('x^2')">x<sup>2</sup></button>
-                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('x^3')">x<sup>3</sup></button>
-                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('root(x, 2)')">√</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCursor('x^2')">x<sup>2</sup></button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCursor('x^3')">x<sup>3</sup></button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCursor('root(x, 2)')">√</button>
                         <button class="button" onclick="removeLastAfterCaret()">CE</button>
                         <button class="button" onclick="clearDisplay()">C</button>
                     </div>
                     <div class="row">
-                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('log(10, x)')">log</button>
-                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('log(Eu, x)')">ln</button>
-                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('root(x, 3)')"><sup>3</sup>√</button>
-                        <button class="button" onclick="insertToDisplayAtCaret('*')">*</button>
-                        <button class="button" onclick="insertToDisplayAtCaret('/')">/</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCursor('log(10, x)')">log</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCursor('log(Eu, x)')">ln</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCursor('root(x, 3)')"><sup>3</sup>√</button>
+                        <button class="button" onclick="insertToDisplayAtCursor('*')">*</button>
+                        <button class="button" onclick="insertToDisplayAtCursor('/')">/</button>
                     </div>
                     <div class="row">
-                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('π')">π</button>
-                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('Eu')">e</button>
-                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('!')">!</button>
-                        <button class="button" onclick="insertToDisplayAtCaret('-')">-</button>
-                        <button class="button" onclick="insertToDisplayAtCaret('+')">+</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCursor('π')">π</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCursor('Eu')">e</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCursor('!')">!</button>
+                        <button class="button" onclick="insertToDisplayAtCursor('-')">-</button>
+                        <button class="button" onclick="insertToDisplayAtCursor('+')">+</button>
                     </div>
                     <div class="row">
-                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('(')">(</button>
-                        <button class="button switchable-button" onclick="insertToDisplayAtCaret(')')">)</button>
-                        <button class="button switchable-button" onclick="insertToDisplayAtCaret('0')">0</button>
-                        <button class="button" onclick="insertToDisplayAtCaret('.')">.</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCursor('(')">(</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCursor(')')">)</button>
+                        <button class="button switchable-button" onclick="insertToDisplayAtCursor('0')">0</button>
+                        <button class="button" onclick="insertToDisplayAtCursor('.')">.</button>
                         <button class="button main-button" onclick="calculate()">=</button>
                     </div>
                 </div>
