@@ -63,7 +63,7 @@ class MathEngine {
         };
 
         // Matches equations in the form of (digits operator digits operator ...)
-        this.eqvPattern = /[\(\{\[][-+*/]?\d+(?:\.\d+)?(?:e[+-]\d+)?([-+*/]\d+(?:\.\d+)?(?:e[+-]\d+)?)*[\)\}\]]/;
+        this.eqvPattern = /[\(\{\[][-+]?\d+(?:\.\d+)?(?:e[+-]\d+)?((([/*][+-])|[-+*/])\d+(?:\.\d+)?(?:e[+-]\d+)?)*[\)\}\]]/;
         
         // Matches only int numbers
         this.intPattern = /\d+(?!\.\d+)/;
@@ -77,8 +77,8 @@ class MathEngine {
         // similar to ablove, but no including negative numbers
         this.floatParamPattern = /-?\d+(?:\.\d+)?(?:e[+-]\d+)?/;
 
-        // Matches basic arithmetic operators: +, -, *, /
-        this.basicOperatorPattern = /[-+*/]/;
+        // Matches basic arithmetic operators: +, -, *, /, *+, +*, -*, *-, -/
+        this.basicOperatorPattern = /([/*][+-])|[-+*/]/;
 
         // Matches power function expressions in the form of pow(x, y)
         this.powerPattern = /pow\(-?\d+(?:\.\d+)?(?:e[+-]\d+)?,-?\d+(?:\.\d+)?(?:e[+-]\d+)?\)/;
@@ -194,7 +194,7 @@ class MathEngine {
             throw new ExponentTypeError('exponent must be an integer');
         }
 
-        if (exponent < 0) {
+        if (exponent <= 0) {
             throw new ExponentTypeError('exponent must be greater than or equal to 0');
         }
 
@@ -244,11 +244,12 @@ class MathEngine {
     @return The logarithm of x with base
     */
     _log(base, x) {
+
         if (typeof base !== 'number' || typeof x !== 'number') {
             throw new TypeError('base and x must be numbers');
         }
 
-        if (x < 0) {
+        if (x <= 0) {
             throw new RangeError('x must be greater than or equal to 0');
         }
 
@@ -410,6 +411,10 @@ class MathEngine {
         if (typeof eqv !== 'string') {
             throw new EqvFormatError('eqv must be a string');
         }
+
+        if (eqv === "(NaN)" || eqv === "(Infinity)" || eqv === "(-Infinity)") {
+            return eqv;
+        }
     
         if (!this.eqvPattern.test(eqv)) {
             throw new EqvFormatError('eqv must be a valid equation');
@@ -430,9 +435,10 @@ class MathEngine {
 
         if (allOperators.length == allNumbers.length) {
 
-            if (allOperators[0] == '*' || allOperators[0] == '/') // check if the first operator is * or /
+            if (allOperators[0] == '*' || allOperators[0] == '/') {
                 throw new EqvFormatError('eqv must be a valid equation');
-
+            } // check if the first operator is * or /
+            
             allNumbers[0] = allNumbers[0] * (allOperators[0] == '-' ? -1 : 1);
             allOperators.splice(0, 1);
         }
@@ -440,14 +446,18 @@ class MathEngine {
         for (let i = 0; i < amountOfSteps; i++) {
             let operator = allOperators[idx];
             let result;
-            if (operator == '*') {
+            if (operator == '*' || operator == '*+') {
                 result = this._multiply(allNumbers[idx], allNumbers[idx + 1]);
-            } else if (operator == '/') {
+            } else if (operator == '/' || operator == '/+') {
                 result = this._divide(allNumbers[idx], allNumbers[idx + 1]);
+            } else if (operator == '*-') {
+                result = this._multiply(allNumbers[idx], -allNumbers[idx + 1]);
+            } else if (operator == '/-') {
+                result = this._divide(allNumbers[idx], -allNumbers[idx + 1]);
             } else {
                 idx++;
             }
-
+            
             if (operator == '*' || operator == '/') {
                 allNumbers[idx] = result;
                 allNumbers.splice(idx + 1, 1);
@@ -490,7 +500,7 @@ class MathEngine {
                 eqv = eqv.replace(bracketEqv, String(result));
             }
             let [newEqv, status] = this._solveComplexEquations(eqv);
-    
+
             if (this.debug) {
                 console.log(` - equation after round of processing -> ${newEqv}\n`);
             }
@@ -504,6 +514,8 @@ class MathEngine {
             }
             counter++;
         }
+
+        // Nan
 
         let openingBracketIdx = 0;
         let closingBracketIdx = eqv.length - 1;
@@ -531,12 +543,11 @@ class MathEngine {
                 }
             }
 
-            if (!con1 && !con2) { // no more brackets found, defound exit
+            if (!con1 && !con2)  // no more brackets found, defound exit
                 break;
-            }
-
+            
             if (con1 && con2) // in this case, the eqv might have the right brackets, but it may not be formated correctally
-                break ;
+                break;
 
             if (openingBracketIdx > closingBracketIdx) // fist ) found before (
                 throw new EqvFormatError('eqv must be a valid equation');
@@ -555,5 +566,6 @@ class MathEngine {
     }
 }
 
-module.exports = {MathEngine, EqvFormatError, DivisionByZeroError};
+
+module.exports = {MathEngine, EqvFormatError, DivisionByZeroError, ExponentTypeError};
 

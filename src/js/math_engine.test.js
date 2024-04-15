@@ -24,13 +24,14 @@ const {
   MathEngine,
   EqvFormatError,
   DivisionByZeroError,
+  ExponentTypeError
 } = require('./math_engine.js');
 
 describe('MathObject', () => {
   let mathEngine;
 
   beforeEach(() => {
-    mathEngine = new MathEngine();
+    mathEngine = new MathEngine(debug=false);
   });
 
   test("Invalid input test           ''         = error", () => {
@@ -97,9 +98,21 @@ describe('MathObject', () => {
     expect(result).toBe(1);
   });
 
-  // here pow test
-  
+  test("Power test            'pow((-2+3), 2)'      = 4", () => {
+    const result = mathEngine.solveEquation("pow((-2+3), -2)");
+    expect(result).toBe(1);
+  });
 
+  test("Power test            'pow((-2), 2)'      = 4", () => {
+    const result = mathEngine.solveEquation("pow((-2), 2)");
+    expect(result).toBe(4);
+  });
+
+  test("Power test           'pow(2, -2)'      = 0.25", () => {
+    const result = mathEngine.solveEquation("pow(2, -2)");
+    expect(result).toBe(0.25);
+  });
+  
   test("Natural root test     'root(4, 2)'      = 2", () => {
     const result = mathEngine.solveEquation("root(4, 2)");
     expect(result).toBe(2);
@@ -109,10 +122,13 @@ describe('MathObject', () => {
     expect(() => mathEngine.solveEquation("root(4, -2.5)")).toThrow(EqvFormatError)
   })
 
-  // valid root test was here
+  test("Valid root    'root(-8, 3)'   = -2" , () => {
+    const result = mathEngine.solveEquation("root(-8, 3)");
+    expect(result).toBe(-2);
+  })
   
   test("Natural root test     'root(4, 0)'      = error", () => {
-    expect(() => mathEngine.solveEquation("root(4, 0)")).toThrow(EqvFormatError);
+    expect(() => mathEngine.solveEquation("root(4, 0)")).toThrow(ExponentTypeError);
   });
 
   test("Log test              'log(10, 100)'    = 2", () => {
@@ -126,7 +142,7 @@ describe('MathObject', () => {
   });
 
   test("Log test              'log(10, 0)'      = error", () => {
-    expect(() => mathEngine.solveEquation("log(10, 0)")).toThrow(EqvFormatError);
+    expect(() => mathEngine.solveEquation("log(10, 0)")).toThrow(RangeError);
   });
 
   test("Log test              'log(0, 100)'     = error", () => {
@@ -253,22 +269,5 @@ describe('MathObject', () => {
     const result = mathEngine.solveEquation("((6 + 8) - log(100, (10 * (5 - 2)))) * pow(2, 3) / (3 - 1)");
     expect(+result.toFixed(6)).toBe(53.045757);
   });
-
-  // test
-  test("Power test            'pow((-2+3), 2)'      = 4", () => {
-    const result = mathEngine.solveEquation("pow((-2+3), -2)");
-    expect(result).toBe(1);
-  });
-
-  // test
-  test("Power test            'pow((-2), 2)'      = 4", () => {
-    const result = mathEngine.solveEquation("pow((-2), 2)");
-    expect(result).toBe(4);
-  });
-
-  test("Valid root    'root(-8, 3)'   = error" , () => {
-    const result = mathEngine.solveEquation("root(-8, 3)");
-    expect(result).toBe(-2);
-  })
 
 });
