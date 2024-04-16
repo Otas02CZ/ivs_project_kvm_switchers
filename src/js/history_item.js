@@ -1,7 +1,7 @@
 /**
  * @file history_item.js
  * @description This file contains class HistoryItem which is used to store history records.
- * constants HISTORY_ITEM_CALCULATION and HISTORY_ITEM_MESSAGE are here as well and
+ * Constants HISTORY_ITEM_CALCULATION and HISTORY_ITEM_MESSAGE are here as well and
  * are used to distinguish between different types of history items.
  * @summary contains HistoryItem class and constants for history items
  * @module history_item
@@ -15,8 +15,8 @@
 //TEAM:             KVM Switchers FIT BUT
 //LICENSE:          GNU GPL v3
 //CREATED:          14/04/2024
-//LAST MODIFIED:    14/04/2024
-//DESCRIPTION:      contains HistoryItem class and constants for history items
+//LAST MODIFIED:    16/04/2024
+//DESCRIPTION:      Contains HistoryItem class and constants for history items
 
 /**
  * @constant
@@ -24,7 +24,7 @@
  * @default "calculation"
  * @name HISTORY_ITEM_CALCULATION
  * @public
- * @description history item type for calculation 
+ * @description History item enum representing record type - calculation 
  */
 const HISTORY_ITEM_CALCULATION = "calculation";
 /**
@@ -33,15 +33,15 @@ const HISTORY_ITEM_CALCULATION = "calculation";
  * @default "message"
  * @name HISTORY_ITEM_MESSAGE
  * @public
- * @description history item type for message
+ * @description History item enum representing record type - message
  */
 const HISTORY_ITEM_MESSAGE = "message";
 
 /**
  * Class representing history item
  * @classdesc Class representing a history item. Each history item has a type, equation, result and message.
- * if type is HISTORY_ITEM_CALCULATION, equation and result are used, if type is HISTORY_ITEM_MESSAGE, msg is used.
- * built in function getHistoryItemHTML() returns HTML representation of history item based on its type.
+ * If type is HISTORY_ITEM_CALCULATION, equation and result are used, if type is HISTORY_ITEM_MESSAGE, msg is used.
+ * Built in function getHistoryItemHTML() returns HTML representation of history item based on its type.
  */
 class HistoryItem {
     /**
@@ -65,7 +65,6 @@ class HistoryItem {
     }
 
     /**
-     * Get history item
      * @description Returns string representation of history item's equation and result
      * in format "equation = result"
      * @returns {string} history item as a string in format "equation = result"
@@ -79,7 +78,7 @@ class HistoryItem {
     }
 
     /**
-     * Get history item HTML
+     * @description Returns HTML representation of history item based on its type.
      * @param {number} id - id of history item that will be used as identificator for calling copyHistoryItem() function
      * @returns {string} HTML representation of history item based on its type
      * @example

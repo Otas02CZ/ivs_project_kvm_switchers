@@ -16,7 +16,7 @@
 //TEAM:             KVM Switchers FIT BUT
 //LICENSE:          GNU GPL v3
 //CREATED:          21/03/2024
-//LAST MODIFIED:    15/04/2024
+//LAST MODIFIED:    16/04/2024
 //DESCRIPTION:      Math engine for solving equations and basic math operations, including complex math operations like power, root, factorial and logarithm
 
 
@@ -74,7 +74,7 @@ class FactorialValueError extends Error {
 class MathEngine {
     /**
     * Creates an instance of MathEngine.
-    * @param {boolean} debug - disable or enable debug mode (default is false)
+    * @param {boolean} debug - disable or enable debug mode
     * @example
     * let mathEngine = new MathEngine();
     * @example
@@ -185,10 +185,10 @@ class MathEngine {
     /**
      * Sum of two numbers
      * @description Adds two numbers, checks correct types of parameters.
-     * @param {number} a - The first number
-     * @param {number} b - The second number
+     * @param {number} a - The first parameter of the sum
+     * @param {number} b - The second parameter of the sum
      * @returns {number} The sum of a and b
-     * @throws {TypeError} a and b must be numbers
+     * @throws {TypeError} Thrown when parameters a or b are not numbers
      */
     _add(a, b) {
         if (typeof a !== 'number' || typeof b !== 'number') {
@@ -201,10 +201,10 @@ class MathEngine {
     /**
      * Subtracts two numbers
      * @description Subtracts two numbers, checks correct types of parameters.
-     * @param {number} a - The first number
-     * @param {number} b - The second number
+     * @param {number} a - The first parameter of the subtraction
+     * @param {number} b - The second parameter of the subtraction
      * @returns {number} The difference of a and b
-     * @throws {TypeError} a and b must be numbers
+     * @throws {TypeError} Thrown when parameters a or b are not numbers
      */
     _subtract(a, b) {
         if (typeof a !== 'number' || typeof b !== 'number') {
@@ -217,10 +217,10 @@ class MathEngine {
     /**
      * Multiplies two numbers
      * @description Multiplies two numbers, checks correct types of parameters.
-     * @param {number} a - The first number
-     * @param {number} b - The second number
+     * @param {number} a - The first parameter of the product
+     * @param {number} b - The second parameter of the product
      * @returns {number} The product of a and b
-     * @throws {TypeError} a and b must be numbers
+     * @throws {TypeError} Thrown when parameters a or b are not numbers
      */
     _multiply(a, b) {
         if (typeof a !== 'number' || typeof b !== 'number') {
@@ -233,11 +233,11 @@ class MathEngine {
    /**
     * Divides two numbers
     * @description Divides two numbers, checks correct types of parameters and if the divisor is not zero.
-    * @param {number} a - The first number
-    * @param {number} b - The second number (not 0)
+    * @param {number} a - The dividend
+    * @param {number} b - The divisor (must not be 0)
     * @returns {number} The quotient of a and b
-    * @throws {TypeError} a and b must be numbers
-    * @throws {DivisionByZeroError} b must not be 0
+    * @throws {TypeError} Thrown when parameters a or b are not numbers
+    * @throws {DivisionByZeroError} Thrown when b is 0
     * @see DivisionByZeroError
     */
     _divide(a, b) {
@@ -258,7 +258,7 @@ class MathEngine {
      * @param {number} base - The base to be raised to the power
      * @param {number} exponent - The exponent to raise the base to
      * @returns {number} The result of the base raised to the power of the exponent
-     * @throws {ExponentTypeError} base and exponent must be numbers
+     * @throws {ExponentTypeError} Thrown when base or exponent are not numbers
      * @see ExponentTypeError
      */
     _power(base, exponent) {
@@ -275,8 +275,8 @@ class MathEngine {
      * @param {number} base - The base number (not negative if exponent is even) 
      * @param {number} exponent - The exponent (exponent >= 0)
      * @returns {number} The result of the natural root of base with exponent
-     * @throws {ExponentTypeError} base and exponent must be numbers, exponent is integer >= 0
-     * @throws {RangeError} base must be >= 0 if exponent is even
+     * @throws {ExponentTypeError} Thrown when base or exponent are not numbers, or if exponent is not an integer >= 0
+     * @throws {RangeError} Thrown when base is negative and exponent is even
      * @see ExponentTypeError
      */
     natural_root(base, exponent) {
@@ -307,9 +307,9 @@ class MathEngine {
     /**
      * Calculates the factorial of a number
      * @description Calculates the factorial of a number, checks correct types of parameters.
-     * @param {number} x - The number (x >= 0, x is an integer)
+     * @param {number} x - The number (integer x >= 0)
      * @returns {number} The factorial of x
-     * @throws {FactorialValueError} x must be a number, x must be an integer, x must be >= 0
+     * @throws {FactorialValueError} Thrown when x is not an integer >= 0
      */
     _factorial(x) {
         if (typeof x !== 'number') {
@@ -338,8 +338,8 @@ class MathEngine {
      * @param {number} base - The base of the logarithm (base > 0, base != 1)
      * @param {number} x - The number (x >= 0)
      * @returns {number} The logarithm of x with base
-     * @throws {TypeError} base and x must be numbers
-     * @throws {RangeError} x must be greater than or equal to 0, base must be greater than 0
+     * @throws {TypeError} Thrown when base or x are not numbers
+     * @throws {RangeError} Thrown when base or x are not greater than 0 
      */
     _log(base, x) {
 
@@ -363,7 +363,7 @@ class MathEngine {
      * @description Solves power operation given as string
      * @param {string} eqv - Equation with power operation, represented as a string
      * @returns {number} The result of the power operation
-     * @throws {EqvFormatError} eqv must be a string with valid power operation format
+     * @throws {EqvFormatError} Thrown when eqv is not a string with valid power operation format
      */
     _solvePow(eqv) {
         if (typeof eqv !== 'string') {
@@ -386,8 +386,8 @@ class MathEngine {
      * @description Solves natural root operation given as string
      * @param {string} eqv - Equation with natural root operation, represented as a string
      * @returns {number} The result of the natural root operation
-     * @throws {EqvFormatError} eqv must be a string with valid natural root operation format
-     * @throws {Error} Invalid number of matches for natural root operation
+     * @throws {EqvFormatError} Thrown when eqv is not a string with valid natural root operation format
+     * @throws {Error} Thrown when invalid number of reg exp matches for natural root operation is found
      * @see ExponentTypeError
      */
     _solveNaturalRoot(eqv) {
@@ -412,8 +412,8 @@ class MathEngine {
      * @description Solves factorial operation given as string
      * @param {string} eqv - Equation with factorial operation, represented as a string
      * @returns {number} The result of the factorial operation
-     * @throws {EqvFormatError} eqv must be a string with valid factorial operation format
-     * @throws {FactorialValueError} Invalid number of matches for factorial operation
+     * @throws {EqvFormatError} Thrown when eqv is not a string with valid factorial operation format
+     * @throws {FactorialValueError} Thrown when invalid number of reg exp matches for factorial operation is found
      * @see FactorialValueError
      * @see EqvFormatError
      */
@@ -438,8 +438,8 @@ class MathEngine {
      * @description Solves logarithm operation given as string
      * @param {string} eqv - Equation with logarithm operation, represented as a string
      * @returns {number} The result of the logarithm operation
-     * @throws {EqvFormatError} eqv must be a string with valid logarithm operation format
-     * @throws {Error} Invalid number of matches for log operation
+     * @throws {EqvFormatError} Thrown when eqv is not a string with valid logarithm operation format
+     * @throws {Error} Thrown when invalid number of reg exp matches for factorial operation is found
      * @see ExponentTypeError
      */
     _solveLog(eqv) {
@@ -463,7 +463,7 @@ class MathEngine {
      * @description Solves complex equations with power, root, factorial and logarithm operations
      * @param {string} eqv - Equation with complex math operations, represented as a string
      * @returns {Array} Array with the result of the equation and a boolean value indicating if the equation was solved
-     * @throws {EqvFormatError} eqv must be a string
+     * @throws {EqvFormatError} Thrown when eqv is not a string
      * @see _solvePow
      * @see _solveNaturalRoot
      * @see _solveFactorial
@@ -508,7 +508,7 @@ class MathEngine {
      * @description Finds the lowest bracket in the equation and returns it
      * @param {string} eqv - Equation with brackets, represented as a string
      * @returns {string} The lowest bracket in the equation
-     * @throws {EqvFormatError} eqv must be a string
+     * @throws {EqvFormatError} Thrown when eqv is not a string
      * @see EqvFormatError
      */
     _findLowestBracket(eqv) {
@@ -544,7 +544,7 @@ class MathEngine {
      * @description Solves one equation with basic math operations given as string
      * @param {string} eqv - Equation with basic math operations, represented as a string
      * @returns {number} The result of the equation
-     * @throws {EqvFormatError} eqv must be a string with valid equation format
+     * @throws {EqvFormatError} Thrown when eqv is not a string with valid equation format
      * @see EqvFormatError
      */
     _solveOneEquationBasicMath(eqv) {
@@ -625,7 +625,11 @@ class MathEngine {
      * @description Solves an equation given as string, uses built-in methods to solve complex math operations
      * @param {string} eqv - Equation to be solved, represented as a string
      * @returns {number} The result of the equation
-     * @throws {EqvFormatError} eqv must be a string
+     * @throws {EqvFormatError} Thrown when eqv is not a string with valid equation format
+     * @throws {DivisionByZeroError} Thrown when division by zero is attempted
+     * @throws {ExponentTypeError} Thrown when base or exponent of a power operation are not numbers
+     * @throws {FactorialValueError} Thrown when the value of the factorial is not a number or is negative
+     * @throws {RangeError} Thrown when base is negative and exponent is even
      * @see _findLowestBracket
      * @see _solveOneEquationBasicMath
      * @see _solveComplexEquations

@@ -9,7 +9,6 @@
  * @author Otakar Kočí - only changes in documentation
  * @author Team KVM Switchers FIT BUT
  * @license GNU GPL v3
- * @todo complete the documentation and comments
  */
 //FILE:             profiling.js
 //AUTHORS:          Martin Mendl <x247581@stud.fit.vutbr.cz>

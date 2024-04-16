@@ -7,7 +7,6 @@
  * @summary Electron application entry point.
  * @module index
  * @requires electron
- * @requires HistoryItem
  * @author Otakar Kočí
  * @author Team KVM Switchers FIT BUT
  * @license GNU GPL v3

@@ -7,6 +7,7 @@
  * @author Team KVM Switchers FIT BUT
  * @license GNU GPL v3
  */
+
 //FILE:           preload.js
 //AUTHORS:        Otakar Kočí <xkocio00@stud.fit.vutbr.cz>
 //                <>

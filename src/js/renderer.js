@@ -2,8 +2,9 @@
  * @file renderer.js
  * @description This file contains the main logic of the calculator such as parsing
  * the inputed equation and using object of the MathEngine class to calculate the
- * result, keyboard bindings, toggles between menus, repositioning the caret in the
+ * result, keyboard bindings, toggles between menus, repositioning the cursor in the
  * input field, inserting results to the history and clearing the history and input fields.
+ * This file is binded to index.html.
  * @summary Main logic of the calculator. Uses MathEngine and is binded to index.html.
  * @module renderer
  * @requires MathEngine
@@ -174,39 +175,39 @@ function navControl() {
 }
 
 /**
- * Returns caret position in the input field (as a number). Uses the selectionStart
+ * Returns cursor position in the input field (as a number). Uses the selectionStart
  * property, so it always returns the leftmost position of a selection in the input field or the
- * position of the caret itself.
- * @summary Gets the caret position in the input field.
- * @function getCaretPosition
- * @see setCaretPosition
+ * position of the cursor itself.
+ * @summary Gets the cursor position in the input field.
+ * @function getCursorPosition
+ * @see setCursorPosition
  * @see insertToDisplayAtCursor
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/selectionStart|MDN Web Docs}
  * @returns {number}
  */
-function getCaretPosition() {
+function getCursorPosition() {
     const display = document.getElementById('display');
-    const caretIndex = display.selectionStart;
-    console.log("Current value: " + caretIndex);
+    const cursorIndex = display.selectionStart;
+    console.log("Current value: " + cursorIndex);
 
-    return caretIndex;
+    return cursorIndex;
 }
 
 /**
- * Sets the caret position in the input field to the specified position. Uses the setSelectionRange method.
+ * Sets the cursor position in the input field to the specified position. Uses the setSelectionRange method.
  * The selection is set from the defined position to the defined position, so that the range has length 0.
  * Also focuses the input field.
- * @summary Sets the caret position in the input field.
- * @function setCaretPosition
- * @param {number} position - position to set the caret to
+ * @summary Sets the cursor position in the input field.
+ * @function setCursorPosition
+ * @param {number} position - position to set the cursor to
  * @returns {void}
- * @see getCaretPosition
+ * @see getCursorPosition
  * @see insertToDisplayAtCursor
- * @see removeLastAfterCaret
+ * @see removeLastAfterCursor
  * @see calculate
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange|MDN Web Docs}
  */
-function setCaretPosition(position) {
+function setCursorPosition(position) {
     const display = document.getElementById('display');
     display.setSelectionRange(position, position);
     console.log("Setting to: " + position);
@@ -217,40 +218,40 @@ function setCaretPosition(position) {
 }
 
 /**
- * Inserts the specified content to the input field at the caret position. The caret position is then updated to
- * reflect the length and content of the inserted string. If the inserted content contains the character 'x', the caret
- * is positioned at the first occurence of 'x' in the inserted content (and 'x' is removed). In case of '^' character, the caret
- * is positioned depending on the character before the caret in the input field. If the character is a number, right bracket or
- * left bracket, the caret is positioned at the end of the inserted content. Otherwise, the caret is positioned in the place of
+ * Inserts the specified content to the input field at the cursor position. The cursor position is then updated to
+ * reflect the length and content of the inserted string. If the inserted content contains the character 'x', the cursor
+ * is positioned at the first occurence of 'x' in the inserted content (and 'x' is removed). In case of '^' character, the cursor
+ * is positioned depending on the character before the cursor in the input field. If the character is a number, right bracket or
+ * left bracket, the cursor is positioned at the end of the inserted content. Otherwise, the cursor is positioned in the place of
  * x in the string
- * @summary Inserts content to the input field at the caret position. Also updates the caret position.
- * @param {string} contentToInsert - content to insert at the caret position
+ * @summary Inserts content to the input field at the cursor position. Also updates the cursor position.
+ * @param {string} contentToInsert - content to insert at the cursor position
  * @function insertToDisplayAtCursor
  * @returns {void}
- * @see getCaretPosition
- * @see setCaretPosition
+ * @see getCursorPosition
+ * @see setCursorPosition
  */
 function insertToDisplayAtCursor(contentToInsert) {
-    const caretIndex = getCaretPosition();
+    const cursorIndex = getCursorPosition();
     const display = document.getElementById('display');
     const displayValue = display.value;
-    const displayValueBeforeCaret = displayValue.substring(0, caretIndex);
-    const displayValueAfterCaret = displayValue.substring(caretIndex);
+    const displayValueBeforeCursor = displayValue.substring(0, cursorIndex);
+    const displayValueAfterCursor = displayValue.substring(cursorIndex);
     const xPositionInContent = contentToInsert.indexOf('x');
     contentToInsert = contentToInsert.replace('x', '');
-    display.value = displayValueBeforeCaret + contentToInsert + displayValueAfterCaret;
-    //if there is a caret in the content
+    display.value = displayValueBeforeCursor + contentToInsert + displayValueAfterCursor;
+    //if there is a cursor in the content
     if (contentToInsert.includes('^')) {
-        const symbolBeforeCaret = displayValueBeforeCaret[caretIndex - 1];
-        if (NUMBERS.includes(symbolBeforeCaret) || RIGHT_BRACKETS.includes(symbolBeforeCaret) || LEFT_BRACKETS.includes(symbolBeforeCaret)) {
-            setCaretPosition(caretIndex + contentToInsert.length);
+        const symbolBeforeCursor = displayValueBeforeCursor[cursorIndex - 1];
+        if (NUMBERS.includes(symbolBeforeCursor) || RIGHT_BRACKETS.includes(symbolBeforeCursor) || LEFT_BRACKETS.includes(symbolBeforeCursor)) {
+            setCursorPosition(cursorIndex + contentToInsert.length);
             return;
         }
     }
     if (xPositionInContent !== -1) {
-        setCaretPosition(caretIndex + xPositionInContent);
+        setCursorPosition(cursorIndex + xPositionInContent);
     } else {
-        setCaretPosition(caretIndex + contentToInsert.length);
+        setCursorPosition(cursorIndex + contentToInsert.length);
     }
 }
 
@@ -425,7 +426,7 @@ function parseInput() {
  * @see HISTORY_ITEM_CALCULATION
  * @see HISTORY_ITEM_MESSAGE
  * @see historyItems
- * @see setCaretPosition
+ * @see setCursorPosition
  */
 function calculate() {
     var displayBoxWrapper = document.getElementsByClassName('displayBoxWrapper');
@@ -472,7 +473,7 @@ function calculate() {
     resultsField.lastChild.scrollLeft = resultsField.lastChild.scrollWidth;
     if (historyItem.type === HISTORY_ITEM_CALCULATION) {
         display.value = result;
-        setCaretPosition(result.toString().length);
+        setCursorPosition(result.toString().length);
     }
 
     // var resultField = document.getElementById('result');
@@ -487,28 +488,28 @@ function calculate() {
 }
 
 /**
- * Removes the character before the caret in the input field.
- * The caret position is then updated to reflect the changes.
- * @summary Removes the character before the caret in the input field.
- * @function removeLastAfterCaret
+ * Removes the character before the cursor in the input field.
+ * The cursor position is then updated to reflect the changes.
+ * @summary Removes the character before the cursor in the input field.
+ * @function removeLastAfterCursor
  * @returns {void}
- * @see getCaretPosition
- * @see setCaretPosition
+ * @see getCursorPosition
+ * @see setCursorPosition
  */
-function removeLastAfterCaret() {
+function removeLastAfterCursor() {
     const display = document.getElementById('display');
-    const caretIndex = getCaretPosition();
+    const cursorIndex = getCursorPosition();
     const displayValue = display.value;
-    const displayValueBeforeCaret = displayValue.substring(0, caretIndex - 1);
-    const displayValueAfterCaret = displayValue.substring(caretIndex);
-    display.value = displayValueBeforeCaret + displayValueAfterCaret;
-    setCaretPosition(caretIndex - 1);
+    const displayValueBeforeCursor = displayValue.substring(0, cursorIndex - 1);
+    const displayValueAfterCursor = displayValue.substring(cursorIndex);
+    display.value = displayValueBeforeCursor + displayValueAfterCursor;
+    setCursorPosition(cursorIndex - 1);
 
 }
 
 /**
  * Copies the result of the history item with the specified index to the input field.
- * The caret position is then updated to reflect the changes.
+ * The cursor position is then updated to reflect the changes.
  * @summary Copies the result of the history item with the specified index to the input field.
  * @function copyHistoryItem
  * @param {number} index - index of the history item in historyItems array
@@ -548,7 +549,7 @@ function clearDisplay() {
 /**
  * Clears the history of calculations and messages. Removes all displayed history items.
  * And all internally stored history items.
- * @summary Clears the history of calculations.
+ * @summary Clears the history.
  * @function clearHistory
  * @returns {void}
  * @see historyItems
