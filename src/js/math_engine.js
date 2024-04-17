@@ -94,7 +94,6 @@ class MathEngine {
         /**
          * Matching brackets for inner implementation
          * @type {Object<string, string>}
-         * @default { '(': ')', '[': ']', '{': '}' }
          */
         this.matchingBrackets = {
             '(': ')',
@@ -492,10 +491,25 @@ class MathEngine {
                 // Perform the relevant operation
                 let fun = operations[idx];
                 for (let match of matches) {
-                    let result = fun(match);
-                    // Replace the math with the result
-                    eqv = eqv.replace(match, String(result));
-                    didSomething = true;
+                    // Get the character preceding the match
+                    var matchIndex = eqv.indexOf(match);
+                    var precedingChar = eqv.charAt(matchIndex - 1);
+                    var nextChar = eqv.charAt(matchIndex + match.length);
+                    
+                    // Check if the preceding character is one of +-*/ or ( and the next character is one of +-*/ or )
+                    if (
+                        (/[+\-*/()]/.test(precedingChar) || matchIndex === 0) && 
+                        (/[+\-*/()]/.test(nextChar) || matchIndex + match.length === eqv.length)
+                    ){
+                        // Calculate the result of the operation
+                        let result = fun(match);
+                        // Replace the matched substring with the modified version
+                        eqv = eqv.replace(match, String(result));
+                        didSomething = true;
+                    } else {
+                        // Do something else, maybe throw an error or handle the case differently
+                        throw new EqvFormatError('eqv must be a valid equation');
+                    }
                 }
             }
         }
@@ -518,23 +532,20 @@ class MathEngine {
     
         let lastKnownBracketIndex = -1;
         let idx = 0;
-        for (idx = 0; idx < eqv.length; idx++) {
+        for (idx = 0; idx < eqv.length; idx++) { // basically go, until we find the first ) or ] or }
             let letter = eqv[idx];
     
-            if (letter === '(' || letter === '[' || letter === '{') {
+            if (letter === '(' || letter === '[' || letter === '{') 
                 lastKnownBracketIndex = idx;
-            }
     
-            if (letter === ')' || letter === ']' || letter === '}') {
+            if (letter === ')' || letter === ']' || letter === '}') 
                 break;
-            }
         }
     
         let newEqv = eqv.substring(lastKnownBracketIndex, idx + 1);
     
-        if (this.eqvPattern.test(newEqv)) {
+        if (this.eqvPattern.test(newEqv)) 
             return newEqv;
-        }
     
         return null;
     }
@@ -548,17 +559,15 @@ class MathEngine {
      * @see EqvFormatError
      */
     _solveOneEquationBasicMath(eqv) {
-        if (typeof eqv !== 'string') {
+        if (typeof eqv !== 'string') 
             throw new EqvFormatError('eqv must be a string');
-        }
 
-        if (eqv === "(NaN)" || eqv === "(Infinity)" || eqv === "(-Infinity)") {
+        // since this function is used at the end, this could be the input, which needs to be valid
+        if (eqv === "(NaN)" || eqv === "(Infinity)" || eqv === "(-Infinity)") 
             return eqv;
-        }
     
-        if (!this.eqvPattern.test(eqv)) {
+        if (!this.eqvPattern.test(eqv)) 
             throw new EqvFormatError('eqv must be a valid equation');
-        }
     
         let removeBrackets = eqv[0] in { '(': ')', '[': ']', '{': '}' } && this.matchingBrackets[eqv[0]] !== eqv.slice(-1);
         if (removeBrackets) {
@@ -572,17 +581,18 @@ class MathEngine {
         let amountOfSteps = allOperators.length;
 
         // we need to check, if the user has added the sing inform of the first number
-
         if (allOperators.length == allNumbers.length) {
 
-            if (allOperators[0] == '*' || allOperators[0] == '/') {
+            // check if the first operator is * or /, which means, it is not valid
+            if (allOperators[0] == '*' || allOperators[0] == '/') 
                 throw new EqvFormatError('eqv must be a valid equation');
-            } // check if the first operator is * or /
             
+            // check if the first operator is - or +, which means, it is valid, update the first number
             allNumbers[0] = allNumbers[0] * (allOperators[0] == '-' ? -1 : 1);
             allOperators.splice(0, 1);
         }
 
+        // calulate the eq, first the * and /
         for (let i = 0; i < amountOfSteps; i++) {
             let operator = allOperators[idx];
             let result;
@@ -605,18 +615,16 @@ class MathEngine {
             }
         }
 
+        // now we can calculate the + and -
         let sum = parseFloat(allNumbers[0]);
-    
         for (let i = 0; i < allOperators.length; i++) {
             let operator = allOperators[i];
     
-            if (operator === '+') {
+            if (operator === '+') 
                 sum = this._add(sum, parseFloat(allNumbers[i + 1]));
-            } else {
+            else 
                 sum = this._subtract(sum, parseFloat(allNumbers[i + 1]));
-            }
         }
-    
         return sum;
     }
 
@@ -658,25 +666,26 @@ class MathEngine {
 
         let counter = 0;
 
+        // main loop
         while (true) {
+            // find the lowest bracket, if found, solve it
             let bracketEqv = this._findLowestBracket(eqv);
             if (bracketEqv) {
                 let result = this._solveOneEquationBasicMath(bracketEqv);
                 eqv = eqv.replace(bracketEqv, String(result));
             }
+            // solve complex equations
             let [newEqv, status] = this._solveComplexEquations(eqv);
 
-            if (this.debug) {
+            if (this.debug) 
                 console.log(` - equation after round of processing -> ${newEqv}\n`);
-            }
-    
-            if (!status && !bracketEqv) {
+            
+            if (!status && !bracketEqv) 
                 break;
-            }
+
             eqv = newEqv;
-            if (counter > 10) {
+            if (counter > 100000) 
                 throw new Error('Infinite loop detected');
-            }
             counter++;
         }
 
@@ -719,11 +728,8 @@ class MathEngine {
 
             if (!con1 || !con2) // one bracket found, but not the other
                 throw new EqvFormatError('eqv must be a valid equation');
-
         }
         
-        // need to test, if the equations has the same amount of opening and closing brackets ?
-
         if (this.debug) 
             console.log('\n\nfinal equation -> ', eqv);
     
