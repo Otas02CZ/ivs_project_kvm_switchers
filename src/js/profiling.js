@@ -62,7 +62,7 @@ rl.on('close', () => {
             deviation_eq += ' + ';
         deviation_eq += `pow(${data[i]}, 2)`
     }
-    deviation_eq += `) - ${data.length} * pow(${x_not_eq}, -2)`;
+    deviation_eq += `) - ${data.length} * pow(${x_not_eq}, 2)`;
     deviation_eq = `root( ( 1 / (${data.length} - 1) * (${deviation_eq})), 2)`
     
     console.log("full equasion", deviation_eq);
