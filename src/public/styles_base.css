@@ -400,6 +400,17 @@ input[type="checkbox"]:checked~span:nth-of-type(3) {
     margin-top: 30px;
 }
 
+.overlay-content-help {
+    font-size: 24px;
+    position: relative;
+    top: 5%;
+    left: 5%;
+    color: #818181;
+    width: 90%;
+    margin-top: 30px;
+}
+
+
 .overlay a {
     padding: 8px;
     text-decoration: none;

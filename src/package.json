@@ -1,14 +1,14 @@
 {
   "name": "calculator_kvm_switchers",
   "version": "0.0.1",
-  "description": "Calculator app made using Electron. Created by team KVM Switchers",
+  "description": "Calculator app made in Electron. Created by team KVM Switchers",
   "main": "index.js",
   "scripts": {
     "test": "jest js/",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "make-docs": "jsdoc --readme README_DOCS.md -c JSDoc.json -d ../docs"
+    "make-docs": "jsdoc --readme README_DOCS.md -c JSDoc.json -d ../docs/code_docs"
   },
   "repository": {
     "type": "git",

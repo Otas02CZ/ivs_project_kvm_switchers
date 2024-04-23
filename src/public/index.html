@@ -31,10 +31,22 @@ DESCRIPTION:    Electron application entry point (HTML)
     
                 <!-- Overlay content -->
                 <div class="overlay-content">
-                    <a href="#">About</a>
-                    <a href="#">Help</a>
-                    <a href="#">Manual</a>
+                    <a href="#" onclick="showAboutPage()">About</a>
+                    <a href="#" onclick="showHelpPage()">Help</a>
+                    <a href="#">User</a>
                     <a href="#" onclick="clearHistory()">Clear History</a>
+                </div>
+    
+            </div>
+            <div id="about" class="overlay">
+                <div class="overlay-content">
+                    ABOUT US
+                </div>
+            </div>
+            <div id="builtInHelp" class="overlay" >
+    
+                <div class="overlay-content-help">
+                    HELP
                 </div>
     
             </div>

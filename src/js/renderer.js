@@ -158,7 +158,10 @@ function toggleSecondaryPage() {
 function navControl() {
     canCalculate = canCalculate ? false : true;
     console.log(canCalculate);
-    var nav = document.getElementById('navOverlay');
+    const nav = document.getElementById('navOverlay');
+    const about = document.getElementById('about');
+    const help = document.getElementById('builtInHelp');
+
     if (document.getElementById('navControlCheck').checked) {
         // $('.overlay').animate({
         //     display: 'block'
@@ -168,6 +171,8 @@ function navControl() {
     else {
         $('.overlay').fadeOut(500);
         nav.style.display = 'none';
+        about.style.display = 'none';
+        help.style.display = 'none';
         // $('.overlay').animate({
         //     display: 'none'
         // }, 500);
@@ -243,7 +248,7 @@ function insertToDisplayAtCursor(contentToInsert) {
     //if there is a cursor in the content
     if (contentToInsert.includes('^')) {
         const symbolBeforeCursor = displayValueBeforeCursor[cursorIndex - 1];
-        if (NUMBERS.includes(symbolBeforeCursor) || RIGHT_BRACKETS.includes(symbolBeforeCursor) || LEFT_BRACKETS.includes(symbolBeforeCursor)) {
+        if (NUMBERS.includes(symbolBeforeCursor) || RIGHT_BRACKETS.includes(symbolBeforeCursor)) {
             setCursorPosition(cursorIndex + contentToInsert.length);
             return;
         }
@@ -561,4 +566,14 @@ function clearHistory() {
     historyItems = [];
     resultsField.innerHTML = '';
     hideMenu();
+}
+
+function showAboutUsPage() {
+    const about = document.getElementById('about');
+    about.style.display = 'block';
+}
+
+function showHelpPage() {
+    const help = document.getElementById('builtInHelp');
+    help.style.display = 'block';
 }
