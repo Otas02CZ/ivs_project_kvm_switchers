@@ -96,9 +96,9 @@ class HistoryItem {
     getHistoryItemHTML(id) {
         switch (this.type) {
             case HISTORY_ITEM_CALCULATION:
-                return `<input type="text" value="${this.getHistoryItem()}" readonly onclick="copyHistoryItem(${id})">`;
+                return `<input type="text" class="resultAnimPlay" value="${this.getHistoryItem()}" readonly onclick="copyHistoryItem(${id})">`;
             case HISTORY_ITEM_MESSAGE:
-                return `<input type="text" value="${this.msg}" readonly>`;
+                return `<input type="text" class="resultAnimPlay" value="${this.msg}" readonly>`;
         }
         return 
     }

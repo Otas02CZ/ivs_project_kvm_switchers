@@ -71,7 +71,6 @@ input#display {
 .resultBoxWrapper {
     display: flex;
     flex-direction: column;
-    /* justify-content: flex-end; */
     overflow: scroll;
     scrollbar-width: none;
     transition: all .4s ease-in-out;
