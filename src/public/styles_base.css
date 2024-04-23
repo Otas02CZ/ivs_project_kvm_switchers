@@ -72,7 +72,13 @@ input#display {
     display: flex;
     flex-direction: column;
     overflow: scroll;
-    scrollbar-width: none
+    scrollbar-width: none;
+    transition: all .4s ease-in-out;
+}
+
+.resultBoxWrapper > * {
+    transition: all .4s ease-in-out;
+    margin-top: auto;
 }
 
 /* Display clear classes */
@@ -349,6 +355,23 @@ input[type="checkbox"]:checked~span:nth-of-type(3) {
     to {
         bottom: 0%;
     }
+}
+
+@keyframes resultAppear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.resultAnimPlay {
+    animation-name: resultAppear;
+    animation-duration: .6s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
 }
 
 .secondary-toggle {
