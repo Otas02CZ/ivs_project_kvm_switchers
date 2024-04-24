@@ -401,15 +401,33 @@ input[type="checkbox"]:checked~span:nth-of-type(3) {
 }
 
 .overlay-content-help {
-    font-size: 24px;
+    font-size: 20px;
     position: relative;
     top: 5%;
     left: 5%;
-    color: #818181;
+    color: #aeaeae;
     width: 90%;
     margin-top: 30px;
 }
 
+.overlay-content-help a {
+    font-size: 20px !important;
+    color: #cdcdcd !important;
+    transition: none !important;
+    display: inline !important;
+    padding: 0 !important;
+    font-weight: bold !important;
+
+}
+.overlay-content-help a:focus,
+.overlay-content-help a:hover {
+    color: #ffffff !important;
+}
+
+.overlay-content-help p {
+    text-align: justify;
+    text-justify: inter-word;
+}
 
 .overlay a {
     padding: 8px;
