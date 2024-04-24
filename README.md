@@ -161,6 +161,19 @@ To give you a glimpse of our application, here are some pictures and gifs showca
 
 <br>
 
+## Standard deviation
+
+The standard deviation is a measure of the amount of variation or dispersion in a set of values. It quantifies the spread of data points around the mean or average value.
+
+To calculate the standard deviation, use the `std_dev.js` file located at `src/js/std_dev.js` within the repository. 
+
+Here is an example usage of the std_dev.js file:
+
+```zsh
+foo@bar:~$ std_dev.js < data.txt
+```
+
+
 ## Miscellaneous
 
 [Project motivation](https://youtu.be/UR7tujNjfo4)
