@@ -29,6 +29,7 @@ DESCRIPTION:    File containing basic styles for the calculator
     text-align: right;
 }
 
+/* Input fields in display wrapper */
 .displayWrapper input[type="text"] {
     padding-left: 20px;
     padding-right: 20px;
@@ -38,13 +39,14 @@ DESCRIPTION:    File containing basic styles for the calculator
     outline: none;
 }
 
+/* Result display */
 input#result {
-    /* visibility: hidden; */
     font-weight: bold;
     font-size: 36px;
     vertical-align: top;
 }
 
+/* Input display */
 input#display {
     font-size: 36px;
     font-weight: bold;
@@ -182,7 +184,6 @@ body {
 
 .switchable-button {
     background-color: #6a63984a;
-    /* color: #e6e6e6 !important; */
 }
 
 .switchable-button:hover {
@@ -230,7 +231,6 @@ body {
 }
 
 /* Top bar */
-
 .topBar {
     display: flex;
     justify-content: left;
@@ -315,7 +315,7 @@ input[type="checkbox"]:checked~span:nth-of-type(3) {
 }
 
 
-/* switch wrapper fly up */
+/* Switch wrapper fly up */
 .switchRow {
     position: relative;
     width: 100%;
@@ -357,6 +357,7 @@ input[type="checkbox"]:checked~span:nth-of-type(3) {
     }
 }
 
+/* New result ease-in animation */
 @keyframes resultAppear {
     from {
         opacity: 0;
@@ -489,4 +490,27 @@ input[type="checkbox"]:checked~span:nth-of-type(3) {
         top: 15px;
         right: 35px;
     }
+}
+
+/* Scollbar styling */
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #c0c0c0 #ffffff;
+}
+
+  /* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+    border-radius: 50px;
+    border: 2px solid #ebebeb;
 }
