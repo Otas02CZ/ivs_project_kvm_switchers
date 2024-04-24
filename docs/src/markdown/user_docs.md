@@ -6,6 +6,7 @@
 ***Welcome to the User Docs of the Calculator app made by team KVM Switchers!***
 
 Simplified and shortened version of this documentation is accessible in-app as the built-in help.
+This full version can be accessed [online](https://otas02cz.github.io/ivs_project_kvm_switchers/) as well.
 
 ## Table of Contents
 
