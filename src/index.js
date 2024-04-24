@@ -31,6 +31,7 @@ const createWindow = () => {
         resizable: false,
         autoHideMenuBar: true,
         webPreferences: {
+            devTools: false,
             preload: path.join(__dirname, 'js/preload.js')
         }
     });
@@ -42,8 +43,6 @@ const createWindow = () => {
     // load index.html
     mainWindow.loadFile('public/index.html');
 }
-
-
 
 app.whenReady().then(() => {
     createWindow();
