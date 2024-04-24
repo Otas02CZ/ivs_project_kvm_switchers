@@ -18,11 +18,11 @@
 //TEAM:           KVM Switchers FIT BUT
 //LICENSE:        GNU GPL v3
 //CREATED:        31/03/2024
-//LAST MODIFIED:  15/04/2024
+//LAST MODIFIED:  24/04/2024
 //DESCRIPTION:    Electron application entry point
 
 const { app, BrowserWindow } = require('electron')
-const path = require('node:path')
+const path = require('node:path');
 
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
@@ -34,9 +34,16 @@ const createWindow = () => {
             preload: path.join(__dirname, 'js/preload.js')
         }
     });
-
+    // all target="_blank" links open in the default browser
+    mainWindow.webContents.setWindowOpenHandler((details) => {
+        require("electron").shell.openExternal(details.url);
+        return { action: 'deny' }
+      })
+    // load index.html
     mainWindow.loadFile('public/index.html');
 }
+
+
 
 app.whenReady().then(() => {
     createWindow();

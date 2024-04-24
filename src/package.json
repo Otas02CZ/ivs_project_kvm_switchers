@@ -1,6 +1,6 @@
 {
   "name": "calculator_kvm_switchers",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Calculator app made in Electron. Created by team KVM Switchers",
   "main": "index.js",
   "scripts": {

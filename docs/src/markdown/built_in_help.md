@@ -75,7 +75,7 @@ sub | x - y | 2 - 1
 mul | x * y | 3 * 6
 div | x / y | 2 * 42
 pow | x^y | 2^2
-root | root(base, exp) | root(4, 2)
+root | root(value, n) | root(4, 2)
 fac | x! | 6|
 log | log(base, value) | log(10, 100)
 

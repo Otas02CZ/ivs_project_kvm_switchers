@@ -5,7 +5,7 @@ AUTHORS:        Otakar Kočí <xkocio00@stud.fit.vutbr.cz>
                 <>
 TEAM            KVM Switchers FIT BUT
 CREATED:        31/03/2024
-LAST MODIFIED:  13/04/2024
+LAST MODIFIED:  24/04/2024
 DESCRIPTION:    Electron application entry point (HTML)
 -->
 
@@ -33,14 +33,20 @@ DESCRIPTION:    Electron application entry point (HTML)
                 <div class="overlay-content">
                     <a href="#" onclick="showAboutPage()">About</a>
                     <a href="#" onclick="showHelpPage()">Help</a>
-                    <a href="#">User Docs</a>
+                    <a href="https://github.com/Otas02CZ/ivs_project_kvm_switchers" target="_blank">User Docs</a>
                     <a href="#" onclick="clearHistory()">Clear History</a>
                 </div>
     
             </div>
             <div id="about" class="overlay">
-                <div class="overlay-content">
-                    ABOUT US
+                <div class="overlay-content-about">
+                    <img src="assets/icon.png" alt="Calculator logo">
+                    <h1>Calculator</h1>
+                    <h3>Team KVM Switchers</h3>
+                    <h3>2024 - FIT BUT</h3>
+                    <p>Simple electron based calculator with support for basic and advanced mathematical operations.</p>
+                    <p>Version: 1.0.0</p>
+                    <a href="https://github.com/Otas02CZ/ivs_project_kvm_switchers" target="_blank">GitHub</a>
                 </div>
             </div>
             <div id="builtInHelp" class="overlay" >
@@ -149,7 +155,7 @@ DESCRIPTION:    Electron application entry point (HTML)
                     </tr>
                     <tr>
                     <td>root</td>
-                    <td>root(base, exp)</td>
+                    <td>root(value, n)</td>
                     <td>root(4, 2)</td>
                     </tr>
                     <tr>

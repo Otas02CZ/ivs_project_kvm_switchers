@@ -5,7 +5,7 @@ AUTHORS:        Kryštof Valenta <xvalenk00@stud.fit.vutbr.cz>
                 <>
 TEAM            KVM Switchers FIT BUT
 CREATED:        31/03/2024
-LAST MODIFIED:  13/04/2024
+LAST MODIFIED:  24/04/2024
 DESCRIPTION:    File containing basic styles for the calculator
 */
 
@@ -399,6 +399,33 @@ input[type="checkbox"]:checked~span:nth-of-type(3) {
     text-align: center;
     margin-top: 30px;
 }
+
+.overlay-content-about {
+    font-size: 22px;
+    position: relative;
+    text-align: center;
+    top: 10%;
+    left: 10%;
+    color: #aeaeae;
+    width: 80%;
+    margin-top: 30px;
+}
+
+.overlay-content-about a {
+    font-size: 22px !important;
+    color: #cdcdcd !important;
+    transition: none !important;
+    display: inline !important;
+    padding: 0 !important;
+    text-align: center !important;
+    font-weight: bold !important;
+
+}
+.overlay-content-about a:focus,
+.overlay-content-about a:hover {
+    color: #ffffff !important;
+}
+
 
 .overlay-content-help {
     font-size: 20px;

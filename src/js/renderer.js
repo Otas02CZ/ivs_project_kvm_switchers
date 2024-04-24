@@ -568,11 +568,25 @@ function clearHistory() {
     hideMenu();
 }
 
-function showAboutUsPage() {
+/**
+ * Shows the about page.
+ * @summary Shows the about page.
+ * @function showAboutPage
+ * @returns {void}
+ * @see hideMenu
+ */
+function showAboutPage() {
     const about = document.getElementById('about');
     about.style.display = 'block';
 }
 
+/**
+ * Shows the built-in help page.
+ * @summary Shows the built-in help page.
+ * @function showHelpPage
+ * @returns {void}
+ * @see hideMenu
+ */
 function showHelpPage() {
     const help = document.getElementById('builtInHelp');
     help.style.display = 'block';
