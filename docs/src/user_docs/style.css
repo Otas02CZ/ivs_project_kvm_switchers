@@ -1,3 +1,13 @@
+/*
+FILE:           style.css
+AUTHORS:        Kryštof Valenta <xvalenk00@stud.fit.vutbr.cz>
+                <>
+TEAM            KVM Switchers FIT BUT
+CREATED:        23/04/2024
+LAST MODIFIED:  23/04/2024
+DESCRIPTION:    File containing styles for the docs page
+*/
+
 html {
     font-family: Arial, sans-serif;
 }

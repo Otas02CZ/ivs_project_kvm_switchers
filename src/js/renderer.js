@@ -513,6 +513,7 @@ function removeLastAfterCursor() {
 }
 
 /**
+ * UNUSED, team decided not to include this feature in the final version, possibly in the future.
  * Copies the result of the history item with the specified index to the input field.
  * The cursor position is then updated to reflect the changes.
  * @summary Copies the result of the history item with the specified index to the input field.
@@ -568,11 +569,25 @@ function clearHistory() {
     hideMenu();
 }
 
-function showAboutUsPage() {
+/**
+ * Shows the about page.
+ * @summary Shows the about page.
+ * @function showAboutPage
+ * @returns {void}
+ * @see hideMenu
+ */
+function showAboutPage() {
     const about = document.getElementById('about');
     about.style.display = 'block';
 }
 
+/**
+ * Shows the built-in help page.
+ * @summary Shows the built-in help page.
+ * @function showHelpPage
+ * @returns {void}
+ * @see hideMenu
+ */
 function showHelpPage() {
     const help = document.getElementById('builtInHelp');
     help.style.display = 'block';

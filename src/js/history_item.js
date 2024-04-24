@@ -15,7 +15,7 @@
 //TEAM:             KVM Switchers FIT BUT
 //LICENSE:          GNU GPL v3
 //CREATED:          14/04/2024
-//LAST MODIFIED:    16/04/2024
+//LAST MODIFIED:    24/04/2024
 //DESCRIPTION:      Contains HistoryItem class and constants for history items
 
 /**
@@ -42,6 +42,8 @@ const HISTORY_ITEM_MESSAGE = "message";
  * @classdesc Class representing a history item. Each history item has a type, equation, result and message.
  * If type is HISTORY_ITEM_CALCULATION, equation and result are used, if type is HISTORY_ITEM_MESSAGE, msg is used.
  * Built in function getHistoryItemHTML() returns HTML representation of history item based on its type.
+ * NOTE onclick copy of the generated html elements by method getHistoryItemHTML() was disabled due to a team decision.
+ * Might be re-enabled in the future with a revision of the implementation and GUI integration.
  */
 class HistoryItem {
     /**
@@ -78,7 +80,7 @@ class HistoryItem {
     }
 
     /**
-     * @description Returns HTML representation of history item based on its type.
+     * @description Returns HTML representation of history item based on its type. CHANGE - DOES NOT ADD COPY FUNCTIONALITY
      * @param {number} id - id of history item that will be used as identificator for calling copyHistoryItem() function
      * @returns {string} HTML representation of history item based on its type
      * @example
@@ -96,7 +98,8 @@ class HistoryItem {
     getHistoryItemHTML(id) {
         switch (this.type) {
             case HISTORY_ITEM_CALCULATION:
-                return `<input type="text" class="resultAnimPlay" value="${this.getHistoryItem()}" readonly onclick="copyHistoryItem(${id})">`;
+                // return `<input type="text" class="resultAnimPlay" value="${this.getHistoryItem()}" readonly onclick="copyHistoryItem(${id})">`;
+                return `<input type="text" class="resultAnimPlay" value="${this.getHistoryItem()}" readonly">`;
             case HISTORY_ITEM_MESSAGE:
                 return `<input type="text" class="resultAnimPlay" value="${this.msg}" readonly>`;
         }

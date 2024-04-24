@@ -5,7 +5,7 @@ AUTHORS:        Otakar Kočí <xkocio00@stud.fit.vutbr.cz>
                 <>
 TEAM            KVM Switchers FIT BUT
 CREATED:        31/03/2024
-LAST MODIFIED:  13/04/2024
+LAST MODIFIED:  24/04/2024
 DESCRIPTION:    Electron application entry point (HTML)
 -->
 
@@ -33,20 +33,202 @@ DESCRIPTION:    Electron application entry point (HTML)
                 <div class="overlay-content">
                     <a href="#" onclick="showAboutPage()">About</a>
                     <a href="#" onclick="showHelpPage()">Help</a>
-                    <a href="#">User</a>
+                    <a href="https://github.com/Otas02CZ/ivs_project_kvm_switchers" target="_blank">User Docs</a>
                     <a href="#" onclick="clearHistory()">Clear History</a>
                 </div>
     
             </div>
             <div id="about" class="overlay">
-                <div class="overlay-content">
-                    ABOUT US
+                <div class="overlay-content-about">
+                    <img src="assets/icon.png" alt="Calculator logo">
+                    <h1>Calculator</h1>
+                    <h3>Team KVM Switchers</h3>
+                    <h3>2024 - FIT BUT</h3>
+                    <p>Simple electron based calculator with support for basic and advanced mathematical operations.</p>
+                    <p>Version: 1.0.0</p>
+                    <a href="https://github.com/Otas02CZ/ivs_project_kvm_switchers" target="_blank">GitHub</a>
                 </div>
             </div>
             <div id="builtInHelp" class="overlay" >
     
                 <div class="overlay-content-help">
-                    HELP
+                    <!-- This section contains converted html code from markdown files -->
+                    <h1 id="help">Help</h1>
+                    <hr>
+                    <p>This is short built-in help page covering only the basic usage of the calculator. Please visit the online <a href="https://github.com">user docs</a> for more detailed overview of features and capabilities of this app.</p>
+                    <h2 id="table-of-contents">Table of Contents</h2>
+                    <ul>
+                    <li><a href="#functionality">Functionality</a></li>
+                    <li><a href="#quick-overview">Quick Overview</a></li>
+                    <li><a href="#input">Input</a></li>
+                    <li><a href="#example-usage">Example usage</a></li>
+                    <li><a href="#usage-tips">Usage tips</a></li>
+                    </ul>
+                    <h2 id="functionality">Functionality</h2>
+                    <p>Supported operations:</p>
+                    <ul>
+                    <li>addition</li>
+                    <li>subtraction</li>
+                    <li>multiplication</li>
+                    <li>division</li>
+                    <li>factorial</li>
+                    <li>power (nat exp)</li>
+                    <li>root</li>
+                    <li>logarithm</li>
+                    </ul>
+                    <p>This application also supports brackets and calculation of nested expressions.</p>
+                    <p>Supported bracket types:</p>
+                    <ul>
+                    <li><code>( )</code></li>
+                    <li><code>[ ]</code></li>
+                    <li><code>{ }</code></li>
+                    </ul>
+                    <p>For advanced function calls only <code>( )</code> brackets can be used.</p>
+                    <p>Built-in constants:</p>
+                    <ul>
+                    <li><code>pi</code></li>
+                    <li><code>e</code></li>
+                    </ul>
+                    <h2 id="quick-overview">Quick overview</h2>
+                    <p>The main window consists of these parts (Top to Bottom):</p>
+                    <ul>
+                    <li>The top bar with the menu icon</li>
+                    <li>Input, result and history panel</li>
+                    <li>Basic operation panel</li>
+                    <li>Toggle for advanced operations panel</li>
+                    </ul>
+                    <h3 id="menu">Menu</h3>
+                    <p>The menu toggle displays the following menu:</p>
+                    <ul>
+                    <li><strong>About</strong> - shows basic info about the app</li>
+                    <li><strong>Help</strong>  - shows this help page</li>
+                    <li><strong>User Docs</strong> - link to website with user docs</li>
+                    <li><strong>Clear history</strong> - clears history records</li>
+                    </ul>
+                    <h3 id="input-results-and-history">Input, Results and History</h3>
+                    <ul>
+                    <li>Above the operations panel is an input field for your expressions.</li>
+                    <li>Above it resides a history and results panel. The last result is always viewed at the bottom. The results panel is also used to display errors.</li>
+                    <li>The panel of basic (and advanced) operations allows the user to easily insert mathematical expressions into the input field.</li>
+                    </ul>
+                    <h2 id="input">Input</h2>
+                    <p>The calculator accepts inputs from the operations panels and from keyboard.
+                    If for any reason you can not input by typing on the keyboard, try clicking into the input field once.</p>
+                    <p>All the buttons from panels and keyboard inputs insert at the position of your cursor in the input panel. To move the cursor use either arrow keys or your mouse.</p>
+                    <p>Buttons for advanced operations (power, root and logarithm) always reposition your cursor to the place where the input number for the given operation is expected. Feel free to change the default exponents or bases of these operations.</p>
+                    <h2 id="supported-input-syntax">Supported Input Syntax</h2>
+                    <p>Calculator supports nested brackets and functions. Additional spaces are ommited.</p>
+                    <p>Syntax of operations:</p>
+                    <table>
+                    <thead>
+                    <tr>
+                    <th>Operation</th>
+                    <th>Syntax</th>
+                    <th>Example</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                    <td>add</td>
+                    <td>x + y</td>
+                    <td>1 + 2</td>
+                    </tr>
+                    <tr>
+                    <td>sub</td>
+                    <td>x - y</td>
+                    <td>2 - 1</td>
+                    </tr>
+                    <tr>
+                    <td>mul</td>
+                    <td>x * y</td>
+                    <td>3 * 6</td>
+                    </tr>
+                    <tr>
+                    <td>div</td>
+                    <td>x / y</td>
+                    <td>2 * 42</td>
+                    </tr>
+                    <tr>
+                    <td>pow</td>
+                    <td>x^y</td>
+                    <td>2^2</td>
+                    </tr>
+                    <tr>
+                    <td>root</td>
+                    <td>root(value, n)</td>
+                    <td>root(4, 2)</td>
+                    </tr>
+                    <tr>
+                    <td>fac</td>
+                    <td>x!</td>
+                    <td>6</td>
+                    <td></td>
+                    </tr>
+                    <tr>
+                    <td>log</td>
+                    <td>log(base, value)</td>
+                    <td>log(10, 100)</td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    <p>The brackets must be closed with the same type. For functions only <code>()</code> brackets can be used.
+                    If you want to add a sub expression into a function call you must enclose it with brackets. More info can be found <a href="#example-usage">here</a>.</p>
+                    <p>Constants:</p>
+                    <ul>
+                    <li><strong><em>Pi</em></strong> - as <code>pi</code>, <code>π</code>, <code>Pi</code> or <code>PI</code></li>
+                    <li><strong><em>E</em></strong> - as <code>Eu</code>, <code>eu</code> or <code>EU</code></li>
+                    </ul>
+                    <h2 id="example-usage">Example usage</h2>
+                    <p>A table with valid inputs with solutions:</p>
+                    <table>
+                    <thead>
+                    <tr>
+                    <th>Input</th>
+                    <th>Result</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                    <td>(2*3)-(4/2)</td>
+                    <td>4</td>
+                    </tr>
+                    <tr>
+                    <td>2<em>(3</em>(10+2))</td>
+                    <td>72</td>
+                    </tr>
+                    <tr>
+                    <td>1.6*2</td>
+                    <td>3.25808</td>
+                    </tr>
+                    <tr>
+                    <td>2^2</td>
+                    <td>4</td>
+                    </tr>
+                    <tr>
+                    <td>root(16, 2)</td>
+                    <td>4</td>
+                    </tr>
+                    <tr>
+                    <td>log(10, 100)</td>
+                    <td>2</td>
+                    </tr>
+                    <tr>
+                    <td>10!</td>
+                    <td>3628800</td>
+                    </tr>
+                    <tr>
+                    <td>log(10, (10^2))</td>
+                    <td>2</td>
+                    </tr>
+                    <tr>
+                    <td>2*root((log(10, (4+6))+15), 2)</td>
+                    <td>8</td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    <h2 id="usage-tips">Usage tips</h2>
+                    <p>The buttons that insert the power operator <code>^</code> are context aware and reposition the cursor before the caret symbol only in case of no number or bracket being already present before it.</p>
+                    <hr>
                 </div>
     
             </div>
