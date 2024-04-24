@@ -513,6 +513,7 @@ function removeLastAfterCursor() {
 }
 
 /**
+ * UNUSED, team decided not to include this feature in the final version, possibly in the future.
  * Copies the result of the history item with the specified index to the input field.
  * The cursor position is then updated to reflect the changes.
  * @summary Copies the result of the history item with the specified index to the input field.
