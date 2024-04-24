@@ -571,7 +571,6 @@ function clearHistory() {
 
 /**
  * Shows the about page.
- * @summary Shows the about page.
  * @function showAboutPage
  * @returns {void}
  * @see hideMenu
@@ -583,7 +582,6 @@ function showAboutPage() {
 
 /**
  * Shows the built-in help page.
- * @summary Shows the built-in help page.
  * @function showHelpPage
  * @returns {void}
  * @see hideMenu

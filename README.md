@@ -1,7 +1,6 @@
 <h1 align="center">IVS Project 2</h1>
 
 <p align="center">
-    <img alt="Static Badge" src="https://img.shields.io/badge/-Python_3-blue?style=flat&logo=python&logoColor=white&labelColor=black">
     <img alt="Static Badge" src="https://img.shields.io/badge/-Electron-blue?style=flat&logo=electron&logoColor=white&labelColor=black">
     <img alt="Static Badge" src="https://img.shields.io/badge/-HTML5-blue?style=flat&logo=html5&logoColor=white&labelColor=black">
     <img alt="Static Badge" src="https://img.shields.io/badge/-CSS-blue?style=flat&logo=css3&logoColor=white&labelColor=black">
@@ -78,6 +77,7 @@ Exceptions in the Math Engine Library:
 | RangeError | value must be within a range |
 | DivisionByZeroError | divisor value must not be 0 |
 | TypeError | values must be numbers |
+| FactorialValueError | incorrect input for factorial |
 
 ### Testing the library
 

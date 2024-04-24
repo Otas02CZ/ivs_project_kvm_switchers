@@ -8,7 +8,7 @@
             "js/math_engine.js",
             "js/preload.js",
             "js/history_item.js", 
-            "js/profiling.js", 
+            "js/std_dev.js", 
             "js/preload.js"
         ]
     },

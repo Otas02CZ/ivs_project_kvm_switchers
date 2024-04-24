@@ -26,6 +26,7 @@ const path = require('node:path');
 
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
+        icon: 'assets/icon.png',
         width: 500,
         height: 650,
         resizable: false,

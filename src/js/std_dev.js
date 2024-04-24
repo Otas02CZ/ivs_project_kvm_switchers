@@ -1,8 +1,8 @@
 /**
- * @file profiling.js
- * @description Script for profiling the MathEngine class using standard deviation of numbers read from stdin.
- * @summary Script for profiling the MathEngine class.
- * @module profiling
+ * @file std_dev.js
+ * @description Script utilizing the MathEngine class to calculate the standard deviation of numbers read from stdin.
+ * @summary Script for calculation of standard deviation of numbers read from stdin.
+ * @module std_dev
  * @requires MathEngine
  * @requires readline
  * @author Martin Mendl
@@ -10,15 +10,15 @@
  * @author Team KVM Switchers FIT BUT
  * @license GNU GPL v3
  */
-//FILE:             profiling.js
+//FILE:             std_dev.js
 //AUTHORS:          Martin Mendl <x247581@stud.fit.vutbr.cz>
 //                  Otakar Kočí <xkocio00@stud.fit.vutbr.cz> only changes in documentation
 //                  <>
 //TEAM:             KVM Switchers FIT BUT
 //LICENSE:          GNU GPL v3
 //CREATED:          31/03/2024
-//LAST MODIFIED:    15/04/2024
-//DESCRIPTION:      Script for profiling the MathEngine class using standard deviation of numbers read from stdin.
+//LAST MODIFIED:    24/04/2024
+//DESCRIPTION:      Script utilizing the MathEngine class to calculate the standard deviation of numbers read from stdin.
 
 
 const readline = require('readline');

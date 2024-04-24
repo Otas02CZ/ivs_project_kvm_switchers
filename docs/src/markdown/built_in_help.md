@@ -7,6 +7,7 @@ This is short built-in help page covering only the basic usage of the calculator
 - [Functionality](#functionality)
 - [Quick Overview](#quick-overview)
 - [Input](#input)
+- [Syntax](#supported-input-syntax)
 - [Example usage](#example-usage)
 - [Usage tips](#usage-tips)
 
@@ -105,6 +106,3 @@ log(10, (10^2)) | 2
 The buttons that insert the power operator `^` are context aware and reposition the cursor before the caret symbol only in case of no number or bracket being already present before it.
 
 ---
-
-
-
