@@ -1,26 +1,22 @@
 #!/bin/bash
 
-# Function to check if a command is available
-command_exists() {
-    command -v "$1" >/dev/null 2>&1
-}
+export NVM_DIR=$HOME/.nvm;
+source $NVM_DIR/nvm.sh;
+
+sudo apt install curl
 
 # Check if node of version 20 is installed
-if ! command_exists node || ! node -v | grep -q "v20"; then
+node > /dev/null
+if [ $? -eq 1 ] || ! node -v | grep -q "v20"; then
     echo "Node.js version 20 is not installed."
 
-    # Check if curl is installed
-    if ! command_exists curl; then
-        echo "curl is not installed. Installing curl..."
-        sudo apt-get update && sudo apt-get install -y curl
-    fi
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    
+    export NVM_DIR=$HOME/.nvm;
+	source $NVM_DIR/nvm.sh;
 
-    # download and run the NodeSource Node.js 20.x repo script
-    curl -sL https://deb.nodesource.com/setup_20.x -o /tmp/nodesource_setup.sh
+    nvm install 20
 
-    sudo bash ./nodesource_setup.sh
-
-    sudo apt install nodejs
 fi
 
 # Copy std_dev_kvm_switchers folder to /usr/lib
