@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Web Page</title>
+    <link rel="stylesheet" href="mathquill.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="mathquill.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div id="math-field" placeholder="Math input"></div>
+    </div>
+    <script>
+        var mathFieldDiv = document.getElementById('math-field');
+        var MQ = MathQuill.getInterface(2); // for backcompat
+        var mathField = MQ.MathField(mathFieldDiv, {
+            spaceBehavesLikeTab: true, // configurable
+            handlers: {
+                edit: function () {
+                    // Useful event handler
+                }
+            }
+        });
+    </script>
+
+
+    <style>
+        /* BEGIN: CSS for math field */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        .container {
+            border: 1px solid #ccc;
+            padding: 5px;
+            width: 10%;
+        }
+
+        #math-field {
+            border: none;
+            outline: none;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        #math-field:focus {
+            border: none;
+            outline: none;
+        }
+
+        
+
+
+        #math-field:focus .container{
+            border: none;
+            outline: none;
+            width: 60%;
+            height: 3rem;
+        }
+        /* END: CSS for math field */
+    </style>
+</body>
+
+</html>

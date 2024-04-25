@@ -1,0 +1,3 @@
+xkocio00 100 (JS pro GUI, instalátory, odinstalátory, Makefile, uživatelská a programová dokumentace, vestavěná nápověda, node prostředí, počáteční testy matematické knihovny)
+xvalenk00 100 (matematická knihovna, testy matematické knihovny, profiling)
+247581 100 (CSS HTML pro GUI, mockupy, ikona, JS pro GUI, README, webové stránky uživatelské a programové dokumentace)

@@ -1,0 +1,43 @@
+{
+  "name": "calculator_kvm_switchers",
+  "version": "1.0.0",
+  "description": "Calculator app made in Electron. Created by team KVM Switchers",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest js/",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "make-docs": "jsdoc --readme README_DOCS.md -c JSDoc.json -d ../docs/code_docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Otas02CZ/ivs_project_kvm_switchers.git"
+  },
+  "keywords": [
+    "calculator",
+    "electron",
+    "calc"
+  ],
+  "author": "Team KVM Switchers FIT BUT",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Otas02CZ/ivs_project_kvm_switchers/issues"
+  },
+  "homepage": "https://github.com/Otas02CZ/ivs_project_kvm_switchers#readme",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.3.1",
+    "@electron-forge/maker-deb": "^7.3.1",
+    "@electron-forge/maker-rpm": "^7.3.1",
+    "@electron-forge/maker-squirrel": "^7.3.1",
+    "@electron-forge/maker-zip": "^7.3.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.3.1",
+    "@electron-forge/plugin-fuses": "^7.3.1",
+    "electron": "^29.1.6",
+    "jest": "^29.7.0",
+    "jsdoc": "^4.0.2"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
+  }
+}

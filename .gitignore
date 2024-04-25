@@ -1,2 +1,8 @@
 */node_modules
 */package-lock.json
+.DS_Store
+_MACOSX
+gui/src/index backup.html
+dist
+docs/code_docs
+docs/github_pages

@@ -1,0 +1,108 @@
+/**
+ * @file history_item.js
+ * @description This file contains class HistoryItem which is used to store history records.
+ * Constants HISTORY_ITEM_CALCULATION and HISTORY_ITEM_MESSAGE are here as well and
+ * are used to distinguish between different types of history items.
+ * @summary contains HistoryItem class and constants for history items
+ * @module history_item
+ * @author Otakar Kočí
+ * @author Team KVM Switchers FIT BUT
+ * @license GNU GPL v3
+ */
+//FILE:             history_item.js
+//AUTHORS:          Otakar Kočí <xkocio00@stud.fit.vutbr.cz>
+//                  <>
+//TEAM:             KVM Switchers FIT BUT
+//LICENSE:          GNU GPL v3
+//CREATED:          14/04/2024
+//LAST MODIFIED:    24/04/2024
+//DESCRIPTION:      Contains HistoryItem class and constants for history items
+
+/**
+ * @constant
+ * @type {string}
+ * @default "calculation"
+ * @name HISTORY_ITEM_CALCULATION
+ * @public
+ * @description History item enum representing record type - calculation 
+ */
+const HISTORY_ITEM_CALCULATION = "calculation";
+/**
+ * @constant
+ * @type {string}
+ * @default "message"
+ * @name HISTORY_ITEM_MESSAGE
+ * @public
+ * @description History item enum representing record type - message
+ */
+const HISTORY_ITEM_MESSAGE = "message";
+
+/**
+ * Class representing history item
+ * @classdesc Class representing a history item. Each history item has a type, equation, result and message.
+ * If type is HISTORY_ITEM_CALCULATION, equation and result are used, if type is HISTORY_ITEM_MESSAGE, msg is used.
+ * Built in function getHistoryItemHTML() returns HTML representation of history item based on its type.
+ * NOTE onclick copy of the generated html elements by method getHistoryItemHTML() was disabled due to a team decision.
+ * Might be re-enabled in the future with a revision of the implementation and GUI integration.
+ */
+class HistoryItem {
+    /**
+     * Creates an instance of HistoryItem.
+     * @param {string} type - type of history item
+     * @param {string} equation - equation of history item
+     * @param {string} result - result of history item
+     * @param {string} msg - message of history item
+     * @example
+     * let historyItem = new HistoryItem(HISTORY_ITEM_CALCULATION, "2+2", "4", "");
+     * @example
+     * let historyItem = new HistoryItem(HISTORY_ITEM_MESSAGE, "", "", "ZERO DIVISION");
+     * @see HISTORY_ITEM_CALCULATION
+     * @see HISTORY_ITEM_MESSAGE
+     */
+    constructor(type, equation, result, msg) {
+        this.type = type;
+        this.equation = equation;
+        this.result = result;
+        this.msg = msg;
+    }
+
+    /**
+     * @description Returns string representation of history item's equation and result
+     * in format "equation = result"
+     * @returns {string} history item as a string in format "equation = result"
+     * @example
+     * let historyItem = new HistoryItem(HISTORY_ITEM_CALCULATION, "2+2", "4", "");
+     * historyItem.getHistoryItem();
+     * -> "2+2 = 4"
+     */
+    getHistoryItem() {
+        return `${this.equation} = ${this.result}`;
+    }
+
+    /**
+     * @description Returns HTML representation of history item based on its type. CHANGE - DOES NOT ADD COPY FUNCTIONALITY
+     * @param {number} id - id of history item that will be used as identificator for calling copyHistoryItem() function
+     * @returns {string} HTML representation of history item based on its type
+     * @example
+     * let historyItem = new HistoryItem(HISTORY_ITEM_CALCULATION, "2+2", "4", "");
+     * historyItem.getHistoryItemHTML(0);
+     * -> "<input type="text" value="2+2 = 4" readonly onclick="copyHistoryItem(0)">"
+     * @example
+     * let historyItem = new HistoryItem(HISTORY_ITEM_MESSAGE, "", "", "ZERO DIVISION");
+     * historyItem.getHistoryItemHTML(1);
+     * -> "<input type="text" value="ZERO DIVISION" readonly>"
+     * @see HISTORY_ITEM_CALCULATION
+     * @see HISTORY_ITEM_MESSAGE
+     * @see getHistoryItem
+     */
+    getHistoryItemHTML(id) {
+        switch (this.type) {
+            case HISTORY_ITEM_CALCULATION:
+                // return `<input type="text" class="resultAnimPlay" value="${this.getHistoryItem()}" readonly onclick="copyHistoryItem(${id})">`;
+                return `<input type="text" class="resultAnimPlay" value="${this.getHistoryItem()}" readonly">`;
+            case HISTORY_ITEM_MESSAGE:
+                return `<input type="text" class="resultAnimPlay" value="${this.msg}" readonly>`;
+        }
+        return 
+    }
+}

@@ -1,0 +1,13 @@
+Tento soubor obsahuje rozdíly plánu oproti skutečnosti.
+
+Funkce programu a komunikace:
+- Plán byl dodržen.
+
+Rozdělení práce:
+- Otakar Kočí (247555) - JS pro GUI, instalátory, odinstalátory, Makefile, uživatelská a programová dokumentace, vestavěná nápověda, node prostředí, počáteční testy matematické knihovny
+- Mendl Martin (247581) - matematická knihovna, testy matematické knihovny, profiling
+- Valenta Kryštof (xvalenk00) - CSS HTML pro GUI, mockupy, ikona, JS pro GUI, README, webové stránky uživatelské a programové dokumentace
+
+Dodržení termínů:
+- V první polovině projektu se dařilo dodržovat termíny.
+- V druhé polovině se některé termíny nepodařilo dodržet kvůli komplikacím, to však nemělo vliv na výsledný produkt.

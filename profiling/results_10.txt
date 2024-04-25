@@ -1,0 +1,256 @@
+Statistical profiling result from isolate-0x5637a81fb3d0-306468-v8.log, (114 ticks, 0 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+     31   27.2%          /usr/lib64/libnode.so.115
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+
+ [C++]:
+   ticks  total  nonlib   name
+     53   46.5%   63.9%  node::builtins::BuiltinLoader::CompileFunction(v8::FunctionCallbackInfo<v8::Value> const&)
+     20   17.5%   24.1%  __GI___libc_write
+      2    1.8%    2.4%  node::binding::GetInternalBinding(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    0.9%    1.2%  v8::platform::DefaultJobHandle::~DefaultJobHandle()
+      1    0.9%    1.2%  operator new(unsigned long)@@GLIBCXX_3.4
+      1    0.9%    1.2%  isprint
+      1    0.9%    1.2%  cfree@GLIBC_2.2.5
+      1    0.9%    1.2%  _int_malloc
+      1    0.9%    1.2%  __GI___lll_lock_wake
+      1    0.9%    1.2%  __GI___libc_malloc
+      1    0.9%    1.2%  __GI__IO_file_xsputn
+
+ [Summary]:
+   ticks  total  nonlib   name
+      0    0.0%    0.0%  JavaScript
+     83   72.8%  100.0%  C++
+      2    1.8%    2.4%  GC
+     31   27.2%          Shared libraries
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+     53   79.1%   46.5%  node::builtins::BuiltinLoader::CompileFunction(v8::FunctionCallbackInfo<v8::Value> const&)
+      9   13.4%    7.9%  __GI___libc_write
+      2    3.0%    1.8%  node::binding::GetInternalBinding(v8::FunctionCallbackInfo<v8::Value> const&)
+      1    1.5%    0.9%  operator new(unsigned long)@@GLIBCXX_3.4
+      1    1.5%    0.9%  isprint
+      1    1.5%    0.9%  _int_malloc
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 1.0% are not shown.
+
+   ticks parent  name
+     53   46.5%  node::builtins::BuiltinLoader::CompileFunction(v8::FunctionCallbackInfo<v8::Value> const&)
+     53  100.0%    /usr/lib64/libnode.so.115
+     39   73.6%      JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+     38   97.4%        JS: ^requireBuiltin node:internal/bootstrap/realm:420:24
+      5   13.2%          JS: ~<anonymous> node:internal/bootstrap/switches/is_main_thread:1:1
+      3    7.9%          JS: ~<anonymous> node:tty:1:1
+      3  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      2    5.3%          JS: ~<anonymous> node:net:1:1
+      2  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      2    5.3%          JS: ~<anonymous> node:internal/streams/duplex:1:1
+      2  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      2    5.3%          JS: ~<anonymous> node:internal/readline/emitKeypressEvents:1:1
+      2  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      2    5.3%          JS: ~<anonymous> node:internal/process/per_thread:1:1
+      2  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      2    5.3%          JS: ~<anonymous> node:internal/fs/utils:1:1
+      2  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      2    5.3%          JS: ~<anonymous> node:internal/fs/promises:1:1
+      2  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      2    5.3%          JS: ~<anonymous> node:internal/bootstrap/node:1:1
+      1    2.6%          JS: ~lazyLoadStreams node:fs:3050:25
+      1  100.0%            JS: ~get ReadStream node:fs:3197:17
+      1    2.6%          JS: ~<anonymous> node:stream:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%          JS: ~<anonymous> node:internal/streams/readable:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%          JS: ~<anonymous> node:internal/streams/pipeline:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%          JS: ~<anonymous> node:internal/streams/operators:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%          JS: ~<anonymous> node:internal/readline/promises:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%          JS: ~<anonymous> node:internal/process/task_queues:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%          JS: ~<anonymous> node:internal/process/permission:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%          JS: ~<anonymous> node:internal/modules/esm/utils:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%          JS: ~<anonymous> node:internal/modules/cjs/loader:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%          JS: ~<anonymous> node:internal/fs/streams:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%          JS: ~<anonymous> node:internal/event_target:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%          JS: ~<anonymous> node:internal/console/global:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%          JS: ~<anonymous> node:internal/bootstrap/web/exposed-wildcard:1:1
+      1    2.6%          JS: ~<anonymous> node:internal/blob:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%          JS: ~<anonymous> node:fs:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    2.6%        JS: ~compileForPublicLoader node:internal/bootstrap/realm:331:25
+      1  100.0%          JS: ~loadBuiltinModule node:internal/modules/helpers:96:27
+      1  100.0%            JS: ~Module._load node:internal/modules/cjs/loader:949:24
+     14   26.4%      JS: ~compileForInternalLoader node:internal/bootstrap/realm:383:27
+     14  100.0%        JS: ~requireBuiltin node:internal/bootstrap/realm:420:24
+      6   42.9%          JS: ~<anonymous> node:internal/timers:1:1
+      6  100.0%            JS: ~compileForInternalLoader node:internal/bootstrap/realm:383:27
+      3   21.4%          JS: ~setupPrepareStackTrace node:internal/bootstrap/realm:443:32
+      3  100.0%            JS: ~<anonymous> node:internal/bootstrap/realm:1:1
+      2   14.3%          JS: ~setupBuffer node:internal/bootstrap/node:394:21
+      2  100.0%            JS: ~<anonymous> node:internal/bootstrap/node:1:1
+      1    7.1%          JS: ~setupProcessObject node:internal/bootstrap/node:353:28
+      1  100.0%            JS: ~<anonymous> node:internal/bootstrap/node:1:1
+      1    7.1%          JS: ~<anonymous> node:internal/validators:1:1
+      1  100.0%            JS: ~compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    7.1%          JS: ~<anonymous> node:buffer:1:1
+      1  100.0%            JS: ~compileForInternalLoader node:internal/bootstrap/realm:383:27
+
+     31   27.2%  /usr/lib64/libnode.so.115
+     25   80.6%    /usr/lib64/libnode.so.115
+      3   12.0%      /usr/lib64/libnode.so.115
+      1   33.3%        JS: ~stripVTControlCharacters node:internal/util/inspect:2411:34
+      1  100.0%          JS: ~<anonymous> node:internal/readline/interface:981:19
+      1  100.0%            JS: ~getCursorPos node:internal/readline/interface:1022:15
+      1   33.3%        JS: ~initializePermission node:internal/process/pre_execution:561:30
+      1  100.0%          JS: ~prepareExecution node:internal/process/pre_execution:97:26
+      1  100.0%            JS: ~prepareMainThreadExecution node:internal/process/pre_execution:53:36
+      1   33.3%        JS: ~getExpectedArgumentLength node:internal/errors:583:35
+      1  100.0%          JS: ~makeNodeErrorWithCode node:internal/errors:429:31
+      1  100.0%            JS: ~E node:internal/errors:550:11
+      1    4.0%      JS: ~wrapSafe node:internal/modules/cjs/loader:1253:18
+      1  100.0%        JS: ~Module._compile node:internal/modules/cjs/loader:1322:37
+      1  100.0%          JS: ~Module._extensions..js node:internal/modules/cjs/loader:1381:37
+      1  100.0%            JS: ~Module.load node:internal/modules/cjs/loader:1193:33
+      1    4.0%      JS: ~value node:internal/console/constructor:235:20
+      1  100.0%        JS: ~<anonymous> node:internal/console/global:1:1
+      1  100.0%          JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1  100.0%            JS: ^requireBuiltin node:internal/bootstrap/realm:420:24
+      1    4.0%      JS: ~toRealPath node:internal/modules/helpers:57:20
+      1  100.0%        JS: ~Module._findPath node:internal/modules/cjs/loader:609:28
+      1  100.0%          JS: ~resolveMainPath node:internal/modules/run_main:15:25
+      1  100.0%            JS: ~executeUserEntryPoint node:internal/modules/run_main:127:31
+      1    4.0%      JS: ~startListeningIfSignal node:internal/process/signal:22:32
+      1  100.0%        JS: ~emit node:events:465:44
+      1  100.0%          JS: ~_addListener node:events:546:22
+      1  100.0%            JS: ~addListener node:events:609:58
+      1    4.0%      JS: ~shift node:internal/fixed_queue:108:8
+      1  100.0%        JS: ~processTicksAndRejections node:internal/process/task_queues:67:35
+      1    4.0%      JS: ~realpathSync node:fs:2625:22
+      1  100.0%        JS: ~toRealPath node:internal/modules/helpers:57:20
+      1  100.0%          JS: ~Module._findPath node:internal/modules/cjs/loader:609:28
+      1  100.0%            JS: ~Module._resolveFilename node:internal/modules/cjs/loader:1057:35
+      1    4.0%      JS: ~onkeypress node:internal/readline/interface:263:22
+      1  100.0%        JS: ~emit node:events:465:44
+      1  100.0%          JS: ~emitKeys node:internal/readline/utils:86:19
+      1  100.0%            /usr/lib64/libnode.so.115
+      1    4.0%      JS: ~initializeGlobalConsole node:internal/console/constructor:690:33
+      1  100.0%        JS: ~patchProcessObject node:internal/process/pre_execution:220:28
+      1  100.0%          JS: ~prepareExecution node:internal/process/pre_execution:97:26
+      1  100.0%            JS: ~prepareMainThreadExecution node:internal/process/pre_execution:53:36
+      1    4.0%      JS: ~formatWithOptions node:internal/util/inspect:2158:27
+      1  100.0%        JS: ~value node:internal/console/constructor:339:20
+      1  100.0%          JS: ~log node:internal/console/constructor:378:6
+      1  100.0%            /usr/lib64/libnode.so.115
+      1    4.0%      JS: ~executeUserEntryPoint node:internal/modules/run_main:127:31
+      1  100.0%        JS: ~<anonymous> node:internal/main/run_main_module:1:1
+      1    4.0%      JS: ~createHook node:async_hooks:153:20
+      1  100.0%        JS: ~<anonymous> node:async_hooks:1:1
+      1  100.0%          JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1  100.0%            JS: ^requireBuiltin node:internal/bootstrap/realm:420:24
+      1    4.0%      JS: ~copyPropsRenamed node:internal/per_context/primordials:75:26
+      1  100.0%        JS: ~<anonymous> node:internal/per_context/primordials:179:11
+      1  100.0%          /usr/lib64/libnode.so.115
+      1  100.0%            JS: ~<anonymous> node:internal/per_context/primordials:1:1
+      1    4.0%      JS: ~SafeIterator node:internal/per_context/primordials:332:16
+      1  100.0%        JS: ~<anonymous> node:internal/per_context/primordials:387:32
+      1  100.0%          /usr/lib64/libnode.so.115
+      1  100.0%            JS: ~getCanBeRequiredByUsersWithoutSchemeList node:internal/bootstrap/realm:322:50
+      1    4.0%      JS: ~ReadStream._read node:internal/fs/streams:248:38
+      1  100.0%        JS: ~Readable.read node:internal/streams/readable:645:35
+      1  100.0%          JS: ~maybeReadMore_ node:internal/streams/readable:862:24
+      1  100.0%            JS: ~processTicksAndRejections node:internal/process/task_queues:67:35
+      1    4.0%      JS: ~<anonymous> node:url:1:1
+      1  100.0%        JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1  100.0%          JS: ^requireBuiltin node:internal/bootstrap/realm:420:24
+      1  100.0%            JS: ~<anonymous> node:internal/bootstrap/switches/is_main_thread:1:1
+      1    4.0%      JS: ~<anonymous> node:internal/webstreams/queuingstrategies:1:1
+      1  100.0%        JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1  100.0%          JS: ^requireBuiltin node:internal/bootstrap/realm:420:24
+      1  100.0%            JS: ~<anonymous> node:internal/blob:1:1
+      1    4.0%      JS: ~<anonymous> node:internal/readline/interface:882:10
+      1  100.0%        JS: ~<anonymous> node:internal/readline/interface:1056:14
+      1  100.0%          JS: ^onkeypress node:internal/readline/interface:263:22
+      1  100.0%            JS: ^emit node:events:465:44
+      1    4.0%      JS: ~<anonymous> node:internal/per_context/primordials:160:11
+      1  100.0%        /usr/lib64/libnode.so.115
+      1  100.0%          JS: ~<anonymous> node:internal/per_context/primordials:1:1
+      1    4.0%      JS: ~<anonymous> node:internal/bootstrap/node:1:1
+      1    4.0%      JS: ^makeNodeErrorWithCode node:internal/errors:429:31
+      1  100.0%        JS: ^E node:internal/errors:550:11
+      1  100.0%          JS: ~<anonymous> node:internal/errors:1:1
+      1  100.0%            JS: ~compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1    4.0%      JS: ^copyPrototype node:internal/per_context/primordials:121:23
+      1  100.0%        JS: ~<anonymous> node:internal/per_context/primordials:261:11
+      1  100.0%          /usr/lib64/libnode.so.115
+      1  100.0%            JS: ~<anonymous> node:internal/per_context/primordials:1:1
+      1    4.0%      JS: ^copyPropsRenamed node:internal/per_context/primordials:75:26
+      1  100.0%        JS: ~<anonymous> node:internal/per_context/primordials:223:11
+      1  100.0%          /usr/lib64/libnode.so.115
+      1  100.0%            JS: ~<anonymous> node:internal/per_context/primordials:1:1
+
+     20   17.5%  __GI___libc_write
+      9   45.0%    /usr/lib64/libnode.so.115
+      1   11.1%      JS: ~push node:internal/fixed_queue:99:7
+      1  100.0%        JS: ~nextTick node:internal/process/task_queues:103:18
+      1  100.0%          JS: ~construct node:internal/streams/destroy:243:19
+      1  100.0%            JS: ~Readable node:internal/streams/readable:318:18
+      1   11.1%      JS: ~emit node:events:465:44
+      1  100.0%        JS: ~addChunk node:internal/streams/readable:548:18
+      1  100.0%          JS: ~readableAddChunkPushByteMode node:internal/streams/readable:461:38
+      1  100.0%            JS: ~Readable.push node:internal/streams/readable:385:35
+      1   11.1%      JS: ~createUnsafeBuffer node:internal/buffer:1061:28
+      1  100.0%        JS: ~createPool node:buffer:152:20
+      1  100.0%          JS: ~<anonymous> node:buffer:1:1
+      1  100.0%            JS: ~compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1   11.1%      JS: ~_solveNaturalRoot /home/otakarkoci/git/ivs_project_kvm_switchers/src/js/math_engine.js:392:22
+      1  100.0%        JS: ^_solveComplexEquations /home/otakarkoci/git/ivs_project_kvm_switchers/src/js/math_engine.js:472:27
+      1  100.0%          JS: ~solveEquation /home/otakarkoci/git/ivs_project_kvm_switchers/src/js/math_engine.js:656:18
+      1  100.0%            JS: ~<anonymous> /home/otakarkoci/git/ivs_project_kvm_switchers/src/js/std_dev.js:53:16
+      1   11.1%      JS: ~_solveComplexEquations /home/otakarkoci/git/ivs_project_kvm_switchers/src/js/math_engine.js:472:27
+      1  100.0%        JS: ~solveEquation /home/otakarkoci/git/ivs_project_kvm_switchers/src/js/math_engine.js:656:18
+      1  100.0%          JS: ~<anonymous> /home/otakarkoci/git/ivs_project_kvm_switchers/src/js/std_dev.js:53:16
+      1  100.0%            JS: ^emit node:events:465:44
+      1   11.1%      JS: ~StringDecoder node:string_decoder:81:23
+      1  100.0%        JS: ~emitKeypressEvents node:internal/readline/emitKeypressEvents:34:28
+      1  100.0%          JS: ~InterfaceConstructor node:internal/readline/interface:132:30
+      1  100.0%            JS: ~Interface node:readline:101:19
+      1   11.1%      JS: ~Module._load node:internal/modules/cjs/loader:949:24
+      1  100.0%        JS: ~executeUserEntryPoint node:internal/modules/run_main:127:31
+      1  100.0%          JS: ~<anonymous> node:internal/main/run_main_module:1:1
+      1   11.1%      JS: ~<anonymous> node:internal/streams/writable:1:1
+      1  100.0%        JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1  100.0%          JS: ^requireBuiltin node:internal/bootstrap/realm:420:24
+      1  100.0%            JS: ~<anonymous> node:internal/streams/duplex:1:1
+      1   11.1%      JS: ~<anonymous> node:internal/readline/interface:981:19
+      1  100.0%        JS: ~getCursorPos node:internal/readline/interface:1022:15
+      1  100.0%          JS: ~<anonymous> node:internal/readline/interface:622:18
+      1  100.0%            JS: ~<anonymous> node:internal/readline/interface:1056:14
+
+      2    1.8%  node::binding::GetInternalBinding(v8::FunctionCallbackInfo<v8::Value> const&)
+      2  100.0%    /usr/lib64/libnode.so.115
+      1   50.0%      JS: ~internalBinding node:internal/bootstrap/realm:184:45
+      1  100.0%        JS: ~<anonymous> node:internal/util:1:1
+      1  100.0%          JS: ~compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1  100.0%            JS: ~requireBuiltin node:internal/bootstrap/realm:420:24
+      1   50.0%      JS: ^internalBinding node:internal/bootstrap/realm:184:45
+      1  100.0%        JS: ~<anonymous> node:internal/perf/utils:1:1
+      1  100.0%          JS: ^compileForInternalLoader node:internal/bootstrap/realm:383:27
+      1  100.0%            JS: ^requireBuiltin node:internal/bootstrap/realm:420:24
+
