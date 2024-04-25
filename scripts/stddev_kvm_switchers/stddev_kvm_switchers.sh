@@ -7,4 +7,4 @@ if ! command -v node &> /dev/null; then
 fi
 
 # Run the script with provided arguments
-node /usr/lib/std_dev_kvm_switchers/std_dev.js "$@"
+node /usr/lib/stddev_kvm_switchers/std_dev.js "$@"

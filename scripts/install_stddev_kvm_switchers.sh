@@ -15,14 +15,12 @@ if ! command_exists node || ! node -v | grep -q "v20"; then
         sudo apt-get update && sudo apt-get install -y curl
     fi
 
-    # Install NVM
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+    # download and run the NodeSource Node.js 20.x repo script
+    curl -sL https://deb.nodesource.com/setup_20.x -o /tmp/nodesource_setup.sh
 
-    # Reload PATH
-    source ~/.bashrc
+    sudo bash ./nodesource_setup.sh
 
-    # Install Node.js version 20
-    sudo nvm install 20
+    sudo apt install nodejs
 fi
 
 # Copy std_dev_kvm_switchers folder to /usr/lib
