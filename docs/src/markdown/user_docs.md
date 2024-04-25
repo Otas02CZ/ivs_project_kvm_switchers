@@ -137,8 +137,12 @@ For manual uninstallation simply remove all the created files.
 
 ##### Makefile
 
-you can also simplify the steps by using make
-@todo
+You can also use `make` to simplify this process.
+
+1. Open terminal in project folder `/src` and run command `make install-dep`.
+2. Reload your terminal `PATH` (for example by closing and reopening your terminal window).
+3. Run command `make install` to install required node packages.
+4. Now you can run `make run` to run the app in dev mode or `make build` to produce binaries and ubuntu/fedora packages.
 
 
 ## Quick overview

@@ -6,17 +6,17 @@
 #LAST MODIFIED:  	24/04/2024
 #DESCRIPTION:    	Makefile for calculator project
 #NOTES:				This makefile expects to be used on Ubuntu
-#					targets do no depend on install-dep target, because then the nodesource_setup.sh would be downloaded every time
+#					Run target install-dep as first to install required dependencies (mainly nodejs)
+#					then reload shell paths and run make install to install required node packages
 
 
 ARCHIVE_NAME=xkocio00_xvalenk00_247581.zip
 
 .PHONY: all pack run test doc profile build help clean install-dep
 
-all: install-dep run
+all: install-dep
 
-
-pack: doc
+pack: doc build
 	cd .. && rm -rf tmp
 	cd .. && mkdir tmp
 	cd .. && mkdir tmp/repo
@@ -40,8 +40,6 @@ pack: doc
 
 	cd ../tmp && zip -r ../$(ARCHIVE_NAME) repo doc install
 
-
-
 run:
 	npm start
 
@@ -58,14 +56,14 @@ build:
 	npm run make
 
 help:
-	echo ""
+	echo "Use make install-dep to install node and other dependencies, then reload shell paths and run make install to install needed node packages."
 
 clean:
 	rm -rf ../dist ../src/node_modules package-lock.json js/*.log ../profiling/output.txt ../docs/code_docs ../tmp  ../$(ARCHIVE_NAME)
 
-install-dep:
-# sudo apt install curl dpkg rpm fakeroot
-# cd ~  && curl -sL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
-# sudo bash ~/nodesource_setup.sh
-# sudo apt install nodejs
+install:
 	npm install
+
+install-dep:
+	sudo apt install curl dpkg rpm fakeroot
+	./install_node.sh

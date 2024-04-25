@@ -6,7 +6,7 @@ source $NVM_DIR/nvm.sh;
 sudo apt install curl
 
 # Check if node of version 20 is installed
-node > /dev/null
+node --version > /dev/null
 if [ $? -eq 1 ] || ! node -v | grep -q "v20"; then
     echo "Node.js version 20 is not installed."
 
