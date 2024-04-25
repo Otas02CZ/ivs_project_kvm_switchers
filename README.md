@@ -170,7 +170,7 @@ To calculate the standard deviation, use the `std_dev.js` file located at `src/j
 Here is an example usage of the std_dev.js file:
 
 ```zsh
-foo@bar:~$ std_dev.js < data.txt
+foo@bar:~$ node std_dev.js < data.txt
 ```
 
 
