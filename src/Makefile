@@ -76,4 +76,5 @@ install:
 
 install-dep:
 	sudo apt install curl dpkg rpm fakeroot
-	sudo ./install_node.sh
+	sudo chmod 777 install_node.sh
+	./install_node.sh
