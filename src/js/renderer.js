@@ -22,7 +22,7 @@
 //TEAM:             KVM Switchers FIT BUT
 //LICENSE:          GNU GPL v3
 //CREATED:          31/03/2024
-//LAST MODIFIED:    15/04/2024
+//LAST MODIFIED:    04/05/2024
 //DESCRIPTION:      Renderer JS script for index.html
 
 /**
@@ -452,7 +452,7 @@ function calculate() {
             case "EqvFormatError":
                 errorMsg = "WRONG FORMAT";
                 break;
-            case "DivideByZeroError":
+            case "DivisionByZeroError":
                 errorMsg = "ZERO DIVISION";
                 break;
             case "ExponentTypeError":
