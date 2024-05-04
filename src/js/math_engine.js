@@ -595,7 +595,7 @@ class MathEngine {
         // calulate the eq, first the * and /
         for (let i = 0; i < amountOfSteps; i++) {
             let operator = allOperators[idx];
-            let result;
+            let result = false;
             if (operator == '*' || operator == '*+') {
                 result = this._multiply(allNumbers[idx], allNumbers[idx + 1]);
             } else if (operator == '/' || operator == '/+') {
@@ -608,7 +608,7 @@ class MathEngine {
                 idx++;
             }
             
-            if (operator == '*' || operator == '/') {
+            if (result != false) {
                 allNumbers[idx] = result;
                 allNumbers.splice(idx + 1, 1);
                 allOperators.splice(idx, 1);
@@ -739,4 +739,3 @@ class MathEngine {
 
 // Export the MathEngine class and custom exceptions as a CommonJS modules
 module.exports = {MathEngine, EqvFormatError, DivisionByZeroError, ExponentTypeError};
-
